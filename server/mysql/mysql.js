@@ -26,3 +26,11 @@ let query = ( sql, values ) => {
     })
   })
 }
+
+let admins = 
+  `create table if not exits admins(
+   ADID INT NOT NULL AUTO_INCREMENT,
+   admin_name VARCHAR(100) NOT NULL,
+   admin_password VARCHAR(100) NOT NULL,
+   PRIMARY KEY (ADID)
+  );`;

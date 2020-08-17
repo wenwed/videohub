@@ -17,43 +17,43 @@
 #### 数据库
 ##### 管理员表（admins）
 
-| 字段名         | 中文含义   | 类型及长度 | 备注                   |
-| -------------- | ---------- | ---------- | ---------------------- |
-| ADID           | 管理员编号 | Int，4位   | 不能为null，自增，主键 |
-| admin_name     | 管理员姓名 | String     | 不能为null，不能重复   |
-| admin_password | 管理员密码 | String     | 不能为null             |
+| 字段名         | 中文含义   | 类型及长度  | 备注                   |
+| -------------- | ---------- | ----------- | ---------------------- |
+| ADID           | 管理员编号 | Int         | 不能为null，自增，主键 |
+| admin_name     | 管理员姓名 | Char，100位 | 不能为null，不能重复   |
+| admin_password | 管理员密码 | Char，100位 | 不能为null             |
 
 ##### 用户表（users）
 
-| 字段名        | 中文含义     | 类型及长度 | 备注                   |
-| ------------- | ------------ | ---------- | ---------------------- |
-| USID          | 用户编号     | int，11位  | 不能为null，自增，主键 |
-| user_name     | 用户昵称     | String     | 不能为null，不能重复   |
-| user_password | 用户密码     | String     | 不能为null             |
-| user_poster   | 用户头像地址 | String     | 不能为null             |
-| register_date | 注册时间     |            | 不能为null             |
-| user_descripe | 用户描述     |            |                        |
+| 字段名        | 中文含义     | 类型及长度  | 备注                   |
+| ------------- | ------------ | ----------- | ---------------------- |
+| USID          | 用户编号     | int         | 不能为null，自增，主键 |
+| user_name     | 用户昵称     | Char，100位 | 不能为null，不能重复   |
+| user_password | 用户密码     | Char，100位 | 不能为null             |
+| user_poster   | 用户头像地址 | Char，100位 | 不能为null             |
+| register_date | 注册时间     | Char，100位 | 不能为null             |
+| user_descripe | 用户描述     | Char，300位 |                        |
 
 ##### 视频表（videos）
 
-| 字段名         | 中文含义     | 类型及长度 | 备注                          |
-| -------------- | ------------ | ---------- | ----------------------------- |
-| VDID           | 视频编号     | int，11位  | 不能为null，自增,主键         |
-| video_poster   | 视频封面     | String     | 不能为null                    |
-| video_url      | 视频链接     | String     | 不能为null                    |
-| video_num      | 视频播放次数 | int，11位  | 初始值为0                     |
-| video_title    | 视频标题     |            | 不能为null                    |
-| video_descripe | 视频描述     |            | 不能为null                    |
-| video_type     | 视频种类     | int，5位   | 不能为null，VideoType表的主键 |
-| video_status   | 视频审核状态 | int,，1位  | 不能为null                    |
+| 字段名         | 中文含义     | 类型及长度  | 备注                          |
+| -------------- | ------------ | ----------- | ----------------------------- |
+| VDID           | 视频编号     | int         | 不能为null，自增,主键         |
+| video_poster   | 视频封面     | Char，100位 | 不能为null                    |
+| video_url      | 视频链接     | Char，100位 | 不能为null                    |
+| video_num      | 视频播放次数 | int         | 初始值为0                     |
+| video_title    | 视频标题     | Char，4位   | 不能为null                    |
+| video_descripe | 视频描述     | Char，4位   | 不能为null                    |
+| video_type     | 视频种类     | int         | 不能为null，VideoType表的主键 |
+| video_status   | 视频审核状态 | int         | 不能为null                    |
 
-##### 视频种类表(VideoType)
+##### 视频种类表(VideoTypes)
 
-| 字段名        | 中文含义     | 类型及长度 | 备注                   |
-| ------------- | ------------ | ---------- | ---------------------- |
-| VTID          | 视频类型编号 | int，5位   | 不能为null，自增，主键 |
-| type_tag      | 视频类型标签 |            | 不能为null             |
-| type_descripe | 视频类型描述 |            | 不能为null             |
+| 字段名        | 中文含义     | 类型及长度  | 备注                   |
+| ------------- | ------------ | ----------- | ---------------------- |
+| VTID          | 视频类型编号 | int         | 不能为null，自增，主键 |
+| type_tag      | 视频类型标签 | Char，100位 | 不能为null             |
+| type_descripe | 视频类型描述 | Char，300位 | 不能为null             |
 
 
 
