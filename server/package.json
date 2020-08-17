@@ -14,5 +14,8 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "node-gyp": "^7.1.0"
+  },
+  "devDependencies": {
+    "mysql": "^2.18.1"
   }
 }
