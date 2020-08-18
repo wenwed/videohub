@@ -162,7 +162,7 @@ exports.insertVideo = ( values ) => {
 //修改一个视频信息
 exports.updateVideo = ( values ) => {
   let _sql = `update videos set video_poster=?,video_url=?,video_title=?,video_descripe=?,
-            video_type=?,video_status=?,where VDID=?;`;
+            video_type=?,video_status=? where VDID=?;`;
   return query( _sql, values );
 }
 
@@ -190,9 +190,15 @@ exports.getVideoRank = ( values ) => {
   return query( _sql, values );
 }
 
-//获取某一用户上传的通过审核的全部视频
+//获取某一用户上传的全部视频
 exports.getAllUserVideo = ( values ) => {
   let _sql = "select * from videos where video_owner=?;";
+  return query( _sql, values );
+}
+
+//获取某一用户上传的通过审核的全部视频
+exports.getAllUserVideo = ( values ) => {
+  let _sql = "select * from videos where video_owner=? and video_status=2;";
   return query( _sql, values );
 }
 
