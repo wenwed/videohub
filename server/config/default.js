@@ -3,12 +3,12 @@ const config = {
   port: 8633,
   //数据库配置
   database: {
-    HOST     : 'localhost',
+    HOST     : '127.0.0.1',
     PORT     : '3306',
     DATABASE : 'pulipuli1',
-    USERNAME : 'root',
+    USER     : 'root',
     PASSWORD : 'wenwd114514'
   }
 }
 
-module.exports = config
+module.exports = config;
