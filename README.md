@@ -41,7 +41,7 @@
 | VDID           | 视频编号     | int         | 不能为null，自增,主键         |
 | video_poster   | 视频封面     | Char，100位 | 不能为null                    |
 | video_url      | 视频链接     | Char，100位 | 不能为null                    |
-| video_num      | 视频播放次数 | int         | 初始值为0                     |
+| video_num      | 视频播放次数 | int         | 不能为null，初始值为0         |
 | video_title    | 视频标题     | Char，100位 | 不能为null                    |
 | video_descripe | 视频描述     | Char，300位 | 不能为null                    |
 | video_type     | 视频种类     | int         | 不能为null，VideoType表的主键 |
@@ -62,6 +62,15 @@
 #### api设计
 
  + 管理员部分
+
+| 管理员重复姓名查询 |  |
+| -------- | -------- |
+| 请求URL  | http://127.0.0.1:8633/api/admin/nameuse |
+| 简要描述 | 查询管理员姓名是否被使用 |
+| 请求方式 | post |
+| 请求参数 | `{ admin_name: "wenwd"}` |
+| 返回示例 | `{ code: 200, msg: "姓名未被使用", flag: true }` |
+
 | 管理员注册   |  |
 | -------- | -------- |
 | 请求URL  | http://127.0.0.1:8633/api/admin/register |
@@ -94,6 +103,8 @@
 | 请求方式 | post |
 | 请求参数 | `{}` |
 | 返回示例 | `{}` |
+
++ 视频标签部分
 
 | 视频标签列表 | |
 | -------- | -------- |
@@ -128,6 +139,16 @@
 | 返回示例 | `{}` |
 
  + 用户部分
+
+| 用户重复姓名查询 |  |
+| -------- | -------- |
+| 请求URL  | http://127.0.0.1:8633/api/user/nameuse |
+| 简要描述 | 查询用户姓名是否被使用 |
+| 请求方式 | post |
+| 请求参数 | `{ user_name: "wenwd"}` |
+| 返回示例 | `{ code: 200, msg: "姓名未被使用", flag: true }` |
+
+
 | 用户注册 |  |
 | -------- | -------- |
 | 请求URL  | http://127.0.0.1:8633/api/user/register |
@@ -142,17 +163,17 @@
 | 简要描述 | 将用户填写的登录信息传入服务端，返回对比信息 |
 | 请求方式 | post |
 | 请求参数 | `{ user_name: "wenwd",  user_password: "wenwd114514" }` |
-| 返回示例 | `{ code: 200, msg: "注册成功", userinfo: { user_name: "wenwd", user_poster: "1919810.jpg", user_descripe: "你回家了，我在等你呢" } }` |
+| 返回示例 | `{ code: 200, msg: "登录成功", userinfo: { user_name: "wenwd", user_poster: "1919810.jpg", user_descripe: "你回家了，我在等你呢" } }` |
 
 | 用户信息修改 | |
 | -------- | -------- |
 | 请求URL  | http://127.0.0.1:8633/api/user/login |
 | 简要描述 | 将需要修改的用户信息传入服务端 |
 | 请求方式 | post |
-| 请求参数 | `{ USID: 1, user_name: "wenwd",  user_password: "wenwd114514", user_descripe: "你回家了，我在等你呢" }` |
+| 请求参数 | `{ USID: 1, user_name: "wenwd", user_poster: "1919810.jpg",  user_password: "wenwd114514", user_descripe: "你回家了，我在等你呢" }` |
 | 返回示例 | `{ code: 200, msg: "修改成功" }` |
 
-| 用户上传图像 | |
+| 用户上传头像 | |
 | -------- | -------- |
 | 请求URL  | http://127.0.0.1:8633/api/user/poster |
 | 简要描述 | 将用户头像上传到服务器 |
@@ -161,6 +182,7 @@
 | 返回示例 | `{ code: 200, user_poster: "1919810.jpg" }` |
 
  + 视频部分
+
 | 用户上传视频文件 | |
 | -------- | -------- |
 | 请求URL  | http://127.0.0.1:8633/api/upload/video |

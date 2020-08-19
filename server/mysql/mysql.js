@@ -94,7 +94,7 @@ exports.insertAdmin = ( values ) => {
 
 //查询管理员密码
 exports.queryAdminPassword = ( values ) => {
-  let _sql = "select admin_password from admins where admin_name=?;";
+  let _sql = "select admin_password from admins where ADID=?;";
   return query( _sql, values );
 }
 
@@ -179,13 +179,13 @@ exports.getVideoRank = ( values ) => {
 }
 
 //获取全站某一段时间时间排行榜
-exports.getVideoRank = ( values ) => {
+exports.getVideoTimeRank = ( values ) => {
   let _sql = "select * from videos where video_status=2 and video_date<? order by video_num desc limit ?,10;";
   return query( _sql, values );
 }
 
 //获取某分区某一时间段时间的排行榜
-exports.getVideoRank = ( values ) => {
+exports.getVideoTypeRank = ( values ) => {
   let _sql = "select * from videos where video_status=2 and video_date<? and video_type=? order by video_num desc limit ?,10;";
   return query( _sql, values );
 }
