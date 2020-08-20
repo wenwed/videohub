@@ -56,13 +56,14 @@ router.post('/login', async (req, res) => {
   }
 
   let values = [ req.body.USID ]
-  await mysql.queryAdminPassword(values)
+  await mysql.getAdminPassword(values)
     .then(result => {
       let passFlag = bcrypt.compareSync(req.body.user_password, result[0].user_password);
       if(passFlag){
         //生成token
         let userToken = jwt.sign({
-          id: req.body.USID
+          id: req.body.USID,
+          role: "user"
           }, jwt_key, { 
           algorithm: 'RS256',   //设置token加密方式
           expiresIn: '7d'       //设置token过期时间
@@ -88,6 +89,31 @@ router.post('/login', async (req, res) => {
     })
 })
 
+//用户密码
+router.post('/updatepass', async (req, res) => {
+  if(!req.querystring){    //验证参数是否合法
+    return res.status(412).json({ status: 412, msg: "参数错误" });
+  }
+  if(!req.headers.usertoken){    //验证是否带有token
+    return res.status(401).json({ status: 401, msg: "请登录" });
+  }
+
+  let token = req.headers.usertoken;
+  jwt.verify(token, jwt_key, async (err, decoded) => {
+    if(err){  //非法token
+      return res.status(401).json({ status: 401, msg: "请登录" });
+    }
+    let values= [ req.body.user_password, req.body.USID ];
+    await mysql.updateUserPassword(values)
+      .then(result => {
+        res.status(200).json({ status: 200, msg: "修改成功" });
+      }).catch(err => {
+        console.log(err)
+        res.status(500).json({ status: 500, msg: "未知错误" });
+      })
+  })
+})
+
 //用户信息修改
 router.post('/updateinfo', async (req, res) => {
   if(!req.querystring){    //验证参数是否合法
@@ -97,12 +123,19 @@ router.post('/updateinfo', async (req, res) => {
     return res.status(401).json({ status: 401, msg: "请登录" });
   }
 
-  let token = req.headerss.sessiontoken;
+  let token = req.headers.usertoken;
   jwt.verify(token, jwt_key, async (err, decoded) => {
     if(err){  //非法token
       return res.status(401).json({ status: 401, msg: "请登录" });
     }
-    
+    let values= [ req.body.user_name, req.body.user_poster, req.body.user_descripe, req.body.USID ];
+    await mysql.updateUserInfo(values)
+      .then(result => {
+        res.status(200).json({ status: 200, msg: "修改成功" });
+      }).catch(err => {
+        console.log(err)
+        res.status(500).json({ status: 500, msg: "未知错误" });
+      })
   })
 })
 

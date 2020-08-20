@@ -36,7 +36,7 @@ router.post('/register', async (req, res) => {
 
   let password = getBcrypt( req.body.admin_password) ;
   let values = [ req.body.admin_name, password ];
-  await mysql.existAdminName(values)
+  await mysql.insertAdmin(values)
     .then(result => {
       res.status(200).json({ status: 200, msg: "注册成功", ADID: result.insertId });
   }).catch(err => {
@@ -52,13 +52,14 @@ router.post('/login', async (req, res) => {
   }
 
   let values = [ req.body.ADID ];
-  await mysql.queryAdminPassword(values)
+  await mysql.getAdminPassword(values)
     .then(result => {
       let passFlag = bcrypt.compareSync(req.body.admin_password, result[0].admin_password);
       if(passFlag){
         //生成token
         let adminToken = jwt.sign({
-              id: req.body.ADID
+              id: req.body.ADID,
+              role: "admin"
               }, jwt_key, { 
               algorithm: 'RS256',   //设置token加密方式
               expiresIn: '7d'       //设置token过期时间
@@ -87,7 +88,7 @@ router.get('/revideolist', async (req, res) => {
     return res.status(401).json({ status: 401, msg: "请登录" });
   }
 
-  let token = req.headerss.sessiontoken;
+  let token = req.headers.admintoken;
   jwt.verify(token, jwt_key, async (err, decoded) => {
     if(err){  //非法token
       return res.status(401).json({ status: 401, msg: "请登录" });
@@ -111,7 +112,7 @@ router.post('/revideo', async (req, res) => {
     return res.status(412).json({ status: 412, msg: "参数错误" });
   }
 
-  let token = req.headerss.sessiontoken;
+  let token = req.headers.admintoken;
   jwt.verify(token, jwt_key, async (err, decoded) => {
     if(err){  //非法token
       return res.status(401).json({ status: 401, msg: "请登录" });

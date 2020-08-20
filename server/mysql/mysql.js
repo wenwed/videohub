@@ -92,7 +92,7 @@ exports.insertAdmin = ( values ) => {
 }
 
 //查询管理员密码
-exports.queryAdminPassword = ( values ) => {
+exports.getAdminPassword = ( values ) => {
   let _sql = "select admin_password from admins where ADID=?;";
   return query( _sql, values );
 }
@@ -110,7 +110,7 @@ exports.insertUser = ( values ) => {
 }
 
 //查询用户密码
-exports.selectUserPassword = ( values ) => {
+exports.getUserPassword = ( values ) => {
   let _sql = "select user_password from users where USID=?;";
   return query( _sql, values );
 }
@@ -127,25 +127,25 @@ exports.updateUserInfo = ( values ) => {
   return query( _sql, values );
 }
 
-//查询所有的视频种类
-exports.selectAllVideoTypes = ( values ) => {
+//查询所有的视频标签
+exports.getAllVideoTypes = ( values ) => {
   let _sql = "select * from VideoTypes;";
   return query( _sql, values );
 }
 
-//创建一个视频种类
+//创建一个视频标签
 exports.insertVideoType = ( values ) => {
   let _sql = "insert into videoTypes set type_tag=?,type_descripe=?;";
   return query( _sql, values );
 }
 
-//修改一个视频种类
+//修改一个视频标签
 exports.updateVideoType = ( values ) => {
   let _sql = "update videoTypes set type_tag=?,type_descripe=? where VTID=?;";
   return query( _sql, values );
 }
 
-//删除一个视频种类
+//删除一个视频标签
 exports.deleteVideoType = ( values ) => {
   let _sql = "delete from videoTypes where VTID=?;";
   return query( _sql, values );

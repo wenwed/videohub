@@ -54,3 +54,12 @@ const mysql = require('../mysql/mysql.js');
 //   .then(res => {
 //     console.log(res);
 //   })
+
+// mysql.getAllVideoTypes()
+//   .then(result => {
+//     console.log(result);
+//   })
+
+let values = [ 5 ];
+mysql.deleteVideoType(values)
+  .then(res => {console.log(res)})
