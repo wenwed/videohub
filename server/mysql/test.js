@@ -12,6 +12,12 @@ const mysql = require('../mysql/mysql.js');
 //     console.log(result[0].count);
 //   });
 
+// let values = ["1"];
+// mysql.queryAdminPassword(values)
+//   .then(res => {
+//     console.log(res[0].admin_password);
+//   })
+
 // let user = ['wenwd1', 'wenwd114514', '114514.jpg', new Date()];
 
 // mysql.insertUser(user)
@@ -24,7 +30,7 @@ const mysql = require('../mysql/mysql.js');
 //     console.log(result);
 //   })
 
-// let video = ["114514.jpg","1919810.mp4",250,"视频","第十一个视频",1,2,1,new Date()];
+// let video = ["114514.jpg","1919810.mp4",0,"视频","第十二个视频",1,1,1,new Date()];
 // mysql.insertVideo(video)
 //   .then(result => {
 //     console.log(result);
@@ -34,6 +40,17 @@ const mysql = require('../mysql/mysql.js');
 // let pageindex = [(index-1)*10];
 // console.log(pageindex);
 // mysql.getVideoRank(pageindex)
+//   .then(res => {
+//     console.log(res);
+//   })
+
+// mysql.getUnreviewVideo()
+//   .then(res => {
+//     console.log(res);
+//   })
+
+// let values = [2,1];
+// mysql.updateVideoStatus(values)
 //   .then(res => {
 //     console.log(res);
 //   })

@@ -65,10 +65,10 @@
 
 | 管理员重复姓名查询 |  |
 | -------- | -------- |
-| 请求URL  | http://127.0.0.1:8633/api/admin/nameuse |
+| 请求URL  | http://127.0.0.1:8633/api/admin/nameuse?name=wenwd |
 | 简要描述 | 查询管理员姓名是否被使用 |
-| 请求方式 | post |
-| 请求参数 | `{ admin_name: "wenwd"}` |
+| 请求方式 | get |
+| 请求参数 |                                                    |
 | 返回示例 | `{ code: 200, msg: "姓名未被使用", flag: true }` |
 
 | 管理员注册   |  |
@@ -116,7 +116,7 @@
 
 | 添加视频标签列表 | |
 | -------- | -------- |
-| 请求URL  | http://127.0.0.1:8633/api/admin/tyvideo/add |
+| 请求URL  | http://127.0.0.1:8633/admin/tyvideo/add |
 | 简要描述 | 发送要添加的视频标签信息 |
 | 请求方式 | post |
 | 请求参数 | |
@@ -124,7 +124,7 @@
 
 | 修改视频标签列表 | |
 | -------- | -------- |
-| 请求URL  | http://127.0.0.1:8633/api/admin/tyvideo/update |
+| 请求URL  | http://127.0.0.1:8633/api/tyvideo/update |
 | 简要描述 | 发送要修改的视频标签信息 |
 | 请求方式 | post |
 | 请求参数 | `{}` |
@@ -132,7 +132,7 @@
 
 | 删除视频标签列表 | |
 | -------- | -------- |
-| 请求URL  | http://127.0.0.1:8633/api/admin/tyvideo/delete |
+| 请求URL  | http://127.0.0.1:8633/api/tyvideo/delete |
 | 简要描述 | 发送要删除的视频标签信息 |
 | 请求方式 | post |
 | 请求参数 | `{}` |
@@ -167,7 +167,7 @@
 
 | 用户信息修改 | |
 | -------- | -------- |
-| 请求URL  | http://127.0.0.1:8633/api/user/login |
+| 请求URL  | http://127.0.0.1:8633/api/user/updateinfo |
 | 简要描述 | 将需要修改的用户信息传入服务端 |
 | 请求方式 | post |
 | 请求参数 | `{ USID: 1, user_name: "wenwd", user_poster: "1919810.jpg",  user_password: "wenwd114514", user_descripe: "你回家了，我在等你呢" }` |

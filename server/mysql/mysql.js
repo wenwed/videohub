@@ -8,7 +8,6 @@ let pool = mysql.createPool({
   user     : config.database.USER,
   password : config.database.PASSWORD
 });
-// console.log('pool', pool);
 
 let query = ( sql, values ) => {
   return new Promise(( resolve, reject ) => {
@@ -112,7 +111,7 @@ exports.insertUser = ( values ) => {
 
 //查询用户密码
 exports.selectUserPassword = ( values ) => {
-  let _sql = "select user_password from users where user_name=?;";
+  let _sql = "select user_password from users where USID=?;";
   return query( _sql, values );
 }
 
@@ -204,7 +203,7 @@ exports.getAllUserVideo = ( values ) => {
 
 //获取所有未审核的视频
 exports.getUnreviewVideo = () =>{
-  let _sql = "select * from video where video_status=1;";
+  let _sql = "select * from videos where video_status=1 limit 0, 10;";
   return query( _sql, [] );
 }
 
