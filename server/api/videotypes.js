@@ -18,6 +18,21 @@ router.get('/all', async (req, res) => {
     })
 })
 
+//获取单个视频标签
+router.get('/one', async (req, res) => {
+  if(!req.query.id){
+    res.status(412).json({ status: 412, msg: "参数错误" });
+  }
+  let values = [ req.query.id ]
+  await mysql.getOneVideoTypes( values )
+    .then(result => {
+      res.status(200).json({ status: 200, msg: "查询成功", videotype: result });
+    }).catch(err => {
+      console.log(err);
+      res.status(412).json({ status: 412, msg: "未知错误" });
+    })
+})
+
 //添加视频标签
 router.post('/add', async (req, res) => {
   if(!req.headers.admintoken){    //验证是否带有token

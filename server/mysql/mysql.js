@@ -128,8 +128,14 @@ exports.updateUserInfo = ( values ) => {
 }
 
 //查询所有的视频标签
-exports.getAllVideoTypes = ( values ) => {
+exports.getAllVideoTypes = () => {
   let _sql = "select * from VideoTypes;";
+  return query( _sql, [] );
+}
+
+//查询单个视频标签
+exports.getOneVideoTypes = ( values ) => {
+  let _sql = "select * from VideoTypes where VTID=?;";
   return query( _sql, values );
 }
 
@@ -161,7 +167,7 @@ exports.insertVideo = ( values ) => {
 //修改一个视频信息
 exports.updateVideo = ( values ) => {
   let _sql = `update videos set video_poster=?,video_url=?,video_title=?,video_descripe=?,
-            video_type=?,video_status=? where VDID=?;`;
+            video_type=? where VDID=?;`;
   return query( _sql, values );
 }
 
@@ -196,7 +202,7 @@ exports.getAllUserVideo = ( values ) => {
 }
 
 //获取某一用户上传的通过审核的全部视频
-exports.getAllUserVideo = ( values ) => {
+exports.getReviewedUserVideo = ( values ) => {
   let _sql = "select * from videos where video_owner=? and video_status=2;";
   return query( _sql, values );
 }

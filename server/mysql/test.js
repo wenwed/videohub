@@ -36,13 +36,13 @@ const mysql = require('../mysql/mysql.js');
 //     console.log(result);
 //   })
 
-// let index = 1;
-// let pageindex = [(index-1)*10];
-// console.log(pageindex);
-// mysql.getVideoRank(pageindex)
-//   .then(res => {
-//     console.log(res);
-//   })
+let index = 1;
+let pageindex = [(index-1)*10];
+console.log(pageindex);
+mysql.getVideoRank(pageindex)
+  .then(res => {
+    console.log(res);
+  })
 
 // mysql.getUnreviewVideo()
 //   .then(res => {
@@ -60,6 +60,12 @@ const mysql = require('../mysql/mysql.js');
 //     console.log(result);
 //   })
 
-let values = [ 5 ];
-mysql.deleteVideoType(values)
-  .then(res => {console.log(res)})
+// let values = [ 5 ];
+// mysql.deleteVideoType(values)
+//   .then(res => {console.log(res)})
+
+// let values= [ 1 ];
+// mysql.getAllUserVideo(values)
+//   .then(result => {
+//     console.log(result);
+//   })

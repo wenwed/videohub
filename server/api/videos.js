@@ -56,4 +56,111 @@ router.post('/add', async (req, res) => {
   })
 })
 
+//用户修改视频信息
+router.post('/add', async (req, res) => {
+  if(!req.headers.admintoken){    //验证是否带有token
+    return res.status(401).json({ status: 401, msg: "请登录" });
+  }
+  if(!req.querystring){    //验证参数是否合法
+    return res.status(412).json({ status: 412, msg: "参数错误" });
+  }
+
+  jwt.verify(token, jwt_key, async (err, decoded) => {
+    if(err){  //非法token
+      return res.status(401).json({ status: 401, msg: "请登录" });
+    }
+    
+    let values = [ 
+                  res.body.video_poster, 
+                  res.body.video_url, 
+                  res.body.video_title, 
+                  res.body.video_descripe, 
+                  res.body.video_type, 
+                  res.body.VDID
+                ];
+    await mysql.updateVideo(values)
+    .then(result => {
+      res.status(200).json({ status: 200, msg: "添加成功" });
+    }).catch(err => {
+      console.log(err);
+      res.status(500).json({ status: 500, msg: "未知错误" });
+    })
+  })
+})
+
+//用户删除视频
+router.post('/del', async (req, res) => {
+  if(!req.headers.admintoken){    //验证是否带有token
+    return res.status(401).json({ status: 401, msg: "请登录" });
+  }
+  if(!req.querystring){    //验证参数是否合法
+    return res.status(412).json({ status: 412, msg: "参数错误" });
+  }
+
+  jwt.verify(token, jwt_key, async (err, decoded) => {
+    if(err){  //非法token
+      return res.status(401).json({ status: 401, msg: "请登录" });
+    }
+
+    let values = [ req.body.VDID ];
+    await mysql.deleteVideo(values)
+      .then(result => {
+        res.status(200).json({ status: 200, msg: "删除成功" });
+      }).catch(err => {
+        res.status(500).json({ status: 500, msg: "未知错误" });
+      })
+  })
+})
+
+//用户全部的视频列表
+router.get('/person/all', async (req, res) => {
+  if(!req.headers.admintoken){    //验证是否带有token
+    return res.status(401).json({ status: 401, msg: "请登录" });
+  }
+  if(!req.query.id){    //验证参数是否合法
+    return res.status(412).json({ status: 412, msg: "参数错误" });
+  }
+  jwt.verify(token, jwt_key, async (err, decoded) => {
+    if(err){  //非法token
+      return res.status(401).json({ status: 401, msg: "请登录" });
+    }
+
+    let values = [ req.query.id ];
+    await mysql.getAllUserVideo(values)
+      .then(result => {
+        res.status(200).json({ status: 200, msg: "查询成功", videolist: result });
+      }).catch(err => {
+        res.status(500).json({ status: 500, msg: "未知错误" });
+      })
+  })
+})
+
+//用户通过审核的全部视频
+router.get('/person/passed', async (req, res) => {
+  if(!req.query.id){    //验证参数是否合法
+    return res.status(412).json({ status: 412, msg: "参数错误" });
+  }
+  let values = [ req.query.id ]
+    await mysql.getReviewedUserVideo(values)
+    .then(result => {
+      res.status(200).json({ status: 200, msg: "查询成功", videolist: result });
+    }).catch(err => {
+      res.status(500).json({ status: 500, msg: "未知错误" });
+    })
+})
+
+//全站排行
+router.get('/rank/all', async (req, res) => {
+  if(!req.query.index){    //验证参数是否合法
+    return res.status(412).json({ status: 412, msg: "参数错误" });
+  }
+  let values = [ (req.query.index-1)*10 ]
+    await mysql.getVideoRank(values)
+    .then(result => {
+      res.status(200).json({ status: 200, msg: "查询成功", videolist: result });
+    }).catch(err => {
+      res.status(500).json({ status: 500, msg: "未知错误" });
+    })
+})
+
 module.exports = router;
