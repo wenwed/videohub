@@ -30,10 +30,6 @@ router.get('/nameuse', async (req, res) => {
 
 //管理员注册
 router.post('/register', async (req, res) => {
-  if(!req.querystring){    //验证参数是否正确
-    return res.status(412).json({ status: 412, msg: "参数错误" });
-  }
-
   let password = getBcrypt( req.body.admin_password) ;
   let values = [ req.body.admin_name, password ];
   await mysql.insertAdmin(values)
@@ -47,9 +43,9 @@ router.post('/register', async (req, res) => {
 
 //管理员登陆
 router.post('/login', async (req, res) => {
-  if(!req.querystring){    //验证参数是否合法
-    return res.status(412).json({ status: 412, msg: "参数错误" });
-  }
+  // if(!req.querystring){    //验证参数是否合法
+  //   return res.status(412).json({ status: 412, msg: "参数错误" });
+  // }
 
   let values = [ req.body.ADID ];
   await mysql.getAdminPassword(values)

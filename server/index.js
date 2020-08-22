@@ -2,9 +2,15 @@ const express = require('express');
 const app = express();
 const config = require('./config/default.js');
 const port = config.port;
+const bodyParser = require("body-parser");
 const path = require('path');
 
 require('./plugins/http.js')(app);    //设置跨域
+
+//中间件
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 const admin = require('./api/admins.js');
 const user = require('./api/users.js');

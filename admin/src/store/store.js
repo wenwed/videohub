@@ -23,10 +23,16 @@ const store = new Vuex.Store({
     },
     setLogin(state, flag){
       state.flag = flag
+    },
+    setADID(state, ADID){
+      state.ADID = ADID
+    },
+    setName(state, name){
+      state.name = name
     }
   },
   actions: {},
-  plugins: [vuexLocal.plugin]
+  plugins: [ vuexLocal.plugin ]
 })
 
 export default store

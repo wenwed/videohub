@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
+import './plugins/axios'
 import store from './store/store.js'
 
 //导入element-ui

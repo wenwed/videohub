@@ -50,8 +50,7 @@ export default {
       adminInfo: {
         id: this.$store.state.ADID,
         name: this.$store.state.name,
-      },
-      formLabelWidth: '120px'
+      }
     }
   },
   components: {
