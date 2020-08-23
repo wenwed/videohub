@@ -36,13 +36,13 @@ const mysql = require('../mysql/mysql.js');
 //     console.log(result);
 //   })
 
-let index = 1;
-let pageindex = [(index-1)*10];
-console.log(pageindex);
-mysql.getVideoRank(pageindex)
-  .then(res => {
-    console.log(res);
-  })
+// let index = 1;
+// let pageindex = [(index-1)*10];
+// console.log(pageindex);
+// mysql.getVideoRank(pageindex)
+//   .then(res => {
+//     console.log(res);
+//   })
 
 // mysql.getUnreviewVideo()
 //   .then(res => {

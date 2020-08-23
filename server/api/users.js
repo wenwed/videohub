@@ -34,10 +34,6 @@ router.get('/nameuse', async (req, res) => {
 
 //用户注册
 router.post('/register', async (req, res) => {
-  if(!req.querystring){    //验证参数是否合法
-    return res.status(412).json({ status: 412, msg: "参数错误" });
-  }
-
   let password = getBcrypt(req.body.user_password);
   let values = [ req.body.user_name, password, "default.jpg", new Date() ];
   await mysql.insertUser(values)
@@ -51,10 +47,6 @@ router.post('/register', async (req, res) => {
 
 //用户登录
 router.post('/login', async (req, res) => {
-  if(!req.querystring){    //验证参数是否合法
-    return res.status(412).json({ status: 412, msg: "参数错误" });
-  }
-
   let values = [ req.body.USID ]
   await mysql.getAdminPassword(values)
     .then(result => {
@@ -91,9 +83,6 @@ router.post('/login', async (req, res) => {
 
 //用户密码
 router.post('/updatepass', async (req, res) => {
-  if(!req.querystring){    //验证参数是否合法
-    return res.status(412).json({ status: 412, msg: "参数错误" });
-  }
   if(!req.headers.usertoken){    //验证是否带有token
     return res.status(401).json({ status: 401, msg: "请登录" });
   }
@@ -116,9 +105,6 @@ router.post('/updatepass', async (req, res) => {
 
 //用户信息修改
 router.post('/updateinfo', async (req, res) => {
-  if(!req.querystring){    //验证参数是否合法
-    return res.status(412).json({ status: 412, msg: "参数错误" });
-  }
   if(!req.headers.usertoken){    //验证是否带有token
     return res.status(401).json({ status: 401, msg: "请登录" });
   }

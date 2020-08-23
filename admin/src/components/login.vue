@@ -35,15 +35,26 @@ export default {
     async loginBtn(){
       await this.$axios.post('/admin/login', this.addform)
         .then(res => {
-          console.log(res)
-          if(res.flag){
-            localStorage.setItem("adminToken", res.token)
-            this.$store.commit("setToken", res.token)
-            this.$store.commit("setADID", res.admin.ADID)
-            this.$store.commit("setName", res.admin.admin_name)
+          if(res.data.flag){
+            localStorage.setItem("adminToken", res.data.token)
+            this.$store.commit("setToken", res.data.token)
+            this.$store.commit("setADID", res.data.admin.ADID)
+            this.$store.commit("setName", res.data.admin.admin_name)
             this.$store.commit("setLogin", true)
           }
         })
+    }
+  },
+  //computed属性监听对象时候，若对象的引导地址未改变，那么computed将不会检测到。
+  //比如object中的某个key对应的value变化了，computed检测不出来。
+  computed: {
+    temFlag() {
+      return !this.$store.state.isLogin
+    }
+  },
+  watch: {
+    temFlag(newval) {
+      this.dialogFormVisible = newval
     }
   }
 }

@@ -11,18 +11,18 @@ const vuexLocal = new VuexPersistence({
 })
 
 const store = new Vuex.Store({
-  state: {
+  state:  Vue.observable({
     adminToken: "",
     ADID: null,
     name: "",
     isLogin: false
-  },
+  }),
   mutations: {
     setToken(state, adminToken){
       state.adminToken = adminToken
     },
     setLogin(state, flag){
-      state.flag = flag
+      state.isLogin = flag
     },
     setADID(state, ADID){
       state.ADID = ADID

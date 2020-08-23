@@ -92,8 +92,8 @@ exports.insertAdmin = ( values ) => {
 }
 
 //查询管理员密码
-exports.getAdminPassword = ( values ) => {
-  let _sql = "select admin_password from admins where ADID=?;";
+exports.getAdminById = ( values ) => {
+  let _sql = "select * from admins where ADID=?;";
   return query( _sql, values );
 }
 
@@ -111,7 +111,7 @@ exports.insertUser = ( values ) => {
 
 //查询用户密码
 exports.getUserPassword = ( values ) => {
-  let _sql = "select user_password from users where USID=?;";
+  let _sql = "select * from users where USID=?;";
   return query( _sql, values );
 }
 

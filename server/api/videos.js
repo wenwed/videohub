@@ -26,9 +26,6 @@ router.post('/add', async (req, res) => {
   if(!req.headers.admintoken){    //验证是否带有token
     return res.status(401).json({ status: 401, msg: "请登录" });
   }
-  if(!req.querystring){    //验证参数是否合法
-    return res.status(412).json({ status: 412, msg: "参数错误" });
-  }
 
   jwt.verify(token, jwt_key, async (err, decoded) => {
     if(err){  //非法token
@@ -61,9 +58,6 @@ router.post('/add', async (req, res) => {
   if(!req.headers.admintoken){    //验证是否带有token
     return res.status(401).json({ status: 401, msg: "请登录" });
   }
-  if(!req.querystring){    //验证参数是否合法
-    return res.status(412).json({ status: 412, msg: "参数错误" });
-  }
 
   jwt.verify(token, jwt_key, async (err, decoded) => {
     if(err){  //非法token
@@ -92,9 +86,6 @@ router.post('/add', async (req, res) => {
 router.post('/del', async (req, res) => {
   if(!req.headers.admintoken){    //验证是否带有token
     return res.status(401).json({ status: 401, msg: "请登录" });
-  }
-  if(!req.querystring){    //验证参数是否合法
-    return res.status(412).json({ status: 412, msg: "参数错误" });
   }
 
   jwt.verify(token, jwt_key, async (err, decoded) => {
