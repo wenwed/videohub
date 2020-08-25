@@ -42,8 +42,8 @@
 
     <el-container>
       <router-view></router-view>
-      </el-container>
     </el-container>
+  </el-container>
 
   <login></login>
   </div>
@@ -62,7 +62,7 @@ export default {
       setInterval(() => {
         this.nowTime = new Date()
       }, 1000)
-    },
+    }
   },
   components: {
     login
@@ -81,11 +81,12 @@ export default {
   name: 'App'
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
   color: #2c3e50;
 
   .el-aside {
