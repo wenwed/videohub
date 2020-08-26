@@ -31,7 +31,7 @@ _axios.interceptors.response.use(
     const { status } = error.response
 
     if(status == 401){
-      localStorage.removeItem("adminToken")
+      // localStorage.removeItem("adminToken")
       this.$store.commit("setToken", "")
       this.$store.commit("setADID", null)
       this.$store.commit("setName", "")

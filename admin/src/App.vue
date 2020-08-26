@@ -58,7 +58,7 @@ export default {
     }
   },
   methods: {
-    currentTime(){
+    currentTime() {
       setInterval(() => {
         this.nowTime = new Date()
       }, 1000)

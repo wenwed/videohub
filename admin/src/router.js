@@ -1,9 +1,9 @@
 import Vue from "vue"
 import Router from "vue-router"
 
-import userView from "@/components/views/userView.vue"
-import videoTypeView from "@/components/views/videoTypeView.vue"
-import videoView from "@/components/views/videoView.vue"
+import userView from "@/views/userView.vue"
+import videoTypeView from "@/views/videoTypeView.vue"
+import videoView from "@/views/videoView.vue"
 
 Vue.use(Router)
 

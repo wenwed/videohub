@@ -30,20 +30,37 @@
           label="名称"
           prop="type_tag">
         </el-table-column>
-        <el-table-column
-          label="操作">
+        <el-table-column label="操作">
+          <template slot-scope="props">
+            <el-button
+              size="mini"
+              @click="handleEdit(props.row)">编辑</el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="handleDelete(props.row)">删除</el-button>
+          </template>
         </el-table-column>
       </el-table>
     </el-main>
+
+    <edit-video-type v-if="editFormVisible" @getVideoTypes="getVideoTypes" :ID="editID"></edit-video-type>
   </div> 
 </template>
 
 <script>
+import editVideoType from "../components/editVideoType.vue"
 export default {
+  components: {
+    editVideoType
+  },
   data() {
     return {
       types: [],
-      search: ""
+      search: "",
+      editFormVisible: false,
+      editID: null,
+      addFormVisible: false
     }
   },
   methods: {
@@ -51,8 +68,16 @@ export default {
       this.$axios.get("/tyvideo/all")
       .then(res => {
         this.types = res.data.videotypes
-        console.log(this.types)
       })
+    },
+    handleEdit( row ) {
+      this.editID = row.VTID
+      console.log( row.VTID )
+      this.editFormVisible = true
+      console.log(this.editFormVisible)
+    },
+    handleDelete( row ) {
+      console.log( row )
     }
   },
   created() {

@@ -36,13 +36,13 @@ router.get('/one', async (req, res) => {
 //添加视频标签
 router.post('/add', async (req, res) => {
   if(!req.headers.admintoken){    //验证是否带有token
-    return res.status(401).json({ status: 401, msg: "请登录" });
+    return res.status(401).json({ status: 401, msg: "没有token，请登录" });
   }
 
   let token = req.headers.admintoken;
   jwt.verify(token, jwt_key, async (err, decoded) => {
     if(err){  //非法token
-      return res.status(401).json({ status: 401, msg: "请登录" });
+      return res.status(401).json({ status: 401, msg: "token错误，请登录" });
     }
     
     let values = [ res.body.type_tag, res.body.type_descripe ];
@@ -59,12 +59,14 @@ router.post('/add', async (req, res) => {
 //修改视频标签
 router.post('/update', async (req, res) => {
   if(!req.headers.admintoken){    //验证是否带有token
-    return res.status(401).json({ status: 401, msg: "请登录" });
+    return res.status(401).json({ status: 401, msg: "没有token，请登录" });
   }
 
+  let token = req.headers.admintoken;
   jwt.verify(token, jwt_key, async (err, decoded) => {
     if(err){  //非法token
-      return res.status(401).json({ status: 401, msg: "请登录" });
+      console.log(err)
+      return res.status(401).json({ status: 401, msg: "token错误，请登录" });
     }
     
     let values = [ res.body.type_tag, res.body.type_descripe, res.body.VTID ];

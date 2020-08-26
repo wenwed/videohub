@@ -48,12 +48,11 @@ router.post('/login', async (req, res) => {
     .then(result => {
       let passFlag = bcrypt.compareSync(req.body.admin_password, result[0].admin_password);
       if(passFlag){
-        //生成token
+        //签发token
         let adminToken = jwt.sign({
               id: req.body.ADID,
               role: "admin"
-              }, jwt_key, { 
-              algorithm: 'RS256',   //设置token加密方式
+              }.toJSON(), jwt_key, { 
               expiresIn: '7d'       //设置token过期时间
             })
         res.status(200).json({ 
@@ -77,13 +76,13 @@ router.post('/login', async (req, res) => {
 //获取未审核的视频
 router.get('/revideolist', async (req, res) => {
   if(!req.headers.admintoken){    //验证是否带有token
-    return res.status(401).json({ status: 401, msg: "请登录" });
+    return res.status(401).json({ status: 401, msg: "没有token，请登录" });
   }
 
   let token = req.headers.admintoken;
   jwt.verify(token, jwt_key, async (err, decoded) => {
     if(err){  //非法token
-      return res.status(401).json({ status: 401, msg: "请登录" });
+      return res.status(401).json({ status: 401, msg: "token错误，请登录" });
     }
     await mysql.getUnreviewVideo()
       .then(result => {
