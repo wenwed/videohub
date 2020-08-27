@@ -45,7 +45,7 @@ router.post('/add', async (req, res) => {
       return res.status(401).json({ status: 401, msg: "token错误，请登录" });
     }
     
-    let values = [ res.body.type_tag, res.body.type_descripe ];
+    let values = [ req.body.type_tag, req.body.type_descripe ];
     await mysql.insertVideoType(values)
     .then(result => {
       res.status(200).json({ status: 200, msg: "添加成功" });
@@ -69,7 +69,7 @@ router.post('/update', async (req, res) => {
       return res.status(401).json({ status: 401, msg: "token错误，请登录" });
     }
     
-    let values = [ res.body.type_tag, res.body.type_descripe, res.body.VTID ];
+    let values = [ req.body.type_tag, req.body.type_descripe, req.body.VTID ];
     await mysql.updateVideoType(values)
     .then(result => {
       res.status(200).json({ status: 200, msg: "更新成功" });
@@ -91,7 +91,7 @@ router.post('/delete', async (req, res) => {
       return res.status(401).json({ status: 401, msg: "请登录" });
     }
     
-    let values = [ res.body.VTID ];
+    let values = [ req.body.VTID ];
     await mysql.deleteVideoType(values)
     .then(result => {
       res.status(200).json({ status: 200, msg: "删除成功" });

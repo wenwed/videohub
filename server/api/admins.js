@@ -52,7 +52,7 @@ router.post('/login', async (req, res) => {
         let adminToken = jwt.sign({
               id: req.body.ADID,
               role: "admin"
-              }.toJSON(), jwt_key, { 
+              }, jwt_key, { 
               expiresIn: '7d'       //设置token过期时间
             })
         res.status(200).json({ 
@@ -94,7 +94,7 @@ router.get('/revideolist', async (req, res) => {
   })
 })
 
-//获取视频审核结果
+//添加视频审核结果
 router.post('/revideo', async (req, res) => {
   if(!req.headers.admintoken){    //验证是否带有token
     return res.status(401).json({ status: 401, msg: "请登录" });
@@ -106,7 +106,7 @@ router.post('/revideo', async (req, res) => {
       return res.status(401).json({ status: 401, msg: "请登录" });
     }
     
-    let values = [res.body.video_status, res.body.VDID];
+    let values = [ req.body.video_status, req.body.VDID ];
     await mysql.updateVideoStatus(values)
     .then(result => {
       res.json({ status: 200, msg: "审核成功" });

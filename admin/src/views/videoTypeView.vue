@@ -7,7 +7,7 @@
         prefix-icon="el-icon-search"
         v-model="search">
       </el-input>
-      <el-button plain class="addBtn">添加</el-button>
+      <el-button plain class="addBtn" @click="handleAdd">添加分区</el-button>
     </el-header>
     <el-main class="vtMain">
       <el-table
@@ -16,7 +16,7 @@
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="描述">
+              <el-form-item>
                 <span>{{ props.row.type_descripe }}</span>
               </el-form-item>
             </el-form>
@@ -44,15 +44,18 @@
       </el-table>
     </el-main>
 
-    <edit-video-type v-if="editFormVisible" @getVideoTypes="getVideoTypes" :ID="editID"></edit-video-type>
+    <edit-video-type v-if="editFormVisible" @closeEdit="closeEdit" @getVideoTypes="getVideoTypes" :ID="editID"></edit-video-type>
+    <add-video-type v-if="addFormVisible" @closeAdd="closeAdd" @getVideoTypes="getVideoTypes"></add-video-type>
   </div> 
 </template>
 
 <script>
 import editVideoType from "../components/editVideoType.vue"
+import addVideoType from "../components/addVideoType.vue"
 export default {
   components: {
-    editVideoType
+    editVideoType,
+    addVideoType
   },
   data() {
     return {
@@ -70,11 +73,19 @@ export default {
         this.types = res.data.videotypes
       })
     },
+    handleAdd() {
+      this.addFormVisible = true
+    },
+    closeAdd() {
+      this.addFormVisible = false
+    },
     handleEdit( row ) {
       this.editID = row.VTID
-      console.log( row.VTID )
       this.editFormVisible = true
-      console.log(this.editFormVisible)
+    },
+    closeEdit(){
+      this.editID = null
+      this.editFormVisible = false
     },
     handleDelete( row ) {
       console.log( row )

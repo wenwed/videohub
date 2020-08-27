@@ -1,5 +1,5 @@
 <template>
-  <div class="temEdit" v-if="dialogFormVisible">
+  <div class="temEdit">
     <!-- 修改框 -->
     <el-dialog title="修改分区" :visible.sync="dialogFormVisible">
       <el-form :model="editForm">
@@ -11,8 +11,8 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="editBtn">确 定</el-button>
+        <el-button @click="childCloseEdit">取 消</el-button>
+        <el-button type="primary" @click="editVT">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -36,18 +36,20 @@ export default {
     async getOneType() {
       await this.$axios.get(`/tyvideo/one?id=${this.ID}`)
         .then(res => {
-          console.log(res.data.videotype[0])
           this.editForm.type_tag = res.data.videotype[0].type_tag
           this.editForm.type_descripe = res.data.videotype[0].type_descripe
         })
     },
-    async editBtn() {
+    async editVT() {
       await this.$axios.post('/tyvideo/update', this.editForm)
         .then(res => {
           console.log(res)
           this.$emit('getVideoTypes')
-          this.dialogFormVisible = false
+          this.$emit('closeEdit')
         })
+    },
+    childCloseEdit() {
+      this.$emit('closeEdit')
     }
   },
   created() {
