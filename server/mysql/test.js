@@ -38,16 +38,15 @@ const mysql = require('../mysql/mysql.js');
 
 // let index = 1;
 // let pageindex = [(index-1)*10];
-// console.log(pageindex);
 // mysql.getVideoRank(pageindex)
 //   .then(res => {
 //     console.log(res);
 //   })
 
-// mysql.getUnreviewVideo()
-//   .then(res => {
-//     console.log(res);
-//   })
+mysql.getUnreviewVideo()
+  .then(res => {
+    console.log(res);
+  })
 
 // let values = [2,1];
 // mysql.updateVideoStatus(values)
@@ -68,4 +67,10 @@ const mysql = require('../mysql/mysql.js');
 // mysql.getAllUserVideo(values)
 //   .then(result => {
 //     console.log(result);
+//   })
+
+// let values = [ '1' ];
+// mysql.selectVideo(values)
+//   .then(res => {
+//     console.log(res)
 //   })

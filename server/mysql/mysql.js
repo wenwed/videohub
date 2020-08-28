@@ -87,7 +87,7 @@ exports.existAdminName = ( values ) => {
 
 //注册管理员
 exports.insertAdmin = ( values ) => {
-  let _sql = "insert into admins set admin_name=?,admin_password=?;";
+  let _sql = `insert into admins set admin_name=?,admin_password=?;`;
   return query( _sql, values );
 }
 
@@ -160,8 +160,18 @@ exports.deleteVideoType = ( values ) => {
 //添加一个视频
 exports.insertVideo = ( values ) => {
   let _sql = `insert into videos set video_poster=?,video_url=?,video_num=?,video_title=?,
-            video_descripe=?,video_type=?,video_status=?,video_owner=?,video_date=?;`;
+    video_descripe=?,video_type=?,video_status=?,video_owner=?,video_date=?;`;
   return query( _sql, values );
+}
+
+//查询一个视频信息
+exports.selectVideo = ( values ) => {
+  let _sql = `select VDID,video_poster,video_url,video_num,video_title,video_descripe,video_type,
+    video_status,video_owner,video_date,type_tag,user_name from videos
+    left join users on users.USID=videos.video_owner 
+    left join videoTypes on videoTypes.VTID=videos.video_type
+    where VDID=?;`;
+  return query (_sql, values );
 }
 
 //修改一个视频信息
@@ -179,37 +189,61 @@ exports.deleteVideo = ( values ) => {
 
 //获取全站所有时间排行榜
 exports.getVideoRank = ( values ) => {
-  let _sql = "select * from videos where video_status=2 order by video_num desc limit ?,10;";
+  let _sql = `select VDID,video_poster,video_url,video_num,video_title,video_descripe,video_type,
+    video_status,video_owner,video_date,user_name from videos
+    left join users on users.USID=videos.video_owner
+    where video_status=2 
+    order by video_num desc 
+    limit ?,10;`;
   return query( _sql, values );
 }
 
 //获取全站某一段时间时间排行榜
 exports.getVideoTimeRank = ( values ) => {
-  let _sql = "select * from videos where video_status=2 and video_date<? order by video_num desc limit ?,10;";
+  let _sql = `select VDID,video_poster,video_url,video_num,video_title,video_descripe,video_type,
+    video_status,video_owner,video_date,user_name from videos
+    left join users on users.USID=videos.video_owner
+    where video_status=2 and video_date<? 
+    order by video_num desc 
+    limit ?,10;`;
   return query( _sql, values );
 }
 
 //获取某分区某一时间段时间的排行榜
 exports.getVideoTypeRank = ( values ) => {
-  let _sql = "select * from videos where video_status=2 and video_date<? and video_type=? order by video_num desc limit ?,10;";
+  let _sql = `select VDID,video_poster,video_url,video_num,video_title,video_descripe,video_type,
+    video_status,video_owner,video_date,user_name from videos
+    left join users on users.USID=videos.video_owner
+    where video_status=2 and video_date<? and video_type=? 
+    order by video_num desc limit ?,10;`;
   return query( _sql, values );
 }
 
 //获取某一用户上传的全部视频
 exports.getAllUserVideo = ( values ) => {
-  let _sql = "select * from videos where video_owner=?;";
+  let _sql = `select VDID,video_poster,video_url,video_num,video_title,video_descripe,video_type,
+    video_status,video_owner,video_date,user_name from videos
+    left join users on users.USID=videos.video_owner
+    where video_owner=?;`;
   return query( _sql, values );
 }
 
 //获取某一用户上传的通过审核的全部视频
 exports.getReviewedUserVideo = ( values ) => {
-  let _sql = "select * from videos where video_owner=? and video_status=2;";
+  let _sql = `select VDID,video_poster,video_url,video_num,video_title,video_descripe,video_type,
+    video_status,video_owner,video_date,user_name from videos
+    left join users on users.USID=videos.video_owner
+    where video_owner=? and video_status=2;`;
   return query( _sql, values );
 }
 
 //获取所有未审核的视频
 exports.getUnreviewVideo = () =>{
-  let _sql = "select * from videos where video_status=1 limit 0, 10;";
+  let _sql = `select VDID,video_poster,video_url,video_num,video_title,video_descripe,video_type,
+    video_status,video_owner,video_date,type_tag,user_name from videos
+    left join users on users.USID=videos.video_owner 
+    left join videoTypes on videoTypes.VTID=videos.video_type
+    where video_status=1 limit 0, 10;`;
   return query( _sql, [] );
 }
 
