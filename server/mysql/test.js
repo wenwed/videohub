@@ -43,10 +43,10 @@ const mysql = require('../mysql/mysql.js');
 //     console.log(res);
 //   })
 
-mysql.getUnreviewVideo()
-  .then(res => {
-    console.log(res);
-  })
+// mysql.getUnreviewVideo()
+//   .then(res => {
+//     console.log(res);
+//   })
 
 // let values = [2,1];
 // mysql.updateVideoStatus(values)
@@ -74,3 +74,20 @@ mysql.getUnreviewVideo()
 //   .then(res => {
 //     console.log(res)
 //   })
+
+let query = -1;
+let date = new Date().getTime()
+if(query === -1){
+  date = new Date("2000-01-01")
+}else{
+  date = new Date(date - 60*60*24*query)
+}
+let values = [ date, 1, (1-1)*5, 5 ]
+// mysql.getVideoAllRank(values)
+//   .then(res => {
+//     console.log(res)
+//   })
+mysql.getVideoTypeRank(values)
+.then(res => {
+  console.log(res)
+})

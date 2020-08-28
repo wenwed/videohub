@@ -65,7 +65,7 @@ router.post('/login', async (req, res) => {
                 msg: "登陆成功", 
                 flag: passFlag, 
                 token: userToken, 
-                admin: {
+                user: {
                   USID: result[0].USID,
                   user_name: result[0].user_name,
                   user_poster: result[0].user_poster,
@@ -81,7 +81,7 @@ router.post('/login', async (req, res) => {
     })
 })
 
-//用户密码
+//用户修改密码
 router.post('/updatepass', async (req, res) => {
   if(!req.headers.usertoken){    //验证是否带有token
     return res.status(401).json({ status: 401, msg: "请登录" });

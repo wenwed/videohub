@@ -65,20 +65,20 @@ router.post('/add', async (req, res) => {
     }
     
     let values = [ 
-                  res.body.video_poster, 
-                  res.body.video_url, 
-                  res.body.video_title, 
-                  res.body.video_descripe, 
-                  res.body.video_type, 
-                  res.body.VDID
-                ];
+      res.body.video_poster, 
+      res.body.video_url, 
+      res.body.video_title, 
+      res.body.video_descripe, 
+      res.body.video_type, 
+      res.body.VDID
+    ];
     await mysql.updateVideo(values)
-    .then(result => {
-      res.status(200).json({ status: 200, msg: "添加成功" });
-    }).catch(err => {
-      console.log(err);
-      res.status(500).json({ status: 500, msg: "未知错误" });
-    })
+      .then(result => {
+        res.status(200).json({ status: 200, msg: "添加成功" });
+      }).catch(err => {
+        console.log(err);
+        res.status(500).json({ status: 500, msg: "未知错误" });
+      })
   })
 })
 
@@ -142,11 +142,37 @@ router.get('/person/passed', async (req, res) => {
 
 //全站排行
 router.get('/rank/all', async (req, res) => {
-  if(!req.query.index){    //验证参数是否合法
+  if(!req.query.index||!req.query.pnum||!req.query.date){    //验证参数是否合法
     return res.status(412).json({ status: 412, msg: "参数错误" });
   }
-  let values = [ (req.query.index-1)*10 ]
-    await mysql.getVideoRank(values)
+  let date = new Date().getTime()
+  if(req.query.date === -1){
+    date = new Date("2000-01-01")
+  }else{
+    date = new Date(date - 60*60*24*req.query.date)
+  }
+  let values = [ date, (req.query.index-1)*req.query.pnum, req.query.pnum-1 ]
+    await mysql.getVideoAllRank(values)
+    .then(result => {
+      res.status(200).json({ status: 200, msg: "查询成功", videolist: result });
+    }).catch(err => {
+      res.status(500).json({ status: 500, msg: "未知错误" });
+    })
+})
+
+//分区排行
+router.get('/rank/type', async (req, res) => {
+  if(!req.query.index||!req.query.pnum||!req.query.type||!req.query.date){    //验证参数是否合法
+    return res.status(412).json({ status: 412, msg: "参数错误" });
+  }
+  let date = new Date().getTime()
+  if(req.query.date === -1){
+    date = new Date("2000-01-01")
+  }else{
+    date = new Date(date - 60*60*24*req.query.date)
+  }
+  let values = [ date, req.query.type, (req.query.index-1)*req.query.pnum, req.query.pnum-1 ]
+    await mysql.getVideoAllRank(values)
     .then(result => {
       res.status(200).json({ status: 200, msg: "查询成功", videolist: result });
     }).catch(err => {

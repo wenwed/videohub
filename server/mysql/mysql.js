@@ -165,7 +165,7 @@ exports.insertVideo = ( values ) => {
 }
 
 //查询一个视频信息
-exports.selectVideo = ( values ) => {
+exports.getVideo = ( values ) => {
   let _sql = `select VDID,video_poster,video_url,video_num,video_title,video_descripe,video_type,
     video_status,video_owner,video_date,type_tag,user_name from videos
     left join users on users.USID=videos.video_owner 
@@ -187,25 +187,14 @@ exports.deleteVideo = ( values ) => {
   return query( _sql, values );
 }
 
-//获取全站所有时间排行榜
-exports.getVideoRank = ( values ) => {
-  let _sql = `select VDID,video_poster,video_url,video_num,video_title,video_descripe,video_type,
-    video_status,video_owner,video_date,user_name from videos
-    left join users on users.USID=videos.video_owner
-    where video_status=2 
-    order by video_num desc 
-    limit ?,10;`;
-  return query( _sql, values );
-}
-
 //获取全站某一段时间时间排行榜
-exports.getVideoTimeRank = ( values ) => {
+exports.getVideoAllRank = ( values ) => {
   let _sql = `select VDID,video_poster,video_url,video_num,video_title,video_descripe,video_type,
     video_status,video_owner,video_date,user_name from videos
     left join users on users.USID=videos.video_owner
-    where video_status=2 and video_date<? 
+    where video_status=2 and video_date>? 
     order by video_num desc 
-    limit ?,10;`;
+    limit ?,?;`;
   return query( _sql, values );
 }
 
@@ -214,8 +203,8 @@ exports.getVideoTypeRank = ( values ) => {
   let _sql = `select VDID,video_poster,video_url,video_num,video_title,video_descripe,video_type,
     video_status,video_owner,video_date,user_name from videos
     left join users on users.USID=videos.video_owner
-    where video_status=2 and video_date<? and video_type=? 
-    order by video_num desc limit ?,10;`;
+    where video_status=2 and video_date>? and video_type=? 
+    order by video_num desc limit ?,?;`;
   return query( _sql, values );
 }
 
