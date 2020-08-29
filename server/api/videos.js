@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const fs = require('fs');
 const mysql = require('../mysql/mysql.js');
 const uploadVideoImg = require('../plugins/uploadVideoImg.js');
 const uploadVideoFile = require('../plugins/uploadVideoFile.js');
@@ -18,11 +19,11 @@ router.post('/poster', async (req, res) => {
 //发送视频封面文件
 router.get('/getposter', async (req, res) => {
   if(!req.query.poster)
-    return res.status(401).json({ status: 401, msg: "参数错误" });
-  const exist = fs.existsSync(path.resolve(__dirname, "../static/videoPoster" + req.query.poster))
+    return res.status(401).json({ status: 412, msg: "参数错误" });
+  const exist = fs.existsSync(path.resolve(__dirname, "../static/videoPoster/" + req.query.poster))
   if(!exist)
-  return res.status(401).json({ status: 401, msg: "文件不存在" });
-  res.sendFile(path.resolve(__dirname, "../static/videoPoster" + req.query.poster))
+  return res.status(401).json({ status: 412, msg: "文件不存在" });
+  res.sendFile(path.resolve(__dirname, "../static/videoPoster/" + req.query.poster))
 })
 
 //上传视频文件
@@ -34,11 +35,11 @@ router.post('/vdfile', async (req, res) => {
 //发送视频文件
 router.get('/getvideo', async (req, res) => {
   if(!req.query.video)
-    return res.status(401).json({ status: 401, msg: "参数错误" });
-  const exist = fs.existsSync(path.resolve(__dirname, "../static/video" + req.query.video))
+    return res.status(401).json({ status: 412, msg: "参数错误" });
+  const exist = fs.existsSync(path.resolve(__dirname, "../static/video/" + req.query.video))
   if(!exist)
-  return res.status(401).json({ status: 401, msg: "文件不存在" });
-  res.sendFile(path.resolve(__dirname, "../static/video" + req.query.video))
+  return res.status(401).json({ status: 412, msg: "文件不存在" });
+  res.sendFile(path.resolve(__dirname, "../static/video/" + req.query.video))
 })
 
 
@@ -172,13 +173,14 @@ router.get('/rank/all', async (req, res) => {
   }else{
     date = new Date(date - 60*60*24*1000*req.query.date)
   }
-  let values = [ date, (req.query.index-1)*req.query.pnum, req.query.pnum ]
-    await mysql.getVideoAllRank(values)
-    .then(result => {
-      res.status(200).json({ status: 200, msg: "查询成功", videolist: result });
-    }).catch(err => {
-      res.status(500).json({ status: 500, msg: "未知错误" });
-    })
+  let values = [ date, (req.query.index-1)*req.query.pnum, req.query.pnum-0 ]
+  console.log(values)
+  await mysql.getVideoAllRank(values)
+  .then(result => {
+    res.status(200).json({ status: 200, msg: "查询成功", videolist: result });
+  }).catch(err => {
+    res.status(500).json({ status: 500, msg: "未知错误" });
+  })
 })
 
 //分区排行

@@ -8,7 +8,7 @@ Vue.use(Router)
 const vueRouter = new Router({
   routes: [
     { path: '/', redirect: '/home' },
-    { path: 'home', name: "首页", component: homeView }
+    { path: '/home', name: "首页", component: homeView }
   ]
 })
 

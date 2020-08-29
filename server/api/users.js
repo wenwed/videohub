@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const fs = require('fs');
 const bcrypt = require('bcryptjs');
 const mysql = require('../mysql/mysql.js');
 
@@ -15,11 +16,11 @@ router.post('/poster', async (req, res) => {
 //发送图像图片
 router.get('/getposter', async (req, res) => {
   if(!req.query.poster)
-    return res.status(401).json({ status: 401, msg: "参数错误" });
-  const exist = fs.existsSync(path.resolve(__dirname, "../static/userPoster" + req.query.poster))
+    return res.status(401).json({ status: 412, msg: "参数错误" });
+  const exist = fs.existsSync(path.resolve(__dirname, "../static/userPoster/" + req.query.poster))
   if(!exist)
-  return res.status(401).json({ status: 401, msg: "文件不存在" });
-  res.sendFile(path.resolve(__dirname, "../static/userPoster" + req.query.poster))
+    return res.status(401).json({ status: 412, msg: "文件不存在" });
+  res.sendFile(path.resolve(__dirname, "../static/userPoster/" + req.query.poster))
 })
 
 //查询姓名是否被占用

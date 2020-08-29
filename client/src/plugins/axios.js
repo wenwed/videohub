@@ -1,10 +1,9 @@
-import Vue from "vue"
-import axios from "axios"
-
+import Vue from 'vue'
+import axios from 'axios'
 
 let config = {
   baseURL: "http://127.0.0.1:8633/api",
-  timeout: 60 * 100,
+  timeout: 60 * 1000,
   headers: { "content-Type": "application/json" }
 }
 
@@ -12,31 +11,26 @@ const _axios = axios.create(config)
 
 _axios.interceptors.request.use(
   function(config){
-    if(localStorage.adminToken){
-      config.headers.admintoken = localStorage.adminToken
+    if(localStorage.userToken) {
+      config.headers.usertoken = localStorage.userToken
     }
-    return config;
+    return config
   },
-  function(error) {
+  function(error){
     return Promise.reject(error)
   }
 )
 
 _axios.interceptors.response.use(
-  function(response) {
-    return response;
+  function(response){
+    return response
   },
-  function(error) {
+  function(error){
     console.log(error)
     const { status } = error.response
 
     if(status === 401){
-      localStorage.removeItem("adminToken")
-      this.$store.commit("setToken", "")
-      this.$store.commit("setADID", null)
-      this.$store.commit("setName", "")
-      this.$store.commit("setLogin", false)
-      alert("密码失效请重新登录")
+      console.log(status)
     }else{
       alert(error.response.data.msg)
     }
@@ -45,7 +39,7 @@ _axios.interceptors.response.use(
   }
 )
 
-Plugin.install = function(Vue) {
+Plugin.install = function( Vue ) {
   Vue.axios = _axios
   window.axios = _axios
   Object.defineProperties(Vue.prototype, {
@@ -63,5 +57,3 @@ Plugin.install = function(Vue) {
 }
 
 Vue.use(Plugin)
-
-export default Plugin
