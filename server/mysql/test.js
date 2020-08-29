@@ -30,7 +30,7 @@ const mysql = require('../mysql/mysql.js');
 //     console.log(result);
 //   })
 
-// let video = ["114514.jpg","1919810.mp4",0,"视频","第十二个视频",1,1,1,new Date()];
+// let video = ["114514.jpg","1919810.mp4",0,"视频","第十三个视频",1,1,1,new Date()];
 // mysql.insertVideo(video)
 //   .then(result => {
 //     console.log(result);
@@ -75,19 +75,22 @@ const mysql = require('../mysql/mysql.js');
 //     console.log(res)
 //   })
 
-let query = -1;
-let date = new Date().getTime()
-if(query === -1){
-  date = new Date("2000-01-01")
-}else{
-  date = new Date(date - 60*60*24*query)
-}
-let values = [ date, 1, (1-1)*5, 5 ]
+// let query = 1;
+// let date = new Date().getTime()
+// if(query === -1){
+//   date = new Date("2000-01-01")
+// }else{
+//   date = new Date(date - 60*60*24*1000*query)
+// }
+// console.log(date)
+// let values = [ date, 1, (1-1)*5, 5 ]
+
 // mysql.getVideoAllRank(values)
 //   .then(res => {
 //     console.log(res)
 //   })
-mysql.getVideoTypeRank(values)
-.then(res => {
-  console.log(res)
-})
+
+// mysql.getVideoTypeRank(values)
+// .then(res => {
+//   console.log(res)
+// })

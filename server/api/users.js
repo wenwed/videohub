@@ -12,6 +12,16 @@ router.post('/poster', async (req, res) => {
   await uploadUserImg(req, res);
 })
 
+//发送图像图片
+router.get('/getposter', async (req, res) => {
+  if(!req.query.poster)
+    return res.status(401).json({ status: 401, msg: "参数错误" });
+  const exist = fs.existsSync(path.resolve(__dirname, "../static/userPoster" + req.query.poster))
+  if(!exist)
+  return res.status(401).json({ status: 401, msg: "文件不存在" });
+  res.sendFile(path.resolve(__dirname, "../static/userPoster" + req.query.poster))
+})
+
 //查询姓名是否被占用
 router.get('/nameuse', async (req, res) => {
   if(!req.query.name){    //验证参数是否正确

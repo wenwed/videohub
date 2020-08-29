@@ -15,11 +15,32 @@ router.post('/poster', async (req, res) => {
   await uploadVideoImg(req, res);
 })
 
+//发送视频封面文件
+router.get('/getposter', async (req, res) => {
+  if(!req.query.poster)
+    return res.status(401).json({ status: 401, msg: "参数错误" });
+  const exist = fs.existsSync(path.resolve(__dirname, "../static/videoPoster" + req.query.poster))
+  if(!exist)
+  return res.status(401).json({ status: 401, msg: "文件不存在" });
+  res.sendFile(path.resolve(__dirname, "../static/videoPoster" + req.query.poster))
+})
+
 //上传视频文件
 router.post('/vdfile', async (req, res) => {
   console.log("用户上传头像成功");
   await uploadVideoFile(req, res);
 })
+
+//发送视频文件
+router.get('/getvideo', async (req, res) => {
+  if(!req.query.video)
+    return res.status(401).json({ status: 401, msg: "参数错误" });
+  const exist = fs.existsSync(path.resolve(__dirname, "../static/video" + req.query.video))
+  if(!exist)
+  return res.status(401).json({ status: 401, msg: "文件不存在" });
+  res.sendFile(path.resolve(__dirname, "../static/video" + req.query.video))
+})
+
 
 //用户添加视频
 router.post('/add', async (req, res) => {
@@ -149,9 +170,9 @@ router.get('/rank/all', async (req, res) => {
   if(req.query.date === -1){
     date = new Date("2000-01-01")
   }else{
-    date = new Date(date - 60*60*24*req.query.date)
+    date = new Date(date - 60*60*24*1000*req.query.date)
   }
-  let values = [ date, (req.query.index-1)*req.query.pnum, req.query.pnum-1 ]
+  let values = [ date, (req.query.index-1)*req.query.pnum, req.query.pnum ]
     await mysql.getVideoAllRank(values)
     .then(result => {
       res.status(200).json({ status: 200, msg: "查询成功", videolist: result });
@@ -169,9 +190,9 @@ router.get('/rank/type', async (req, res) => {
   if(req.query.date === -1){
     date = new Date("2000-01-01")
   }else{
-    date = new Date(date - 60*60*24*req.query.date)
+    date = new Date(date - 60*60*24*1000*req.query.date)
   }
-  let values = [ date, req.query.type, (req.query.index-1)*req.query.pnum, req.query.pnum-1 ]
+  let values = [ date, req.query.type, (req.query.index-1)*req.query.pnum, req.query.pnum ]
     await mysql.getVideoAllRank(values)
     .then(result => {
       res.status(200).json({ status: 200, msg: "查询成功", videolist: result });
