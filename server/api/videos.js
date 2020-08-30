@@ -168,19 +168,18 @@ router.get('/rank/all', async (req, res) => {
     return res.status(412).json({ status: 412, msg: "参数错误" });
   }
   let date = new Date().getTime()
-  if(req.query.date === -1){
+  if(req.query.date === "-1"){
     date = new Date("2000-01-01")
   }else{
     date = new Date(date - 60*60*24*1000*req.query.date)
   }
   let values = [ date, (req.query.index-1)*req.query.pnum, req.query.pnum-0 ]
-  console.log(values)
   await mysql.getVideoAllRank(values)
-  .then(result => {
-    res.status(200).json({ status: 200, msg: "查询成功", videolist: result });
-  }).catch(err => {
-    res.status(500).json({ status: 500, msg: "未知错误" });
-  })
+    .then(result => {
+      res.status(200).json({ status: 200, msg: "查询成功", videolist: result });
+    }).catch(err => {
+      res.status(500).json({ status: 500, msg: "未知错误" });
+    })
 })
 
 //分区排行
@@ -189,13 +188,14 @@ router.get('/rank/type', async (req, res) => {
     return res.status(412).json({ status: 412, msg: "参数错误" });
   }
   let date = new Date().getTime()
-  if(req.query.date === -1){
+  if(req.query.date === "-1"){
     date = new Date("2000-01-01")
   }else{
     date = new Date(date - 60*60*24*1000*req.query.date)
   }
-  let values = [ date, req.query.type, (req.query.index-1)*req.query.pnum, req.query.pnum ]
-    await mysql.getVideoAllRank(values)
+  let values = [ date, req.query.type-0, (req.query.index-1)*req.query.pnum, req.query.pnum-0 ]
+  console.log(values)
+  await mysql.getVideoTypeRank(values)
     .then(result => {
       res.status(200).json({ status: 200, msg: "查询成功", videolist: result });
     }).catch(err => {

@@ -204,7 +204,8 @@ exports.getVideoTypeRank = ( values ) => {
     video_status,video_owner,video_date,user_name from videos
     left join users on users.USID=videos.video_owner
     where video_status=2 and video_date>? and video_type=? 
-    order by video_num desc limit ?,?;`;
+    order by video_num desc
+    limit ?,?;`;
   return query( _sql, values );
 }
 

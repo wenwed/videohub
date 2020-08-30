@@ -75,7 +75,7 @@ const mysql = require('../mysql/mysql.js');
 //     console.log(res)
 //   })
 
-// let query = 1;
+// let query = -1;
 // let date = new Date().getTime()
 // if(query === -1){
 //   date = new Date("2000-01-01")

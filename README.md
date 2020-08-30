@@ -289,7 +289,7 @@
 
 | 查询分区排行榜 |  |
 | -------- | -------- |
-| 请求URL  | http://127.0.0.1:8633/api/video/rank/type?index=1&pnum=10&date=1 |
+| 请求URL  | http://127.0.0.1:8633/api/video/rank/type?type=1&index=1&pnum=10&date=1 |
 | 简要描述 | 获取分区某段时间的排行榜 |
 | 请求方式 | |
 | 请求参数 | |
