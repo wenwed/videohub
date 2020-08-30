@@ -1,7 +1,9 @@
 <template>
   <div>
     <h1>首页</h1>
-    <carousel :videolist="allRank"></carousel>
+    <div class="carouselContainer">
+      <carousel :videolist="allRank" class="carouselClass"></carousel>
+    </div>
   </div>
 </template>
 
@@ -18,10 +20,9 @@ export default {
   },
   methods: {
     async getAllRank() {
-      await this.$axios.get('/video/rank/all?index=1&pnum=4&date=-1')
+      await this.$axios.get('/video/rank/all?index=1&pnum=3&date=-1')
         .then(res => {
           this.allRank = res.data.videolist
-          // console.log(this.allRank)
         })
     }
   },
@@ -32,5 +33,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

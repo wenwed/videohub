@@ -233,7 +233,7 @@
 
 | 获取视频封面文件 |  |
 | -------- | -------- |
-| 请求URL  | http://127.0.0.1:8633/api/video/getposter |
+| 请求URL  | http://127.0.0.1:8633/api/video/getposter?poster=114514.jpg |
 | 简要描述 | 获取视频封面 |
 | 请求方式 | get |
 | 请求参数 |  |
