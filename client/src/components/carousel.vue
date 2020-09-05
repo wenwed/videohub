@@ -1,20 +1,19 @@
 <template>
-  <div class="container"
-    @mouseenter="stopPlay"
-    @mouseleave="startPlay">
-    <transition class="imgContainer">
-        <router-link :to="'/video/'+videoID">
-          <img class="imageClass"
-            :src="'http://127.0.0.1:8633/api/video/getposter?poster='+videoPoster">
-        </router-link>
-    </transition>
-    <ul class="dots">
-      <li
-        v-for="i in listLength"
-        :class="{ active: i===index+1 }"
-        :key="i"
-        @click="changeOne(i)"></li>
-    </ul>
+  <div class="slide-show" @mouseenter="stopPlay" @mouseleave="startPlay">
+    <div class="slide-img">
+      <router-link :to="'/video/'+videoID">
+        <img class="img" v-if="isShow"
+          :src="'http://127.0.0.1:8633/api/video/getposter?poster='+videoPoster">
+      </router-link>
+    </div>
+    <div class="slide-footer">
+      <h2>{{ videoTitle }}</h2>
+      <ul class="slide-pages">
+        <li v-for="i in listLength" :key="i" @click="changeTo(i)">
+          <div :class="{ active: i===index+1 }"></div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -23,8 +22,8 @@ export default {
   props: [ "videolist" ],
   data() {
     return {
-      listlength: this.listLength,
       timer: null,
+      isShow: true,
       index: 0
     }
   },
@@ -33,15 +32,18 @@ export default {
       if(this.timer)
         return
       this.timer = setInterval(() => {
-        this.index = (this.index + 1) % this.listLength
+        this.nextChangeTo((this.index+1)%this.listLength)
       }, 5000)
     },
     stopPlay() {
       clearInterval(this.timer);
       this.timer = null
     },
-    changeOne(i){
-      this.index = i - 1
+    nextChangeTo(i){
+      console.log(i)
+    },
+    preChangeTo(i){
+      console.log(i)
     }
   },
   created() {
@@ -62,50 +64,47 @@ export default {
         return this.videolist[this.index].video_poster
       else
         return "default.jpg"
+    },
+    videoTitle() {
+      if(this.videolist.length)
+        return this.videolist[this.index].video_title
+      else
+        return "null"
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.container{
+.slide-show{
   width: 256px;
   height: 144px;
   overflow: hidden;
+  position: relative;
 
-  .imageClass{
-    width: 100%;
-  }
-
-  .dots li{
-    display: flex;
-    position: relative;
-    top: -30px;
-    list-style: none;
-    width: 7px;
-    height: 7px;
-    background-color: black;
-    border-radius: 50%;
-
-    .active{
-      width: 10px;
-      height: 10px;
+  .slide-img{
+    .img{
+      width: 100%;
     }
   }
-}
-.v-enter{
-  opacity: 0;
-  transform: translateX(100%);
-  position: absolute;
-}
-.v-leave-to{
-  opacity: 0;
-  transform: translateX(-100%);
-  position: absolute;
-}
 
-.v-enter-active,
-.v-leave-active{
-  transition: all 1s ease;
+  .slide-footer{
+    position: relative;
+    top: -50px;
+
+    .slide-pages li{
+      list-style: none;
+
+      width: 7px;
+      height: 7px;
+      background-color: black;
+      border-radius: 50%;
+
+      .active{
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
 }
 </style>

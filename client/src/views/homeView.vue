@@ -1,17 +1,17 @@
 <template>
   <div>
-    <h1>首页</h1>
-    <div class="carouselContainer">
-      <carousel :videolist="allRank" class="carouselClass"></carousel>
-    </div>
+    <top-header></top-header>
+    <carousel :videolist="allRank" class="carouselClass"></carousel>
   </div>
 </template>
 
 <script>
+import topHeader from '../components/topHeader.vue'
 import carousel from '../components/carousel.vue'
 export default {
   components: {
-    carousel
+    carousel,
+    topHeader
   },
   data() {
     return {
