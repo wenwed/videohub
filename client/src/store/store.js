@@ -10,7 +10,7 @@ const vuexLocal = new VuexPersistence({
   })
 })
 
-const store = new Vuex.store({
+const store = new Vuex.Store({
   state: Vue.observable({
     userToken: null,
     USID: null,
