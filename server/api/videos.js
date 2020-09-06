@@ -75,6 +75,20 @@ router.post('/add', async (req, res) => {
   })
 })
 
+//查询视频信息
+router.get('/videoinfo', async (req, res) => {
+  if(!req.query.vdid)
+    return res.status(412).json({ status: 412, msg: "参数错误" });
+  let values = [ req.query.vdid ];
+  await mysql.getVideoInfo(values)
+    .then(result => {
+      res.status(200).json({ status: 200, msg: "查询成功", videoinfo: result });
+    }).catch(err => {
+      console.log(err)
+      res.status(500).json({ status: 500, msg: "未知错误" });
+    })
+})
+
 //用户修改视频信息
 router.post('/add', async (req, res) => {
   if(!req.headers.admintoken){    //验证是否带有token

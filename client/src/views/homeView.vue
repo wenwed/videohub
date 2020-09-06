@@ -1,7 +1,9 @@
 <template>
-  <div>
+  <div class="home-page">
     <top-header></top-header>
-    <carousel :videolist="allRank" class="carouselClass"></carousel>
+    <div class="home-body">
+      <carousel :videolist="allRank" class="carouselClass"></carousel>
+    </div>
   </div>
 </template>
 
@@ -33,4 +35,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.home-page{
+  .home-body{
+    background-color: rgb(231, 243, 243);
+    width: 90%;
+    margin: 15px 5% 15px 5%;
+  }
+}
 </style>

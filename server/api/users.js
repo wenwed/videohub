@@ -92,6 +92,20 @@ router.post('/login', async (req, res) => {
     })
 })
 
+//查询用户信息
+router.get('/userinfo', async (req, res) => {
+  if(!req.query.usid)
+    return res.status(412).json({ status: 412, msg: "参数错误" });
+  let values = [ req.query.usid ];
+  await mysql.getUserInfo(values)
+    .then(result => {
+      res.status(200).json({ status: 200, msg: "查询成功", userinfo: result });
+    }).catch(err => {
+      console.log(err)
+      res.status(500).json({ status: 500, msg: "未知错误" });
+    })
+})
+
 //用户修改密码
 router.post('/updatepass', async (req, res) => {
   if(!req.headers.usertoken){    //验证是否带有token

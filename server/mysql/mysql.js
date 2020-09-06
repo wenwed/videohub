@@ -105,7 +105,13 @@ exports.existUserName = ( values ) => {
 
 //注册用户
 exports.insertUser = ( values ) => {
-  let _sql = "insert into users set user_name=?,user_password=?,user_poster=?,register_date=?"
+  let _sql = "insert into users set user_name=?,user_password=?,user_poster=?,register_date=?";
+  return query( _sql, values );
+}
+
+//查询用户信息
+exports.getUserInfo = ( values ) => {
+  let _sql = "select USID,user_name,user_poster,user_descripe from users where USID=?";
   return query( _sql, values );
 }
 
@@ -165,7 +171,7 @@ exports.insertVideo = ( values ) => {
 }
 
 //查询一个视频信息
-exports.getVideo = ( values ) => {
+exports.getVideoInfo = ( values ) => {
   let _sql = `select VDID,video_poster,video_url,video_num,video_title,video_descripe,video_type,
     video_status,video_owner,video_date,type_tag,user_name from videos
     left join users on users.USID=videos.video_owner 

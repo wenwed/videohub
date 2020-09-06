@@ -154,8 +154,7 @@
 | 简要描述 | 查询用户姓名是否被使用 |
 | 请求方式 | post |
 | 请求参数 | `{ user_name: "wenwd"}` |
-| 返回示例 | `{ code: 200, msg: "姓名未被使用", flag: true }` |
-
+| 返回示例 | `{ status: 200, msg: "姓名未被使用", flag: true }` |
 
 | 用户注册 |  |
 | -------- | -------- |
@@ -163,7 +162,15 @@
 | 简要描述 | 将用户填写的用户信息传入服务器，返回注册信息 |
 | 请求方式 | post |
 | 请求参数 | `{ user_name: "wenwd",  user_password: "wenwd114514" }` |
-| 返回示例 | `{ code: 200, msg: "注册成功", USID: 1 }` |
+| 返回示例 | `{ status: 200, msg: "注册成功", USID: 1 }` |
+
+| 用户信息查询 |  |
+| -------- | -------- |
+| 请求URL  | http://127.0.0.1:8633/api/user/userinfo?usid=1 |
+| 简要描述 | 返回用户信息 |
+| 请求方式 | get |
+| 请求参数 |  |
+| 返回示例 | { status: 200, msg: "查询成功", userinfo: {USID: 1, user_name: "wenwd", user_poster: "1919810.jpg", user_descripe: "你回家了，我在等你呢"} } |
 
 | 用户登录 |  |
 | -------- | -------- |
@@ -171,7 +178,7 @@
 | 简要描述 | 将用户填写的登录信息传入服务端，返回对比信息 |
 | 请求方式 | post |
 | 请求参数 | `{ user_name: "wenwd",  user_password: "wenwd114514" }` |
-| 返回示例 | `{ code: 200, msg: "登录成功", flag:true, user: { USID: 1,user_name: "wenwd", user_poster: "1919810.jpg", user_descripe: "你回家了，我在等你呢", register_date: "2020-08-19 02:01:22" } }` |
+| 返回示例 | `{ status: 200, msg: "登录成功", flag:true, user: { USID: 1,user_name: "wenwd", user_poster: "1919810.jpg", user_descripe: "你回家了，我在等你呢", register_date: "2020-08-19 02:01:22" } }` |
 
 | 用户信息修改 |  |
 | -------- | -------- |
@@ -179,7 +186,7 @@
 | 简要描述 | 将需要修改的用户信息传入服务端 |
 | 请求方式 | post |
 | 请求参数 | `{ USID: 1, user_name: "wenwd", user_poster: "1919810.jpg", user_descripe: "你回家了，我在等你呢" }` |
-| 返回示例 | `{ code: 200, msg: "修改成功" }` |
+| 返回示例 | `{ status: 200, msg: "修改成功" }` |
 
 | 用户密码修改 |  |
 | -------- | -------- |
@@ -187,7 +194,7 @@
 | 简要描述 | 将需要修改的用户密码传入服务端 |
 | 请求方式 | post |
 | 请求参数 | `{ USID: 1, user_password: "wenwd114514" }` |
-| 返回示例 | `{ code: 200, msg: "修改成功" }` |
+| 返回示例 | `{ status: 200, msg: "修改成功" }` |
 
 | 用户上传头像 |  |
 | -------- | -------- |
@@ -195,7 +202,7 @@
 | 简要描述 | 将用户头像上传到服务器 |
 | 请求方式 | post |
 | 请求参数 | 114514.jpg |
-| 返回示例 | `{ code: 200, user_poster: "1919810.jpg" }` |
+| 返回示例 | `{ status: 200, user_poster: "1919810.jpg" }` |
 
 | 获取用户头像 |  |
 | -------- | -------- |
@@ -213,7 +220,7 @@
 | 简要描述 | 将用户的视频文件上传到服务端 |
 | 请求方式 | post |
 | 请求参数 | |
-| 返回示例 | `{ code: 200, video_url: "1919810.mp4" }` |
+| 返回示例 | `{ status: 200, video_url: "1919810.mp4" }` |
 
 | 获取视频文件 |  |
 | -------- | -------- |
@@ -229,7 +236,7 @@
 | 简要描述 | 将用户的视频封面上传到服务端 |
 | 请求方式 | post |
 | 请求参数 |  |
-| 返回示例 | `{ code: 200, video_poster: "1919810.jpg" }` |
+| 返回示例 | `{ status: 200, video_poster: "1919810.jpg" }` |
 
 | 获取视频封面文件 |  |
 | -------- | -------- |
@@ -246,6 +253,14 @@
 | 请求方式 | post |
 | 请求参数 | `{ video_poster: "114514.jpg", video_url: "1919810.mp4", video_type: 1, video_title: "视频", video_descripe: "第一个视频", video_owner: 1 }` |
 | 返回示例 | `{ status: 200, msg: "添加成功" }` |
+
+| 视频信息查询 |  |
+| -------- | -------- |
+| 请求URL  | http://127.0.0.1:8633/api/video/videoinfo?vdid=1 |
+| 简要描述 | 返回用户视频 |
+| 请求方式 | get |
+| 请求参数 |  |
+| 返回示例 | {"status":200,"msg":"查询成功","videoinfo":[{"VDID":1,"video_poster":"1145141.jpg","video_url":"1919810.mp4","video_num":0,"video_title":"视频","video_descripe":"第一个视频","video_type":1,"video_status":1,"video_owner":1,"video_date":"2020-08-19T04:24:02.000Z","type_tag":"生活区","user_name":"wenwd"}]} |
 
 | 用户修改视频 |  |
 | -------- | -------- |
