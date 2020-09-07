@@ -28,7 +28,6 @@ export default {
   computed: {
     profile(){
       let tem = this.$store.state.poster?this.$store.state.poster : "default.jpg"
-      console.log(tem)
       return "http://127.0.0.1:8633/api/user/getposter?poster=" + tem
     },
     username(){
@@ -50,12 +49,14 @@ export default {
   .header{
     height: 100%;
     width: 90%;
+    display: -webkit-flex; /* Safari */
     display: flex;
     justify-content: space-between;
-    margin: 15px 5% 15px 5%;
+    margin: 10px 5% 15px 5%;
 
     .header-left{
       width: 600px;
+      display: -webkit-flex; /* Safari */
       display: flex;
       justify-content: space-between;
 
@@ -68,6 +69,7 @@ export default {
 
     .header-right{
       width: 250px;
+      display: -webkit-flex; /* Safari */
       display: flex;
       justify-content: space-between;
     }
