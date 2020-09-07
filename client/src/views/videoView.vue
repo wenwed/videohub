@@ -4,29 +4,27 @@
     <div class="main-container">
       <div class="video">
         <div class="video-info">
-          <span class="video-title">{{videoInfo.video_title}}</span><br />
-          <span class="video-type">{{videoInfo.type_tag}}&nbsp;</span>
-          <span class="video-date">{{videoInfo.video_date | Dayjs}}</span><br />
-          <span class="video-num">{{videoInfo.video_num}}次播放</span>
+          <span class="video-title">{{ videotitle }}</span><br />
+          <span class="video-type">{{ typetag }}&nbsp;</span>
+          <span class="video-date">{{ videodate | Dayjs }}</span><br />
+          <span class="video-num">{{ videonum }}次播放</span>
         </div>
-        <div class="video-play">
-          <div class="mediaplayer">
-            <div class="player">
-              <video ref="player" :src="videosrc" :poster="postersrc"></video>
-            </div>
-            <div class="controls">
-              <input type="button" :value="btnvalue" @click="changePlay">
-              <span id="curtime">{{curtime}}</span>/<span id="duration">{{durationtime}}</span>
-            </div>
+        <div class="video-player">
+          <div class="player-top"></div>
+          <video class="player" ref="videoplayer" :src="videosrc"
+                :poster="postersrc" @click="changePlay"></video>
+          <div class="controller">
+            <input type="button" :value="btnvalue" @click="changePlay">
+            <span id="curtime">{{ curtime }}</span>/<span id="duration">{{ durationtime }}</span>
           </div>
         </div>
       </div>
       <div class="about">
         <div class="user-info">
-          <el-avatar :src="profilesrc"></el-avatar>
+          <el-avatar :src="profilesrc" class="profile"></el-avatar>
           <div class="user">
-            <span class="user-name">{{userInfo.user_name}}</span><br />
-            <span class="user-descripe">{{userInfo.user_descripe}}</span>
+            <span class="user-name">{{ username }}</span><br />
+            <span class="user-descripe">{{ userdescripe }}</span>
           </div>
         </div>
         <div class="about-info"></div>
@@ -52,8 +50,8 @@ export default {
   },
   methods: {
     changePlay() {
-      let player = this.$refs.player
-      if(player.pasued){
+      let player = this.$refs.videoplayer
+      if(player.paused){
         player.play()
         this.btnvalue = "pause"
       }else{
@@ -67,6 +65,12 @@ export default {
       let tem = this.userInfo != null?this.userInfo.user_poster : "default.jpg"
       return "http://127.0.0.1:8633/api/user/getposter?poster=" + tem
     },
+    username() {
+      return this.userInfo != null?this.userInfo.user_name : "作者"
+    },
+    userdescripe() {
+      return this.userInfo != null?this.userInfo.user_descripe : "签名"
+    },
     videosrc() {
       let tem = this.videoInfo != null?this.videoInfo.video_url : "default.mp4"
       return "http://127.0.0.1:8633/api/video/getvideo?video=" + tem
@@ -74,7 +78,19 @@ export default {
     postersrc() {
       let tem = this.videoInfo != null?this.videoInfo.video_poster : "default.jpg"
       return "http://127.0.0.1:8633/api/video/getposter?poster=" + tem
-    }
+    },
+    videotitle() {
+      return this.videoInfo != null?this.videoInfo.video_title: "标题"
+    },
+    typetag() {
+      return this.videoInfo != null?this.videoInfo.type_tag: "分区"
+    },
+    videodate() {
+      return this.videoInfo != null?this.videoInfo.video_date: "发表日期"
+    },
+    videonum() {
+      return this.videoInfo != null?this.videoInfo.video_num: "播放次数"
+    },
   },
   created() {
     this.$axios.get(`/video/videoinfo?vdid=${this.$route.params.vdid}`)
@@ -84,7 +100,6 @@ export default {
       })
       .then(res=> {
         this.userInfo = res["data"]["userinfo"][0]
-        console.log(this.userInfo)
       })
       .catch(function(err) {
         console.log(err)
@@ -95,21 +110,38 @@ export default {
 
 <style lang="scss" scoped>
 .main-container{
-  width: 80%;
-  margin: 30px 10% 20px 10%;
+  width: 70%;
+  margin: 20px 15% 20px 15%;
   display: -webkit-flex; /* Safari */
   display: flex;
 
   .video{
-    flex: 4;
+    flex: 5;
     .video-info{
-      height: 150px;
+      height: 100px;
       
       .video-title{
         font-size: 25px;
       }
       .video-type, .video-date, .video-num{
         font-size: 8px;
+      }
+    }
+
+    .video-player{
+      .player-top{
+        width: 100%;
+        height: 20px;
+        background-color: black;
+      }
+      .player{
+        width: 100%;
+      }
+      .controller{
+        padding: 0;
+        width: 100%;
+        height: 20px;
+        background-color: black;
       }
     }
   }
@@ -120,8 +152,13 @@ export default {
       height: 150px;
       display: flex;
 
+      .profile{
+        width: 40px;
+      }
+
       .user{
         margin-left: 7px;
+        width: 250px;
         .user-name{
           font-size: 16px;
         }

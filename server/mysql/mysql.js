@@ -248,3 +248,9 @@ exports.updateVideoStatus = ( values ) => {
   let _sql = "update videos set video_status=? where VDID=?;";
   return query( _sql, values );
 }
+
+//查询视频审核信息
+exports.getVideoStatus = ( values ) => {
+  let _sql = "select video_status from videos where VDID=?;";
+  return query( _sql, values );
+}

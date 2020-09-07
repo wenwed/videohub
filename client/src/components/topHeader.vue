@@ -12,7 +12,7 @@
         </el-input>
       </div>
       <div class="header-right">
-        <el-avatar :src="profile"></el-avatar>
+        <el-avatar :src="profile" :size="36"></el-avatar>
         <div v-if="!isLogin">
           <el-button>登录</el-button>
           <el-button type="primary">注册</el-button>

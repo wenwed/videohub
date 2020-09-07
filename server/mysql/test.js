@@ -94,3 +94,9 @@ const mysql = require('../mysql/mysql.js');
 // .then(res => {
 //   console.log(res)
 // })
+
+// let values = [1];
+// mysql.getVideoStatus(values)
+//   .then(res => {
+//     console.log(res[0].video_status)
+//   })

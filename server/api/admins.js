@@ -10,20 +10,20 @@ const jwt_key = require("../config/jwtkey.js").KEYORSECRET;
 //查询管理员姓名是否被占用
 router.get('/nameuse', async (req, res) => {
   if(!req.query.name){    //验证参数是否正确
-    return res.status(412).json({ status: 412, msg: "参数错误" });
+    return res.status(412).json({ code: 412, msg: "参数错误" });
   }
 
   let values = [ req.query.name ];
   await mysql.existAdminName(values)
     .then(result => {
       if(result[0].count != 0){
-        res.status(200).json({ status: 200, msg: "该姓名已被占用", flag: true });
+        res.status(200).json({ code: 200, msg: "该姓名已被占用", flag: true });
       }else{
-        res.status(200).json({ status: 200, msg: "该姓名未被占用", flag: false });
+        res.status(200).json({ code: 200, msg: "该姓名未被占用", flag: false });
       }
   }).catch(err => {
     console.log(err);
-    res.status(500).json({ status: 500, msg: "服务器内部错误" });
+    res.status(500).json({ code: 500, msg: "服务器内部错误" });
   })
 })
 
@@ -33,10 +33,10 @@ router.post('/register', async (req, res) => {
   let values = [ req.body.admin_name, password ];
   await mysql.insertAdmin(values)
     .then(result => {
-      res.status(200).json({ status: 200, msg: "注册成功", ADID: result.insertId });
+      res.status(200).json({ code: 200, msg: "注册成功", ADID: result.insertId });
   }).catch(err => {
     console.log(err);
-    res.status(500).json({ status: 500, msg: "未知错误" });
+    res.status(500).json({ code: 500, msg: "未知错误" });
   })
 })
 
@@ -64,31 +64,31 @@ router.post('/login', async (req, res) => {
                       admin_name: result[0].admin_name
                     }});
       }else{
-        res.status(200).json({ status: 200, msg: "密码错误", flag: passFlag });
+        res.status(200).json({ code: 200, msg: "密码错误", flag: passFlag });
       }
   }).catch(err => {
     console.log(err);
-    res.status(500).json({ status: 500, msg: "未知错误" });
+    res.status(500).json({ code: 500, msg: "未知错误" });
   })
 })
 
 //获取未审核的视频
 router.get('/revideolist', async (req, res) => {
   if(!req.headers.admintoken){    //验证是否带有token
-    return res.status(401).json({ status: 401, msg: "没有token，请登录" });
+    return res.status(401).json({ code: 401, msg: "没有token，请登录" });
   }
 
   let token = req.headers.admintoken;
   jwt.verify(token, jwt_key, async (err, decoded) => {
     if(err){  //非法token
-      return res.status(401).json({ status: 401, msg: "token错误，请登录" });
+      return res.status(401).json({ code: 401, msg: "token错误，请登录" });
     }
     await mysql.getUnreviewVideo()
       .then(result => {
-        res.json({ status: 200, videolist: result });
+        res.json({ code: 200, videolist: result });
     }).catch(err => {
       console.log(err);
-      res.status(500).json({ status: 500, msg: "未知错误" });
+      res.status(500).json({ code: 500, msg: "未知错误" });
     })
   })
 })
@@ -96,22 +96,22 @@ router.get('/revideolist', async (req, res) => {
 //添加视频审核结果
 router.post('/revideo', async (req, res) => {
   if(!req.headers.admintoken){    //验证是否带有token
-    return res.status(401).json({ status: 401, msg: "请登录" });
+    return res.status(401).json({ code: 401, msg: "请登录" });
   }
 
   let token = req.headers.admintoken;
   jwt.verify(token, jwt_key, async (err, decoded) => {
     if(err){  //非法token
-      return res.status(401).json({ status: 401, msg: "请登录" });
+      return res.status(401).json({ code: 401, msg: "请登录" });
     }
     
     let values = [ req.body.video_status, req.body.VDID ];
     await mysql.updateVideoStatus(values)
     .then(result => {
-      res.json({ status: 200, msg: "审核成功" });
+      res.json({ code: 200, msg: "审核成功" });
     }).catch(err => {
       console.log(err);
-      res.status(500).json({ status: 500, msg: "未知错误" });
+      res.status(500).json({ code: 500, msg: "未知错误" });
     })
   })
 })
