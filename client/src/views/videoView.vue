@@ -5,7 +5,7 @@
       <div class="video">
         <div class="video-info">
           <span class="video-title">{{ videotitle }}</span><br />
-          <span class="video-type">{{ typetag }}&nbsp;</span>
+          <span class="video-type">{{ typetag }}&nbsp;&nbsp;</span>
           <span class="video-date">{{ videodate | Dayjs }}</span><br />
           <span class="video-num">{{ videonum }}次播放</span>
         </div>
@@ -27,7 +27,17 @@
             <span class="user-descripe">{{ userdescripe }}</span>
           </div>
         </div>
-        <div class="about-info"></div>
+        <div class="correlate">
+          <span class="correlate-title">相关推荐</span>
+          <div class="list" v-for="(item, i) in videolist" :key="i">
+            <img class="poster" :src="'http://127.0.0.1:8633/api/video/getposter?poster='+item.video_poster">
+            <div class="info">
+              <span class="title">{{ item.video_title }}</span><br />
+              <span class="owner">{{ item.user_name }}</span><br />
+              <span class="num">{{ item.video_num }}次播放</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -45,7 +55,13 @@ export default {
       userInfo: null,
       curtime: 0,
       durationtime: 0,
-      btnvalue: "play"
+      btnvalue: "play",
+      videolist: [
+        { "video_poster": "default.jpg",
+          "video_title":"标题",
+          "user_name": "作者",
+          "video_num":0 }
+      ]
     }
   },
   methods: {
@@ -100,6 +116,11 @@ export default {
       })
       .then(res=> {
         this.userInfo = res["data"]["userinfo"][0]
+        return this.$axios.get(`http://127.0.0.1:8633/api/video/rank/type?type=${this.videoInfo.video_type}&index=1&pnum=7&date=-1`)
+      })
+      .then(res => {
+        this.videolist = res["data"]["videolist"]
+        console.log(this.videolist)
       })
       .catch(function(err) {
         console.log(err)
@@ -121,10 +142,15 @@ export default {
       height: 100px;
       
       .video-title{
-        font-size: 25px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        font-size: 20px;
       }
       .video-type, .video-date, .video-num{
+        margin-top: 20px;
+        margin-bottom: 20px;
         font-size: 8px;
+        color: darkgrey;
       }
     }
 
@@ -138,7 +164,6 @@ export default {
         width: 100%;
       }
       .controller{
-        padding: 0;
         width: 100%;
         height: 20px;
         background-color: black;
@@ -148,9 +173,11 @@ export default {
 
   .about{
     flex: 2;
+    margin-left: 20px;
     .user-info{
-      height: 150px;
+      height: 100px;
       display: flex;
+      display: -webkit-flex; /* Safari */
 
       .profile{
         width: 40px;
@@ -165,6 +192,31 @@ export default {
 
         .user-descripe{
           font-size: 8px;
+          color: dimgray;
+        }
+      }
+    }
+
+    .correlate{
+      .correlate-title{
+        font-size: 18px;
+      }
+      .list{
+        margin-top: 10px;
+        margin-bottom: 10px;
+        display: flex;
+        .poster{
+          width: 120px;
+        }
+        .info{
+          margin-left: 7px;
+          .title{
+            font-size: 18px;
+          }
+          .owner,.num{
+            color: darkgrey;
+            font-size: 8px;
+          }
         }
       }
     }
