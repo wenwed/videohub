@@ -30,9 +30,13 @@
         <div class="correlate">
           <span class="correlate-title">相关推荐</span>
           <div class="list" v-for="(item, i) in videolist" :key="i">
-            <img class="poster" :src="'http://127.0.0.1:8633/api/video/getposter?poster='+item.video_poster">
+            <router-link :to="'/video/'+item.VDID" @click.native="flushCom">
+              <img class="poster" :src="'http://127.0.0.1:8633/api/video/getposter?poster='+item.video_poster">
+            </router-link>
             <div class="info">
-              <span class="title">{{ item.video_title }}</span><br />
+              <router-link :to="'/video/'+item.VDID" @click.native="flushCom">
+                <span class="title">{{ item.video_title }}</span><br />
+              </router-link>
               <span class="owner">{{ item.user_name }}</span><br />
               <span class="num">{{ item.video_num }}次播放</span>
             </div>
@@ -74,6 +78,9 @@ export default {
         player.pause()
         this.btnvalue = "play"
       }
+    },
+    flushCom() {
+      this.$router.go(0)
     }
   },
   computed: {
@@ -221,5 +228,9 @@ export default {
       }
     }
   }
+}
+a, a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+    color: black;
 }
 </style>

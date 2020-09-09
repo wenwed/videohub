@@ -40,6 +40,7 @@ export default {
       this.timer = null
     },
     nextChangeTo(i){
+      this.index = i;
       console.log(i)
     },
     preChangeTo(i){
@@ -48,6 +49,7 @@ export default {
   },
   created() {
     this.startPlay()
+    console.log("test")
   },
   computed: {
     listLength() {

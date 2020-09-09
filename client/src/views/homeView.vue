@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     async getAllRank() {
-      await this.$axios.get('/video/rank/all?index=1&pnum=3&date=-1')
+      await this.$axios.get('/video/rank/all?index=1&pnum=5&date=-1')
         .then(res => {
           this.allRank = res.data.videolist
         })

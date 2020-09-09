@@ -14,17 +14,32 @@
       <div class="header-right">
         <el-avatar :src="profile" :size="36"></el-avatar>
         <div v-if="!isLogin">
-          <el-button>登录</el-button>
-          <el-button type="primary">注册</el-button>
+          <el-button @click="loginVisible=!loginVisible">登录</el-button>
+          <el-button @click="registerVisible=!registerVisible" type="primary">注册</el-button>
         </div>
         <div class="content" v-if="isLogin">{{ username }}</div>
       </div>
     </div>
+
+    <login :loginvisible="loginVisible" v-show="loginVisible"></login>
+    <register :registerVisible="registerVisible" v-show="registerVisible"></register>
   </div>
 </template>
 
 <script>
+import login from './login.vue'
+import register from './register.vue'
 export default {
+  components: {
+    login,
+    register
+  },
+  data() {
+    return {
+      loginVisible: false,
+      registerVisible: false
+    }
+  },
   computed: {
     profile(){
       let tem = this.$store.state.poster?this.$store.state.poster : "default.jpg"
