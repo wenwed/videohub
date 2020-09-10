@@ -24,7 +24,7 @@ const store = new Vuex.Store({
     setToken(state, userToken){
       state.userToken = userToken
     },
-    setUSIDn(state, USID){
+    setUSID(state, USID){
       state.USID = USID
     },
     setName(state, name){

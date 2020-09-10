@@ -70,67 +70,67 @@ export default {
   },
   methods: {
     changePlay() {
-      let player = this.$refs.videoplayer
+      let player = this.$refs.videoplayer;
       if(player.paused){
-        player.play()
-        this.btnvalue = "pause"
+        player.play();
+        this.btnvalue = "pause";
       }else{
-        player.pause()
-        this.btnvalue = "play"
+        player.pause();
+        this.btnvalue = "play";
       }
     },
     flushCom() {
-      this.$router.go(0)
+      this.$router.go(0);
     }
   },
   computed: {
     profilesrc() {
-      let tem = this.userInfo != null?this.userInfo.user_poster : "default.jpg"
-      return "http://127.0.0.1:8633/api/user/getposter?poster=" + tem
+      let tem = this.userInfo != null?this.userInfo.user_poster : "default.jpg";
+      return "http://127.0.0.1:8633/api/user/getposter?poster=" + tem;
     },
     username() {
-      return this.userInfo != null?this.userInfo.user_name : "作者"
+      return this.userInfo != null?this.userInfo.user_name : "作者";
     },
     userdescripe() {
-      return this.userInfo != null?this.userInfo.user_descripe : "签名"
+      return this.userInfo != null?this.userInfo.user_descripe : "签名";
     },
     videosrc() {
-      let tem = this.videoInfo != null?this.videoInfo.video_url : "default.mp4"
-      return "http://127.0.0.1:8633/api/video/getvideo?video=" + tem
+      let tem = this.videoInfo != null?this.videoInfo.video_url : "default.mp4";
+      return "http://127.0.0.1:8633/api/video/getvideo?video=" + tem;
     },
     postersrc() {
-      let tem = this.videoInfo != null?this.videoInfo.video_poster : "default.jpg"
-      return "http://127.0.0.1:8633/api/video/getposter?poster=" + tem
+      let tem = this.videoInfo != null?this.videoInfo.video_poster : "default.jpg";
+      return "http://127.0.0.1:8633/api/video/getposter?poster=" + tem;
     },
     videotitle() {
-      return this.videoInfo != null?this.videoInfo.video_title: "标题"
+      return this.videoInfo != null?this.videoInfo.video_title: "标题";
     },
     typetag() {
-      return this.videoInfo != null?this.videoInfo.type_tag: "分区"
+      return this.videoInfo != null?this.videoInfo.type_tag: "分区";
     },
     videodate() {
-      return this.videoInfo != null?this.videoInfo.video_date: "发表日期"
+      return this.videoInfo != null?this.videoInfo.video_date: "发表日期";
     },
     videonum() {
-      return this.videoInfo != null?this.videoInfo.video_num: "播放次数"
+      return this.videoInfo != null?this.videoInfo.video_num: "播放次数";
     },
   },
   created() {
     this.$axios.get(`/video/videoinfo?vdid=${this.$route.params.vdid}`)
       .then(res => {
-        this.videoInfo = res["data"]["videoinfo"][0]
-        return this.$axios.get(`/user/userinfo?usid=${this.videoInfo.video_owner}`)
+        this.videoInfo = res["data"]["videoinfo"][0];
+        return this.$axios.get(`/user/userinfo?usid=${this.videoInfo.video_owner}`);
       })
       .then(res=> {
-        this.userInfo = res["data"]["userinfo"][0]
-        return this.$axios.get(`http://127.0.0.1:8633/api/video/rank/type?type=${this.videoInfo.video_type}&index=1&pnum=7&date=-1`)
+        this.userInfo = res["data"]["userinfo"][0];
+        return this.$axios.get(`http://127.0.0.1:8633/api/video/rank/type?type=${this.videoInfo.video_type}
+              &index=1&pnum=7&date=-1`);
       })
       .then(res => {
-        this.videolist = res["data"]["videolist"]
-        console.log(this.videolist)
+        this.videolist = res["data"]["videolist"];
       })
-      .catch(function(err) {
-        console.log(err)
+      .catch(err => {
+        console.log(err);
       })
   }
 }

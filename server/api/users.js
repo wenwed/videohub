@@ -5,6 +5,10 @@ const fs = require('fs');
 const bcrypt = require('bcryptjs');
 const mysql = require('../mysql/mysql.js');
 
+//验证token端口
+const jwt = require('jsonwebtoken');
+const jwt_key = require("../config/jwtkey.js").KEYORSECRET;
+
 const uploadUserImg = require('../plugins/uploadUserImg');
 
 //上传头像文件
@@ -58,14 +62,14 @@ router.post('/register', async (req, res) => {
 
 //用户登录
 router.post('/login', async (req, res) => {
-  let values = [ req.body.USID ]
-  await mysql.getAdminPassword(values)
+  let values = [ req.body.user_name ]
+  await mysql.getUserPassword(values)
     .then(result => {
       let passFlag = bcrypt.compareSync(req.body.user_password, result[0].user_password);
       if(passFlag){
         //生成token
         let userToken = jwt.sign({
-          id: req.body.USID,
+          id: result[0].USID,
           role: "user"
           }, jwt_key, { 
           algorithm: 'RS256',   //设置token加密方式
@@ -84,11 +88,11 @@ router.post('/login', async (req, res) => {
                   user_descripe: result[0].user_descripe
                 }});
       }else{
-        res.status(200).json({ code: 200, msg: "密码错误", flag: passFlag });
+        res.status(500).json({ code: 500, msg: "账号或密码错误", flag: passFlag });
       }
     }).catch(err => {
       console.log(err)
-      res.status(500).json({ code: 500, msg: "未知错误" });
+      res.status(500).json({ code: 500, msg: "账号或密码错误", flag: passFlag });
     })
 })
 

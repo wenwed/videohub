@@ -11,10 +11,10 @@
         <el-form-item label="确认密码" class="form-item">
           <el-input v-model="confirm_password" autocomplete="off" class="form-input"></el-input>
         </el-form-item>
-      </el-form>
+      </el-form>     
       <div slot="footer" class="dialog-footer">
-        <el-button @click="loginvisible = false">取 消</el-button>
-        <el-button type="primary" @click="loginvisible = false">确 定</el-button>
+        <el-button>取 消</el-button>
+        <el-button type="primary" @click="sendRegisterForm">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  props: [ "registervisible" ],
+  props: [ "registervisible", "changeVisible" ],
   data() {
     return {
       confirm_password: "",
@@ -31,9 +31,44 @@ export default {
         user_password: "",
       }
     }
+  },
+  methods: {
+    sendRegisterForm() {
+      this.$axios.post('/user/register', this.form)
+        .then(res => {
+          if(res.data.code === 200){
+            console.log(res.data)
+            alert("注册成功");
+            this.changeVisible();
+          }
+        });
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+.register-container {
+  text-align: center;
+  .el-dialog__wrapper {
+    .el-dialog {
+      width: 450px !important;
+
+      .form {
+        .form-item {
+          text-align: right;
+        }
+        .el-form-item {
+          text-align: right;
+        }
+        .el-input {
+          width: 300px;
+        }
+      }
+      .dialog-footer {
+        text-align: center;
+      }
+    }
+  }
+}
 </style>

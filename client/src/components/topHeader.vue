@@ -12,17 +12,22 @@
         </el-input>
       </div>
       <div class="header-right">
-        <el-avatar :src="profile" :size="36"></el-avatar>
-        <div v-if="!isLogin">
-          <el-button @click="loginVisible=!loginVisible">登录</el-button>
-          <el-button @click="registerVisible=!registerVisible" type="primary">注册</el-button>
+        <!-- 未登录显示的内容 -->
+        <div v-if="!isLogin" class="notLogin">
+          <el-avatar @click="changeLogin"  :src="profile" :size="36"></el-avatar>
+          <el-button @click="changeLogin">登录</el-button>
+          <el-button @click="changeRegister" type="primary">注册</el-button>
         </div>
-        <div class="content" v-if="isLogin">{{ username }}</div>
+        <!-- 登陆后显示的内容 -->
+        <router-link v-if="isLogin" class="isLogion" :to="'/user/' + $store.state.USID">
+          <el-avatar :src="profile" :size="36"></el-avatar>
+          <div class="content">{{ username }}</div>
+        </router-link>
       </div>
     </div>
 
-    <login :loginvisible="loginVisible" v-show="loginVisible"></login>
-    <register :registerVisible="registerVisible" v-show="registerVisible"></register>
+    <login :changeVisible="changeLogin" :loginvisible="loginVisible" v-if="loginVisible"></login>
+    <register :changeVisible="changeRegister" :registervisible="registerVisible" v-if="registerVisible"></register>
   </div>
 </template>
 
@@ -40,22 +45,30 @@ export default {
       registerVisible: false
     }
   },
+  methods: {
+    changeLogin() {
+      this.loginVisible = !this.loginVisible;
+    },
+    changeRegister() {
+      this.registerVisible = ! this.registerVisible;
+    }
+  },
   computed: {
     profile(){
-      let tem = this.$store.state.poster?this.$store.state.poster : "default.jpg"
-      return "http://127.0.0.1:8633/api/user/getposter?poster=" + tem
+      let tem = this.$store.state.poster?this.$store.state.poster : "default.jpg";
+      return "http://127.0.0.1:8633/api/user/getposter?poster=" + tem;
     },
     username(){
-      return this.$store.state.name
+      return this.$store.state.name;
     },
     isLogin(){
-      return this.$store.state.isLogin
+      return this.$store.state.isLogin;
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .headerContainer{
   height: 45px;
   width: 100%;
@@ -85,9 +98,28 @@ export default {
     .header-right{
       width: 250px;
       display: -webkit-flex; /* Safari */
-      display: flex;
-      justify-content: space-between;
+      .notLogin{
+        display: flex;
+        .el-avatar{
+          margin-right: 8px;
+        }
+      }
+      .isLogion{
+        display: flex;
+        .el-avatar{
+          margin-right: 8px;
+        }
+        .content{
+          padding: 0 5px 0 5px;
+          width: 70px;
+          line-height: 36px;
+        }
+      }
     }
   }
+}
+a, a:link, a:visited, a:hover, a:active {
+    text-decoration: none;
+    color: black;
 }
 </style>

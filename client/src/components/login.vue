@@ -11,7 +11,7 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="loginvisible = false">取 消</el-button>
-        <el-button type="primary" @click="loginvisible = false">登 录</el-button>
+        <el-button type="primary" @click="sendLoginForm">登 录</el-button>
       </div>
     </el-dialog>
   </div>
@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  props: [ "loginvisible" ],
+  props: [ "loginvisible", "changeVisible" ],
   data() {
     return {
       formLabelWidth: "400px",
@@ -27,6 +27,26 @@ export default {
         user_name: "",
         user_password: ""
       }
+    }
+  },
+  methods: {
+    sendLoginForm() {
+      this.$axios.post('/user/login', this.form)
+        .then(res => {
+          console.log(res.data);
+          if(res.data.flag){
+            localStorage.setItem("userToken", res.data.token);
+            this.$store.commit("setToken", res.data.token);
+            this.$store.commit("setUSID", res.data.user.USID);
+            this.$store.commit("setName", res.data.user.user_name);
+            this.$store.commit("setPoster", res.data.user.user_poster);
+            this.$store.commit("setDate", res.data.user.register_date);
+            this.$store.commit("setDescripe", res.data.user.user_descripe);
+            this.$store.commit("setLogin", res.data.flag);
+            alert("登录成功");
+            this.changeVisible();
+          }
+        })
     }
   }
 }
@@ -37,14 +57,14 @@ export default {
   text-align: center;
   .el-dialog__wrapper {
     .el-dialog {
-      width: 400px!important;
+      width: 450px !important;
 
       .form {
         .form-item {
-          text-align: left;
+          text-align: right;
         }
         .el-form-item {
-          text-align: left;
+          text-align: right;
         }
         .el-input {
           width: 300px;
