@@ -70,6 +70,7 @@ export default {
 
 <style lang="scss">
 .headerContainer{
+  background-color: white;
   height: 45px;
   width: 100%;
   box-shadow: rgb(228, 224, 224) 0 1px;
