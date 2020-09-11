@@ -4,9 +4,15 @@
     <div class="main-container">
       <div class="user-work"></div>
       <div class="user-info">
-        <span>
+        <div class="user-profile">
           <el-avatar :src="profile" :size="40"></el-avatar>
-        </span>
+        </div>
+        <div class="user-name">
+          {{ username }}
+        </div>
+        <div class="user-descripe">
+          {{ userdescripe }}
+        </div>
       </div>
     </div>
   </div>
@@ -46,12 +52,10 @@ export default {
   created() {
     this.axios.get(`/user/userinfo?usid=${this.$route.params.usid}`)
       .then(res => {
-        console.log(res.data);
         this.userinfo = res.data.userinfo;
         return this.$axios.get(`/video/person/passed?id=${this.$route.params.usid}`);
       })
       .then(res => {
-        console.log(res.data);
         this.videoList = res.data.videolist;
       })
       .catch(err => {
@@ -61,6 +65,12 @@ export default {
   computed: {
     profile() {
       return "http://127.0.0.1:8633/api/user/getposter?poster=" + this.userinfo[0].user_poster;
+    },
+    username() {
+      return this.userinfo[0].user_name;
+    },
+    userdescripe() {
+      return this.userinfo[0].user_descripe ? this.userinfo[0].user_descripe : "这个人很懒，什么都没有写";
     }
   }
 }
@@ -71,11 +81,14 @@ export default {
   background-color: rgb(240, 240, 240);
   .body-container{
     margin:10px 124.5px 15px 124.5px;
-    height: 100px;
     .user-work{}
     .user-info{
       display: flex;
       flex-direction: column;
+      align-content: space-around;
+      .user-profile{}
+      .user-name{}
+      .user-descripe{}
     }
   }
 }
