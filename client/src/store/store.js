@@ -6,7 +6,13 @@ Vue.use(Vuex)
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage,
   reducer: state => ({
-    userToken: state.usertoken
+    userToken: state.usertoken,
+    USID: state.USID,
+    user_name: state.name,
+    user_poster: state.poster,
+    register_date: state.date,
+    user_descripe: state.descripe,
+    login: state.isLogin
   })
 })
 

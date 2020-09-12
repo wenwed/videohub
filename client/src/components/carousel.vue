@@ -41,7 +41,6 @@ export default {
     },
     nextChangeTo(i){
       this.index = i;
-      console.log(i)
     },
     preChangeTo(i){
       console.log(i)
@@ -79,8 +78,9 @@ export default {
 
 <style lang="scss" scoped>
 .slide-show{
-  width: 256px;
-  height: 144px;
+  background-color: white;
+  width: 512px;
+  height: 288px;
   overflow: hidden;
   position: relative;
 

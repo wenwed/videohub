@@ -36,6 +36,12 @@ export default {
           console.log(res.data);
           if(res.data.flag){
             localStorage.setItem("userToken", res.data.token);
+            localStorage.setItem("USID", res.data.user.USID);
+            localStorage.setItem("user_name", res.data.user.user_name);
+            localStorage.setItem("user_poster", res.data.user.user_poster);
+            localStorage.setItem("register_date", res.data.user.register_date);
+            localStorage.setItem("user_descripe", res.data.user.user_descripe);
+            localStorage.setItem("login", res.data.flag);
             this.$store.commit("setToken", res.data.token);
             this.$store.commit("setUSID", res.data.user.USID);
             this.$store.commit("setName", res.data.user.user_name);
