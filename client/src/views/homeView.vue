@@ -6,7 +6,9 @@
         <carousel :videolist="allRank" class="carousel-class"></carousel>
         <div class="carouse-card">
           <div class="carouse-box" v-for="item in lastAllRank" :key="item.VDID">
-            <img class="box-img" :src="'http://127.0.0.1:8633/api/video/getposter?poster=' + item.video_poster">
+            <router-link :to="'/video/'+item.VDID">
+              <img class="box-img" :src="'http://127.0.0.1:8633/api/video/getposter?poster=' + item.video_poster">
+            </router-link>
           </div>
         </div>
       </div>
@@ -64,9 +66,10 @@ export default {
   background-color: rgb(231, 243, 243);
   .home-body{
     width: 70%;
-    margin: 15px 15% 15px 15%;
+    margin: 0 15% 15px 15%;
 
     .body-top{
+      padding-top: 15px;
       display: flex;
       flex-wrap: nowrap;
       .carouse-card{

@@ -1,11 +1,15 @@
 <template>
   <div>
-    <h1>视频排行界面</h1>
+    <top-header></top-header>
   </div>
 </template>
 
 <script>
+import topHeader from '../components/topHeader.vue';
 export default {
+  components: {
+    topHeader
+  }
 }
 </script>
 
