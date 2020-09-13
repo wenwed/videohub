@@ -74,19 +74,19 @@ router.post('/login', async (req, res) => {
           }, jwt_key, { 
           algorithm: 'RS256',   //设置token加密方式
           expiresIn: '7d'       //设置token过期时间
-        })
+        });
         res.status(200).json({ 
-                code: 200, 
-                msg: "登陆成功", 
-                flag: passFlag, 
-                token: userToken, 
-                user: {
-                  USID: result[0].USID,
-                  user_name: result[0].user_name,
-                  user_poster: result[0].user_poster,
-                  register_date: result[0].register_date,
-                  user_descripe: result[0].user_descripe
-                }});
+          code: 200, 
+          msg: "登陆成功", 
+          flag: passFlag, 
+          token: userToken, 
+          user: {
+            USID: result[0].USID,
+            user_name: result[0].user_name,
+            user_poster: result[0].user_poster,
+            register_date: result[0].register_date,
+            user_descripe: result[0].user_descripe
+        }});
       }else{
         res.status(500).json({ code: 500, msg: "账号或密码错误", flag: passFlag });
       }
@@ -121,14 +121,23 @@ router.post('/updatepass', async (req, res) => {
     if(err){  //非法token
       return res.status(401).json({ code: 401, msg: "请登录" });
     }
-    let values= [ req.body.user_password, req.body.USID ];
-    await mysql.updateUserPassword(values)
-      .then(result => {
-        res.status(200).json({ code: 200, msg: "修改成功" });
-      }).catch(err => {
-        console.log(err)
-        res.status(500).json({ code: 500, msg: "未知错误" });
-      })
+    let values = [ req.body.old_password, req.body.USID ];
+    await mysql.getUserPassword(values)
+    .then(result => { 
+      let passFlag = bcrypt.compareSync(req.body.user_password, result[0].user_password);
+      if(passFlag){
+        let values = [ req.body.new_password, req.body.USID ];
+        return mysql.updateUserPassword(values)
+      }else{
+        res.status(500).json({ code: 500, msg: "密码错误", flag: passFlag });
+      }
+    })
+    .then(result => {
+      res.status(200).json({ code: 200, msg: "修改成功", flag: true });
+    }).catch(err => {
+      console.log(err)
+      res.status(500).json({ code: 500, msg: "未知错误" });
+    })
   })
 })
 
