@@ -20,7 +20,7 @@
           :action="headurl+'/video/poster'"
           :show-file-list="false"
           :on-success="handleAvatarSuccess">
-          <img v-if="form.video_poster" :src="headurl+form.video_poster" class="avatar">
+          <img v-if="form.video_poster" :src="headurl+'/video/getposter?poster='+form.video_poster" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </div>
@@ -63,8 +63,6 @@ export default {
   data() {
     return {
       headurl: "http://127.0.0.1:8633/api",
-      posterfilename: "",
-      videofilename: "",
       form: {
         video_poster: "",
         video_url: "",
@@ -83,15 +81,20 @@ export default {
         })
     },
     handleVideoSuccess(res) {
-      this.form.video_url = res.data.video;
+      this.form.video_url = res.video;
     },
     handleAvatarSuccess(res) {
-      this.form.video_poster = res.data.poster;
+      this.form.video_poster = res.poster;
     },
     confirmForm() {
       this.$axios.post('/video/add', this.form)
         .then(res => {
-          if(res.code === 200){
+          if(res.data.code === 200){
+            this.video_poster = "";
+            this.video_url = "";
+            this.video_type = "";
+            this.video_title = "";
+            this.video_descripe = "";
             alert("上传成功");
           }
         })

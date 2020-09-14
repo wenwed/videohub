@@ -78,6 +78,7 @@ export default {
         flex-wrap: wrap;
         .carouse-box{
           width: 160px;
+          height: 90px;
           .box-img{
             width: 100%;
           }

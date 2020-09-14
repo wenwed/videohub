@@ -43,6 +43,8 @@ export default {
       this.$axios.post('/user/updatepass', this.form)
         .then(res => {
           if(res.data.flag){
+            this.old_password = "",
+            this.new_password = "";
             alert("修改成功");
           }
         })

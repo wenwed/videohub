@@ -54,16 +54,15 @@ router.post('/add', async (req, res) => {
     if(err){  //非法token
       return res.status(401).json({ code: 401, msg: "请登录" });
     }
-    
     let values = [ 
-                  res.body.video_poster, 
-                  res.body.video_url, 
+                  req.body.video_poster, 
+                  req.body.video_url, 
                   0,                    //播放量
-                  res.body.video_title, 
-                  res.body.video_descripe, 
-                  res.body.video_type, 
+                  req.body.video_title, 
+                  req.body.video_descripe, 
+                  req.body.video_type, 
                   1,                   //审核状态
-                  video_owner, 
+                  decoded.id, 
                   new Date()
                 ];
     await mysql.insertVideo(values)

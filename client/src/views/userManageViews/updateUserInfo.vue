@@ -28,12 +28,16 @@ export default {
       this.$axios.post('/user/updateinfo', this.form)
         .then(res => {
           if(res.data.flag === true){
-            localStorage.setItem("user_name", res.data.user.user_name);
-            localStorage.setItem("user_poster", res.data.user.user_poster);
-            localStorage.setItem("user_descripe", res.data.user.user_descripe);
-            this.$store.commit("setName", res.data.user.user_name);
-            this.$store.commit("setPoster", res.data.user.user_poster);
-            this.$store.commit("setDescripe", res.data.user.user_descripe);
+            localStorage.setItem("user_name", res.data.userinfo.user_name);
+            localStorage.setItem("user_poster", res.data.userinfo.user_poster);
+            localStorage.setItem("user_descripe", res.data.userinfo.user_descripe);
+            this.$store.commit("setName", res.data.userinfo.user_name);
+            this.$store.commit("setPoster", res.data.userinfo.user_poster);
+            this.$store.commit("setDescripe", res.data.userinfo.user_descripe);
+            this.user_name = res.data.userinfo.user_name;
+            this.user_poster = res.data.userinfo.user_poster;
+            this.user_descripe = res.data.userinfo.user_descripe;
+            alert("修改成功");
           }
         })
     }
