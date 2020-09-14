@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const formidable = require('formidable');
-const formatdate = require('silly-datetime');
+const formatTime = require('silly-datetime');
 const Jimp = require('jimp');
 
 module.exports = (req, res) => {
@@ -18,9 +18,8 @@ module.exports = (req, res) => {
       console.log("服务器内部错误");
       return res.status(500).json({ status: 500, msg: "服务器内部错误" });
     }
-    if(file.size > form.maxFields){
+    if(file.size > form.maxFieldsSize){
       console.log("图片大小不能超过10M");
-      fs.unlink(file.path);
       return res.status(412).json({ status: 412, msg: "图片大小不能超过10M" });
     }
 
@@ -45,9 +44,9 @@ module.exports = (req, res) => {
       return res.status(412).json({ status: 412, msg: "只支持上传png或jpg格式的图片" });
     }
 
-    let time = formatdate(new Date(), "YYYYMMDDHHmmss");
+    let time = formatTime.format(new Date(), "YYYYMMDDHHmmss");
     let num = Math.floor(Math.random() * 8999 + 10000);
-    let imgName = `u_${time}_${num}.${extName}`;
+    let imgName = `v_${time}_${num}.${extName}`;
     let newPath = form.uploadDir + '/' + imgName;
 
     Jimp.read(file.path, (err, poster) => {
@@ -57,9 +56,8 @@ module.exports = (req, res) => {
       poster
           .resize(1280, 720)     //设置图片大小
           .quality(60)          //设置为jepg
-          .greyscale()
           .write(newPath);      //保存
-      return res.status(200).json({ status: 200, msg: "图片上传成功", poster: newPath });
+      return res.status(200).json({ status: 200, msg: "图片上传成功", poster: imgName });
     });
   })
 }

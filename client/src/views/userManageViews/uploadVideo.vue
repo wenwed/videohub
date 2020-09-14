@@ -5,7 +5,7 @@
         上传视频
         <el-upload
           drag
-          action="headurl+'/video/vdfile'"
+          :action="headurl+'/video/vdfile'"
           :on-success="handleVideoSuccess"
           multiple>
           <p v-if="form.video_url">{{ videofilename }}</p>
@@ -17,7 +17,7 @@
       </div>
       <div class="poster-post">
         <el-upload
-          action="headurl+'/video/poster'"
+          :action="headurl+'/video/poster'"
           :show-file-list="false"
           :on-success="handleAvatarSuccess">
           <img v-if="form.video_poster" :src="headurl+form.video_poster" class="avatar">
@@ -38,8 +38,8 @@
             <el-option
               v-for="item in tagList"
               :key="item.VTID"
-              :label="item.VTID"
-              :value="item.type_tag">
+              :label="item.type_tag"
+              :value="item.VTID">
             </el-option>
           </el-select>
         </div>
@@ -83,10 +83,10 @@ export default {
         })
     },
     handleVideoSuccess(res) {
-      console.log(res);
+      this.form.video_url = res.data.video;
     },
     handleAvatarSuccess(res) {
-      console.log(res);
+      this.form.video_poster = res.data.poster;
     },
     confirmForm() {
       this.$axios.post('/video/add', this.form)
@@ -96,6 +96,9 @@ export default {
           }
         })
     }
+  },
+  created() {
+    this.getAllTags();
   }
 }
 </script>

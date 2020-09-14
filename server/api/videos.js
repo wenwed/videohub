@@ -12,7 +12,7 @@ const jwt_key = require("../config/jwtkey.js").KEYORSECRET;
 
 //上传封面文件
 router.post('/poster', async (req, res) => {
-  console.log("用户上传头像成功");
+  console.log("用户上传头像中");
   await uploadVideoImg(req, res);
 })
 
@@ -28,7 +28,7 @@ router.get('/getposter', async (req, res) => {
 
 //上传视频文件
 router.post('/vdfile', async (req, res) => {
-  console.log("用户上传头像成功");
+  console.log("用户上传视频文件中");
   await uploadVideoFile(req, res);
 })
 

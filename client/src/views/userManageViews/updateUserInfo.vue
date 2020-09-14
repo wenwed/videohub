@@ -1,21 +1,13 @@
 <template>
   <el-container>
-    <!-- <el-header style="text-align: right; font-size: 12px">
-      <el-dropdown>
-        <i class="el-icon-setting" style="margin-right: 15px"></i>
-        <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>查看</el-dropdown-item>
-          <el-dropdown-item>新增</el-dropdown-item>
-          <el-dropdown-item>删除</el-dropdown-item>
-        </el-dropdown-menu>
-      </el-dropdown>
-      <span>王小虎</span>
-    </el-header> -->
-
     <el-main>
-      <el-avatar :size="50" :src="circleUrl"></el-avatar>
-      <div class="user-name"></div>
-      <div class="user-descripe"></div>
+      <el-avatar :size="50" :src="'http://127.0.0.1:8633/api/user/getposter?poster='+form.user_poster"></el-avatar>
+      <div class="user-name">
+        <el-input v-model="form.user_name"></el-input>
+      </div>
+      <div class="user-descripe">
+        <el-input v-model="form.descripe"></el-input>
+      </div>
       <el-button type="primary" @click="confirmForm">确定</el-button>
     </el-main>
   </el-container>
