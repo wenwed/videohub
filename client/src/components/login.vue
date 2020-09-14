@@ -6,7 +6,7 @@
           <el-input v-model="form.user_name" autocomplete="off" class="form-input"></el-input>
         </el-form-item>
         <el-form-item label="密码" class="form-item">
-          <el-input v-model="form.user_password" autocomplete="off" class="form-input"></el-input>
+          <el-input v-model="form.user_password" autocomplete="off" class="form-input" show-password></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

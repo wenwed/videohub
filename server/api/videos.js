@@ -45,10 +45,11 @@ router.get('/getvideo', async (req, res) => {
 
 //用户添加视频
 router.post('/add', async (req, res) => {
-  if(!req.headers.admintoken){    //验证是否带有token
+  if(!req.headers.usertoken){    //验证是否带有token
     return res.status(401).json({ code: 401, msg: "请登录" });
   }
 
+  let token = req.headers.usertoken;
   jwt.verify(token, jwt_key, async (err, decoded) => {
     if(err){  //非法token
       return res.status(401).json({ code: 401, msg: "请登录" });
@@ -91,10 +92,11 @@ router.get('/videoinfo', async (req, res) => {
 
 //用户修改视频信息
 router.post('/add', async (req, res) => {
-  if(!req.headers.admintoken){    //验证是否带有token
+  if(!req.headers.usertoken){    //验证是否带有token
     return res.status(401).json({ code: 401, msg: "请登录" });
   }
 
+  let token = req.headers.usertoken;
   jwt.verify(token, jwt_key, async (err, decoded) => {
     if(err){  //非法token
       return res.status(401).json({ code: 401, msg: "请登录" });
@@ -120,10 +122,11 @@ router.post('/add', async (req, res) => {
 
 //用户删除视频
 router.post('/del', async (req, res) => {
-  if(!req.headers.admintoken){    //验证是否带有token
+  if(!req.headers.usertoken){    //验证是否带有token
     return res.status(401).json({ code: 401, msg: "请登录" });
   }
 
+  let token = req.headers.usertoken;
   jwt.verify(token, jwt_key, async (err, decoded) => {
     if(err){  //非法token
       return res.status(401).json({ code: 401, msg: "请登录" });
@@ -141,15 +144,17 @@ router.post('/del', async (req, res) => {
 
 //用户全部的视频列表
 router.get('/person/all', async (req, res) => {
-  if(!req.headers.admintoken){    //验证是否带有token
-    return res.status(401).json({ code: 401, msg: "请登录" });
+  if(!req.headers.usertoken){    //验证是否带有token
+    return res.status(401).json({ code: 401, msg: "请登录1" });
   }
   if(!req.query.id){    //验证参数是否合法
     return res.status(412).json({ code: 412, msg: "参数错误" });
   }
+  let token = req.headers.usertoken;
   jwt.verify(token, jwt_key, async (err, decoded) => {
+    console.log(err);
     if(err){  //非法token
-      return res.status(401).json({ code: 401, msg: "请登录" });
+      return res.status(401).json({ code: 401, msg: "请登录2" });
     }
 
     let values = [ req.query.id ];

@@ -28,9 +28,23 @@ _axios.interceptors.response.use(
   function(error){
     console.log(error)
     const { status } = error.response
-
+    console.log("错误代码为:"+status);
     if(status === 401){
-      console.log(status)
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("USID");
+      localStorage.removeItem("user_name");
+      localStorage.removeItem("user_poster");
+      localStorage.removeItem("register_date");
+      localStorage.removeItem("user_descripe");
+      localStorage.removeItem("login");
+      this.$store.commit("setToken", null);
+      this.$store.commit("setUSID", null);
+      this.$store.commit("setName", "");
+      this.$store.commit("setPoster", "");
+      this.$store.commit("setDate", "");
+      this.$store.commit("setDescripe", "");
+      this.$store.commit("setLogin", false);
+      alert("token错误");
     }else{
       alert(error.response.data.msg)
     }

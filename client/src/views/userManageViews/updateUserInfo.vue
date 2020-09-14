@@ -13,13 +13,39 @@
     </el-header> -->
 
     <el-main>
-      <el-table :data="tableData">
-      </el-table>
+      <el-avatar :size="50" :src="circleUrl"></el-avatar>
+      <div class="user-name"></div>
+      <div class="user-descripe"></div>
+      <el-button type="primary" @click="confirmForm">确定</el-button>
     </el-main>
   </el-container>
 </template>
 <script>
 export default {
+  data() {
+    return {
+      form: {
+        user_name: this.$store.state.name,
+        user_poster: this.$store.state.poster,
+        user_descripe: this.$store.state.descripe
+      }
+    }
+  },
+  methods: {
+    confirmForm() {
+      this.$axios.post('/user/updateinfo', this.form)
+        .then(res => {
+          if(res.data.flag === true){
+            localStorage.setItem("user_name", res.data.user.user_name);
+            localStorage.setItem("user_poster", res.data.user.user_poster);
+            localStorage.setItem("user_descripe", res.data.user.user_descripe);
+            this.$store.commit("setName", res.data.user.user_name);
+            this.$store.commit("setPoster", res.data.user.user_poster);
+            this.$store.commit("setDescripe", res.data.user.user_descripe);
+          }
+        })
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>

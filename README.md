@@ -4,7 +4,7 @@
 
 ###  server
 
-对密码要进行加盐加密（bcrypt）、验证码（svg-captcha）
+对密码要进行加盐加密（bcrypt）、验证码（svg-captcha），需要判断token中的用户id和要修改信息的用户是否对应
 
 ### admin
 
@@ -170,7 +170,7 @@
 | 简要描述 | 返回用户信息 |
 | 请求方式 | get |
 | 请求参数 |  |
-| 返回示例 | { code: 200, msg: "查询成功", userinfo: {USID: 1, user_name: "wenwd", user_poster: "1919810.jpg", user_descripe: "你回家了，我在等你呢"} } |
+| 返回示例 | `{ code: 200, msg: "查询成功", userinfo: { USID: 1, user_name: "wenwd", user_poster: "1919810.jpg", user_descripe: "你回家了，我在等你呢" } }` |
 
 | 用户登录 |  |
 | -------- | -------- |
@@ -185,16 +185,16 @@
 | 请求URL  | http://127.0.0.1:8633/api/user/updateinfo |
 | 简要描述 | 将需要修改的用户信息传入服务端 |
 | 请求方式 | post |
-| 请求参数 | `{ USID: 1, user_name: "wenwd", user_poster: "1919810.jpg", user_descripe: "你回家了，我在等你呢" }` |
-| 返回示例 | `{ code: 200, msg: "修改成功" }` |
+| 请求参数 | `{ user_name: "wenwd", user_poster: "1919810.jpg", user_descripe: "你回家了，我在等你呢" }` |
+| 返回示例 | `{ code: 200, msg: "修改成功", flag: true, userinfo: { USID: 1, user_name: "wenwd", user_poster: "114514.jpg", user_descripe: "你回家了，我在等你呢" } }` |
 
 | 用户密码修改 |  |
 | -------- | -------- |
 | 请求URL  | http://127.0.0.1:8633/api/user/updatepass |
 | 简要描述 | 将需要修改的用户密码传入服务端 |
 | 请求方式 | post |
-| 请求参数 | `{ USID: 1, old_password: "wenwd114514", new_password: "wenwd1919810" }` |
-| 返回示例 | `{ code: 200, msg: "修改成功" }` |
+| 请求参数 | `{ old_password: "wenwd114514", new_password: "wenwd1919810" }` |
+| 返回示例 | `{ code: 200, msg: "修改成功", flag: true }` |
 
 | 用户上传头像 |  |
 | -------- | -------- |
@@ -260,7 +260,7 @@
 | 简要描述 | 返回用户视频 |
 | 请求方式 | get |
 | 请求参数 |  |
-| 返回示例 | {"code":200,"msg":"查询成功","videoinfo":[{"VDID":1,"video_poster":"1145141.jpg","video_url":"1919810.mp4","video_num":0,"video_title":"视频","video_descripe":"第一个视频","video_type":1,"video_status":1,"video_owner":1,"video_date":"2020-08-19T04:24:02.000Z","type_tag":"生活区","user_name":"wenwd"}]} |
+| 返回示例 | `{"code":200,"msg":"查询成功","videoinfo":[{"VDID":1,"video_poster":"1145141.jpg","video_url":"1919810.mp4","video_num":0,"video_title":"视频","video_descripe":"第一个视频","video_type":1,"video_status":1,"video_owner":1,"video_date":"2020-08-19T04:24:02.000Z","type_tag":"生活区","user_name":"wenwd"}]}` |
 
 | 用户修改视频 |  |
 | -------- | -------- |

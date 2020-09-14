@@ -7,7 +7,11 @@ import videoView from '@/views/videoView.vue';
 import userView from '@/views/userView.vue';
 import userManage from '@/views/userManage.vue';
 import NOTFOUND from '@/views/404.vue';
-
+import updatePassword from '@/views/userManageViews/updatePassword.vue';
+import updateUserInfo from '@/views/userManageViews/updateUserInfo.vue';
+import updateVideo from '@/views/userManageViews/updateVideo.vue';
+import uploadVideo from '@/views/userManageViews/uploadVideo.vue';
+import videoList from '@/views/userManageViews/videoList.vue';
 Vue.use(Router);
 
 const vueRouter = new Router({
@@ -22,10 +26,44 @@ const vueRouter = new Router({
       component: userManage,
       meta: { 
         requiresAuth: true
-      }
-      // children: [
-      //   path: ''
-      // ]
+      },
+      children: [
+        {
+          path: 'updatepassword',
+          component: updatePassword,
+          meta: { 
+            requiresAuth: true
+          }
+        },
+        {
+          path: 'updateuserinfo',
+          component: updateUserInfo,
+          meta: { 
+            requiresAuth: true
+          }
+        },
+        {
+          path: 'updatevideo/:id',
+          component: updateVideo,
+          meta: { 
+            requiresAuth: true
+          }
+        },
+        {
+          path: 'uploadvideo',
+          component: uploadVideo,
+          meta: { 
+            requiresAuth: true
+          }
+        },
+        {
+          path: 'videolist',
+          component: videoList,
+          meta: { 
+            requiresAuth: true
+          }
+        }
+      ]
     },
     { path: '*', name: "404NotFound", component: NOTFOUND, meta: { requiresAuth: false } },
   ]

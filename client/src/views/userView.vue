@@ -27,6 +27,11 @@
         <div class="user-descripe">
           {{ userdescripe }}
         </div>
+        <div>
+          <router-link to="/account">
+            <p>个人中心</p>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -40,6 +45,7 @@ export default {
   },
   data() {
     return {
+      isMyself: false,
       userInfo: [
         {
           USID: this.$route.params.usid,
@@ -64,6 +70,11 @@ export default {
     }
   },
   created() {
+    if(this.$route.params.usid === this.$store.state.USID){
+      this.isMyself = true;
+    }else{
+      this.isMyself = false;
+    }
     this.axios.get(`/user/userinfo?usid=${this.$route.params.usid}`)
       .then(res => {
         this.userInfo = res.data.userinfo;
