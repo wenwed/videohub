@@ -225,7 +225,6 @@ router.get('/rank/type', async (req, res) => {
     date = new Date(date - 60*60*24*1000*req.query.date)
   }
   let values = [ date, req.query.type-0, (req.query.index-1)*req.query.pnum, req.query.pnum-0 ]
-  console.log(values)
   await mysql.getVideoTypeRank(values)
     .then(result => {
       res.status(200).json({ code: 200, msg: "查询成功", videolist: result });
