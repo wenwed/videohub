@@ -73,9 +73,11 @@ export default {
       display: flex;
       flex-wrap: nowrap;
       .carouse-card{
+        padding-left: 10px;
         background-color: white;
         display: flex;
         flex-wrap: wrap;
+        align-content: flex-start;
         .carouse-box{
           width: 160px;
           height: 90px;

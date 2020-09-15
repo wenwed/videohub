@@ -48,7 +48,6 @@ export default {
   },
   created() {
     this.startPlay()
-    console.log("test")
   },
   computed: {
     listLength() {
@@ -79,7 +78,7 @@ export default {
 <style lang="scss" scoped>
 .slide-show{
   background-color: white;
-  width: 512px;
+  width: 600px;
   height: 288px;
   overflow: hidden;
   position: relative;
@@ -93,6 +92,7 @@ export default {
   .slide-footer{
     position: relative;
     top: -50px;
+    display: inline;
 
     .slide-pages li{
       list-style: none;
@@ -105,6 +105,7 @@ export default {
       .active{
         width: 10px;
         height: 10px;
+        background-color: red;
       }
     }
   }

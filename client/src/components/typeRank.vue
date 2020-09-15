@@ -10,12 +10,14 @@
           :src="'http://127.0.0.1:8633/api/video/getposter?poster=' + item.video_poster">
           <div class="video-title">{{ item.video_title }}</div>
         </router-link>
-        <router-link :to="'/user/'+item.video_owner">
-          <div class="video-owner">{{ item.user_name }}</div>
-        </router-link>
         <div class="video-info">
-          <div class="video-num">{{ item.video_num }}</div>
-          <div class="video-date">{{ item.video_date }}</div>
+          <router-link :to="'/user/'+item.video_owner">
+            <div class="video-owner">{{ item.user_name }}</div>
+          </router-link>
+          <div class="info-footer">
+            <div class="video-num">{{ item.video_num | ViewCounts }}次播放</div>
+            <div class="video-date">{{ item.video_date | Dayjs("YYYY-MM-DD") }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -50,11 +52,10 @@ export default {
   methods: {
   },
   created() {
-    console.log(this.typetag);
     this.$axios.get(`/tyvideo/one?id=${this.typetag}`)
       .then(res => {
         this.typeInfo = res.data.videotype;
-        return this.$axios.get(`/video/rank/type?type=${this.typetag}&index=1&pnum=10&date=-1`);
+        return this.$axios.get(`/video/rank/type?type=${this.typetag}&index=1&pnum=8&date=-1`);
       })
       .then(res =>{
         this.videoRank = res.data.videolist;
@@ -65,17 +66,40 @@ export default {
 
 <style lang="scss" scoped>
 .rank-container{
+  padding-left: 10px;
+  padding-bottom: 10px;
   background-color: white;
   .rank-title{
+    padding-left: 10px;
+    padding-bottom: 20px;
     font-size: 25px;
   }
   .rank-body{
     display: flex;
     flex-wrap: wrap;
+    align-content: flex-start;
     .rank-box{
+      margin-left: 10px;
+      margin-right: 10px;
       width: 200px;
+      height: 215px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       .video-poster{
         width: 100%;
+      }
+      .video-info{
+        .info-footer{
+          display: flex;
+          justify-content: space-between;
+          .video-num{
+            height: 21px;
+          }
+          .video-date{
+            height: 21px;
+          }
+        }
       }
     }
   }
