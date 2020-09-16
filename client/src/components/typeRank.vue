@@ -1,6 +1,6 @@
 <template>
   <div class="rank-container">
-    <div class="rank-title">
+    <div class="rank-head">
       {{ typeInfo[0].type_tag }}
     </div>
     <div class="rank-body">
@@ -12,11 +12,20 @@
         </router-link>
         <div class="video-info">
           <router-link :to="'/user/'+item.video_owner">
-            <div class="video-owner">{{ item.user_name }}</div>
+            <div class="video-owner">
+              <i class="el-icon-user"></i>
+              {{ item.user_name }}
+            </div>
           </router-link>
           <div class="info-footer">
-            <div class="video-num">{{ item.video_num | ViewCounts }}次播放</div>
-            <div class="video-date">{{ item.video_date | Dayjs("YYYY-MM-DD") }}</div>
+            <div class="video-num">
+              <i class="el-icon-video-play"></i>
+              {{ item.video_num | ViewCounts }}
+            </div>
+            <div class="video-date">
+              <i class="el-icon-timer"></i>
+              {{ item.video_date | Dayjs("YYYY-MM-DD") }}
+            </div>
           </div>
         </div>
       </div>
@@ -66,11 +75,11 @@ export default {
 
 <style lang="scss" scoped>
 .rank-container{
-  padding-left: 10px;
+  padding-left: 29px;
   padding-bottom: 10px;
   background-color: white;
-  .rank-title{
-    padding-left: 10px;
+  .rank-head{
+    padding-left: 29px;
     padding-bottom: 20px;
     font-size: 25px;
   }
@@ -81,16 +90,26 @@ export default {
     .rank-box{
       margin-left: 10px;
       margin-right: 10px;
+      margin-bottom: 10px;
       width: 200px;
-      height: 215px;
+      height: 205px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       .video-poster{
         width: 100%;
       }
+      .video-title{
+        font-size: 18px;
+      }
       .video-info{
+        color: rgb(121, 124, 126);
+        font-size: 15px;
+        .video-owner{
+          color: rgb(121, 124, 126);
+        }
         .info-footer{
+          margin-top: 4px;
           display: flex;
           justify-content: space-between;
           .video-num{

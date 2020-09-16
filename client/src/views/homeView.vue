@@ -65,8 +65,10 @@ export default {
 .home-page{
   background-color: rgb(231, 243, 243);
   .home-body{
+    background-color: white;
     width: 70%;
-    margin: 0 15% 15px 15%;
+    padding: 10px;
+    margin: 0 15% 0 15%;
 
     .body-top{
       padding-top: 15px;
@@ -74,7 +76,6 @@ export default {
       flex-wrap: nowrap;
       .carouse-card{
         padding-left: 10px;
-        background-color: white;
         display: flex;
         flex-wrap: wrap;
         align-content: flex-start;

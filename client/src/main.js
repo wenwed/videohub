@@ -19,7 +19,6 @@ Vue.filter('Dayjs', function(value, formatString) {
 
 Vue.filter('ViewCounts', function(value) {
   let level = value.toString().length;
-  console.log(level <= 3);
   switch (true) {
     case level <= 3:
       return value;

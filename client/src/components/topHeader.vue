@@ -6,6 +6,7 @@
         <div class="content">首页</div>
         <div class="content">排行</div>
         <el-input
+        class="search-input"
         type="text"
         placeholder="关键词"
         suffix-icon="el-icon-search">
@@ -15,13 +16,13 @@
         <!-- 未登录显示的内容 -->
         <div v-if="!isLogin" class="notLogin">
           <el-avatar @click="changeLogin"  :src="profile" :size="36"></el-avatar>
-          <el-button @click="changeLogin">登录</el-button>
-          <el-button @click="changeRegister" type="primary">注册</el-button>
+          <input class="login-btn" type="button" value="登录" @click="changeLogin">
+          <input class="register-btn" type="button" value="注册" @click="changeRegister">
         </div>
         <!-- 登陆后显示的内容 -->
         <router-link v-if="isLogin" class="isLogion" :to="'/user/' + $store.state.USID">
           <el-avatar :src="profile" :size="36"></el-avatar>
-          <div class="content">{{ username }}</div>
+          <div class="user-name">{{ username }}</div>
         </router-link>
       </div>
     </div>
@@ -73,8 +74,8 @@ export default {
   background-color: white;
   height: 45px;
   width: 100%;
-  box-shadow: rgb(228, 224, 224) 0 1px;
-
+  box-shadow: 0px 2px 1px rgb(221, 218, 218);
+  margin-bottom: 2px;
   .header{
     height: 100%;
     width: 90%;
@@ -82,20 +83,23 @@ export default {
     display: flex;
     justify-content: space-between;
     margin: 10px 5% 15px 5%;
-
     .header-left{
       width: 600px;
       display: -webkit-flex; /* Safari */
       display: flex;
       justify-content: space-between;
-
       .content{
         padding: 0 5px 0 5px;
         width: 70px;
         line-height: 36px;
       }
+      .el-input__inner{
+        height: 35px;
+      }
+      .el-icon-search{
+        height: 35px;
+      }
     }
-
     .header-right{
       width: 250px;
       display: -webkit-flex; /* Safari */
@@ -104,13 +108,31 @@ export default {
         .el-avatar{
           margin-right: 8px;
         }
+        .login-btn{
+          width: 45px;
+          height: 36px;
+          background-color: white;
+          border-width: 0;
+          outline: none;
+        }
+        .register-btn{
+          width: 45px;
+          height: 36px;
+          background-color: white;
+          border-width: 0;
+          outline: none;
+        }
+        .login-btn:hover, .register-btn:hover{
+          cursor: pointer;
+        }
       }
       .isLogion{
         display: flex;
         .el-avatar{
           margin-right: 8px;
         }
-        .content{
+        .user-name{
+          color: rgb(97, 89, 89);
           padding: 0 5px 0 5px;
           width: 70px;
           line-height: 36px;
