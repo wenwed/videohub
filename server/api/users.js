@@ -154,7 +154,7 @@ router.post('/updateinfo', async (req, res) => {
     let values= [ req.body.user_name, req.body.user_poster, req.body.user_descripe, decoded.id ];
     await mysql.updateUserInfo(values)
       .then(result => {
-        let values= [ decoded.id ];
+        let values = [ decoded.id ];
         return mysql.getUserInfo(values);
       })
       .then(result => {

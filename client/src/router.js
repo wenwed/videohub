@@ -81,9 +81,8 @@ if (window.localStorage.getItem('login')) {
 }
 
 vueRouter.beforeEach((to, from, next) => {
-  console.log(from.name);
   if(to.matched.some(r => r.meta.requiresAuth)){
-    if(store.state.isLogin !== "true"){
+    if(window.localStorage.getItem('login') !== "true"){
       next({ name: "404NotFound" });
     }else{
       next();

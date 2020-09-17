@@ -12,8 +12,8 @@
             <div class="video-title">{{ item.video_title }}</div>
           </router-link>
           <div class="video-info">
-            <span>{{ item.video_num }}</span>
-            <span>{{ item.video_date }}</span>
+            <span>{{ item.video_num | ViewCounts }}</span>
+            <span>{{ item.video_date | Dayjs("YYYY-MM-DD") }}</span>
           </div>
         </div>
       </div>
@@ -112,11 +112,11 @@ export default {
       width: 700px;
       background-color: white;
       display: flex;
-      flex-direction: row;
       flex-wrap: wrap;
+      align-content: flex-start;
       .box {
         width: 160px;
-        height: 250px;
+        height: 165px;
         .video-poster {
           width: 100%;
         }

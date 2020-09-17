@@ -9,21 +9,17 @@
           <span class="video-date">{{ videodate | Dayjs }}</span><br />
           <span class="video-num">{{ videonum }}次播放</span>
         </div>
-        <div class="video-player">
-          <div class="player-top"></div>
-          <video class="player" ref="videoplayer" :src="videosrc"
-                :poster="postersrc" @click="changePlay"></video>
-          <div class="controller">
-            <input type="button" :value="btnvalue" @click="changePlay">
-            <span id="curtime">{{ curtime }}</span>/<span id="duration">{{ durationtime }}</span>
-          </div>
-        </div>
+        <video-player :videoInfo="videoInfo"></video-player>
       </div>
       <div class="about">
         <div class="user-info">
-          <el-avatar :src="profilesrc" class="profile"></el-avatar>
+          <router-link :to="'/user/' + userid">
+            <el-avatar :src="profilesrc" class="profile"></el-avatar>
+          </router-link>
           <div class="user">
-            <span class="user-name">{{ username }}</span><br />
+            <router-link :to="'/user/' + userid">
+              <span class="user-name">{{ username }}</span><br />
+            </router-link>
             <span class="user-descripe">{{ userdescripe }}</span>
           </div>
         </div>
@@ -48,18 +44,17 @@
 </template>
 
 <script>
-import topHeader from '../components/topHeader.vue'
+import topHeader from '../components/topHeader.vue';
+import videoPlayer from '../components/videoPlayer.vue';
 export default {
   components: {
-    topHeader
+    topHeader,
+    videoPlayer
   },
   data(){
     return {
       videoInfo: null,
       userInfo: null,
-      curtime: 0,
-      durationtime: 0,
-      btnvalue: "play",
       videolist: [
         { "video_poster": "default.jpg",
           "video_title":"标题",
@@ -69,16 +64,6 @@ export default {
     }
   },
   methods: {
-    changePlay() {
-      let player = this.$refs.videoplayer;
-      if(player.paused){
-        player.play();
-        this.btnvalue = "pause";
-      }else{
-        player.pause();
-        this.btnvalue = "play";
-      }
-    },
     flushCom() {
       this.$router.go(0);
     }
@@ -91,16 +76,11 @@ export default {
     username() {
       return this.userInfo != null?this.userInfo.user_name : "作者";
     },
+    userid() {
+      return this.userInfo != null?this.userInfo.user_USID : 0;
+    },
     userdescripe() {
       return this.userInfo != null?this.userInfo.user_descripe : "签名";
-    },
-    videosrc() {
-      let tem = this.videoInfo != null?this.videoInfo.video_url : "default.mp4";
-      return "http://127.0.0.1:8633/api/video/getvideo?video=" + tem;
-    },
-    postersrc() {
-      let tem = this.videoInfo != null?this.videoInfo.video_poster : "default.jpg";
-      return "http://127.0.0.1:8633/api/video/getposter?poster=" + tem;
     },
     videotitle() {
       return this.videoInfo != null?this.videoInfo.video_title: "标题";
@@ -158,22 +138,6 @@ export default {
         margin-bottom: 20px;
         font-size: 8px;
         color: darkgrey;
-      }
-    }
-
-    .video-player{
-      .player-top{
-        width: 100%;
-        height: 20px;
-        background-color: black;
-      }
-      .player{
-        width: 100%;
-      }
-      .controller{
-        width: 100%;
-        height: 20px;
-        background-color: black;
       }
     }
   }
