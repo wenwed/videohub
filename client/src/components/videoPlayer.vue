@@ -11,12 +11,14 @@
     <div class="controller">
       <div class="controller-bar">
         <div class="load-bar">
-          <div class="play-bar"></div>
+           <div class="play-bar">
+             <i class="el-icon-apple"></i>
+           </div>
         </div>
       </div>
-      <br />
       <div class="controller-footer">
-        <input type="button" :value="btnvalue" @click="changePlay">
+        <i v-if="videoIsPlay" class="el-icon-video-pause" @click="changePlay"></i>
+        <i v-if="!videoIsPlay" class="el-icon-video-play" @click="changePlay"></i>
         <span id="curtime">{{ curtime }}</span>/
         <span id="duration">{{ durationtime }}</span>
         <span><i class="el-icon-microphone"></i></span>
@@ -34,6 +36,7 @@ export default {
       curtime: "00:00",
       durationtime: "00:00",
       btnvalue: "play",
+      videoIsPlay: false,
       timer: null
     }
   },
@@ -44,11 +47,11 @@ export default {
         player.play();
         this.durationtime = this.formatTime(player.duration);
         this.startMonitor();
-        this.btnvalue = "pause";
+        this.videoIsPlay = true;
       }else{
         player.pause();
         this.stopMonitor();
-        this.btnvalue = "play";
+        this.videoIsPlay = false;
       }
     },
     startMonitor() {
@@ -112,31 +115,39 @@ export default {
   }
   .player{
     width: 100%;
+    display: block;
   }
   .controller{
+    padding-top: 7px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
     width: 100%;
-    height: 50px;
+    height: 40px;
     color: white;
     background-color: black;
     .controller-bar{
-      height: 20px;
+      height: 3px;
       width: 100%;
       background-color: rgb(236, 233, 233);
       .load-bar{
         width: 80%;
         text-align: right;
-        line-height: 20px;
+        height: 3px;
         background-color: rgb(189, 188, 188);
         .play-bar{
           width: 50%;
           text-align: right;
-          line-height: 5px;
+          // padding-right: 20px;
+          height: 3px;
+          color: white;
           background-color: rgb(238, 161, 208);
         }
       }
     }
     .controller-footer{
-      display: flex;
+      margin-top: 10px;
+      height: 20px;
     }
   }
 }
