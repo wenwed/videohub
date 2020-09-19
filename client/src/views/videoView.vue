@@ -56,10 +56,12 @@ export default {
       videoInfo: null,
       userInfo: null,
       videolist: [
-        { "video_poster": "default.jpg",
+        {
+          "video_poster": "default.jpg",
           "video_title":"标题",
           "user_name": "作者",
-          "video_num":0 }
+          "video_num":0
+        }
       ]
     }
   },

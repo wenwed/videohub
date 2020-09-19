@@ -12,6 +12,7 @@ import updateUserInfo from '@/views/userManageViews/updateUserInfo.vue';
 import updateVideo from '@/views/userManageViews/updateVideo.vue';
 import uploadVideo from '@/views/userManageViews/uploadVideo.vue';
 import videoList from '@/views/userManageViews/videoList.vue';
+import test1 from '@/components/test.vue';
 Vue.use(Router);
 
 const vueRouter = new Router({
@@ -20,6 +21,7 @@ const vueRouter = new Router({
     { path: '/home', name: "home", component: homeView, meta: { requiresAuth: false } },
     { path: '/video/:vdid', name: "video", component: videoView, meta: { requiresAuth: false } },
     { path: '/user/:usid', name: "user", component: userView, meta: { requiresAuth: false } },
+    { path: '/test', name: "test", component: test1, meta: { requiresAuth: false } },
     { 
       path: '/account',
       name: "account",

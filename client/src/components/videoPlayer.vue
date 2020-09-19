@@ -12,7 +12,7 @@
       <div class="controller-bar">
         <div class="load-bar">
            <div class="play-bar">
-             <i class="el-icon-apple"></i>
+             <i class="el-icon-apple bar-header"></i>
            </div>
         </div>
       </div>
@@ -21,7 +21,30 @@
         <i v-if="!videoIsPlay" class="el-icon-video-play" @click="changePlay"></i>
         <span id="curtime">{{ curtime }}</span>/
         <span id="duration">{{ durationtime }}</span>
-        <span><i class="el-icon-microphone"></i></span>
+        <span>
+          <div
+            :style="{left: volumeInfo.xAxis + 'px', top: volumeInfo.yAxis + 'px'}"
+            class="volume-box"
+            v-show="volumeInfo.volumeVisible">
+              <div class="box-arrow"></div>
+              <div class="box-shadow"></div>
+            </div>
+          <i class="el-icon-microphone volume-btn" @mouseover="showVolume"></i>
+        </span>
+        <!-- <el-popover
+          popper-class="volume-popover"
+          placement="top-start"
+          width="10"
+          trigger="hover">
+          <el-slider
+            class="volume-slider"
+            v-model="volume"
+            vertical
+            tooltip-class="volume-slider"
+            height="50px">
+          </el-slider>
+          <i class="el-icon-microphone" slot="reference"></i>
+        </el-popover> -->
         <span><i class="el-icon-full-screen" @click="fullScreen"></i></span>
       </div>
     </div>
@@ -35,9 +58,16 @@ export default {
     return {
       curtime: "00:00",
       durationtime: "00:00",
-      btnvalue: "play",
+      loadPerecent: 0,
+      playPerecent: 0,
       videoIsPlay: false,
-      timer: null
+      timer: null,
+      volumeInfo: {
+        volume: 100,
+        volumeVisible: false,
+        xAxis: 0,
+        yAxis: 0
+      }
     }
   },
   methods: {
@@ -91,6 +121,12 @@ export default {
     fullScreen() {
       let player = this.$refs.videoplayer;
       player.webkitRequestFullScreen();
+    },
+    showVolume() {
+      let domI =  event.toElement.getBoundingClientRect();
+      this.volumeInfo.xAxis = domI.x + 16/2 - 50/2 - 1.5;
+      this.volumeInfo.yAxis = domI.y + document.documentElement.scrollTop - 100 - 13;
+      this.volumeInfo.volumeVisible = true;
     }
   },
   computed: {
@@ -142,12 +178,47 @@ export default {
           height: 3px;
           color: white;
           background-color: rgb(238, 161, 208);
+          .bar-header{
+            position: relative;
+            top: -8px;
+            right: -8px;
+          }
         }
       }
     }
     .controller-footer{
       margin-top: 10px;
       height: 20px;
+      .volume-box{
+        width: 50px;
+        height: 100px;
+        position: absolute;
+        background-color: black;
+        opacity: 0.5;
+        .box-arrow{
+          width: 0;
+          height: 0;
+          border: 10px solid transparent;
+          opacity: 0.5;
+          border-top-color: black;
+          position: relative;
+          top: 100%;
+          left: 15px;
+        }
+        .box-shadow{
+          width: 0;
+          height: 0;
+          border: 10px solid transparent;
+          background-color: transparent;
+          border-top-color: black;
+          position: relative;
+          top: 79%;
+          left: 15px;
+        }
+      }
+      .volume-btn{
+        color: white;
+      }
     }
   }
 }
