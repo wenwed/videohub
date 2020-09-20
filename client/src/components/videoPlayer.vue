@@ -8,12 +8,12 @@
       :poster="postersrc"
       @click="changePlay">
     </video>
+    <!-- 进度条 -->
     <div class="controller">
       <div class="controller-bar">
-        <div class="load-bar">
-           <div class="play-bar">
-             <i class="el-icon-apple bar-header"></i>
-           </div>
+        <div class="load-bar" :style="{ width: loadPerecent + '%' }"></div>
+        <div class="play-bar" :style="{ width: playPerecent + '%' }">
+          <i class="el-icon-apple bar-header"></i>
         </div>
       </div>
       <div class="controller-footer">
@@ -21,31 +21,40 @@
         <i v-if="!videoIsPlay" class="el-icon-video-play" @click="changePlay"></i>
         <span id="curtime">{{ curtime }}</span>/
         <span id="duration">{{ durationtime }}</span>
+        <!-- 音量 -->
         <span>
           <div
-            :style="{left: volumeInfo.xAxis + 'px', top: volumeInfo.yAxis + 'px'}"
-            class="volume-box"
-            v-show="volumeInfo.volumeVisible">
-              <div class="box-arrow"></div>
-              <div class="box-shadow"></div>
+           :style="{ left: volumeInfo.xAxis + 'px', top: volumeInfo.yAxis + 'px' }"
+           class="volume-box"
+           v-show="volumeInfo.volumeVisible"
+           @mouseleave="closeVolume">
+            <div class="box-arrow"></div>
+            <div class="box-shadow"></div>
+            <div class="box-slider">
+              <div class="volume-data">{{ volumeInfo.volume }}</div>
+              <el-slider
+                @change="changeData"
+                v-model="volumeInfo.volume"
+                vertical
+                :show-tooltip="false"
+                input-size="mini"
+                tooltip-class="tooltip-class"
+                height="50px">
+              </el-slider>
             </div>
-          <i class="el-icon-microphone volume-btn" @mouseover="showVolume"></i>
+          </div>
+          <i v-show="!volumeInfo.isMute"
+           class="el-icon-microphone volume-btn"
+           @mouseover="showVolume"
+           @click="changeMute">
+          </i>
+          <i v-show="volumeInfo.isMute"
+           class="el-icon-turn-off-microphone volume-btn"
+           @mouseover="showVolume"
+           @click="changeMute">
+          </i>
         </span>
-        <!-- <el-popover
-          popper-class="volume-popover"
-          placement="top-start"
-          width="10"
-          trigger="hover">
-          <el-slider
-            class="volume-slider"
-            v-model="volume"
-            vertical
-            tooltip-class="volume-slider"
-            height="50px">
-          </el-slider>
-          <i class="el-icon-microphone" slot="reference"></i>
-        </el-popover> -->
-        <span><i class="el-icon-full-screen" @click="fullScreen"></i></span>
+        <span><i class="el-icon-full-screen full-screen-btn" @click="fullScreen"></i></span>
       </div>
     </div>
   </div>
@@ -63,6 +72,7 @@ export default {
       videoIsPlay: false,
       timer: null,
       volumeInfo: {
+        isMute: false,
         volume: 100,
         volumeVisible: false,
         xAxis: 0,
@@ -71,6 +81,7 @@ export default {
     }
   },
   methods: {
+    //开始或停止播放
     changePlay() {
       let player = this.$refs.videoplayer;
       if(player.paused){
@@ -84,21 +95,25 @@ export default {
         this.videoIsPlay = false;
       }
     },
+    //开始监听播放进度
     startMonitor() {
       this.timer = setInterval(() => {
         let player = this.$refs.videoplayer;
         this.curtime = this.formatTime(player.currentTime);
+        this.loadPerecent = ( player.buffered.end(0) / player.duration ) * 100;
+        this.playPerecent = ( player.currentTime / player.duration ) * 100;
       },500)
     },
+    //停止监听播放进度
     stopMonitor() {
       clearInterval(this.timer);
       this.timer = null;
     },
+    //格式化时长
     formatTime(time) {
       let res ="";
       //小时
       let h = Math.floor(time/3600);
-      console.log(h);
       //分钟
       let m = Math.floor(time/60);
       //秒
@@ -122,11 +137,35 @@ export default {
       let player = this.$refs.videoplayer;
       player.webkitRequestFullScreen();
     },
+    //显示音量栏
     showVolume() {
       let domI =  event.toElement.getBoundingClientRect();
-      this.volumeInfo.xAxis = domI.x + 16/2 - 50/2 - 1.5;
-      this.volumeInfo.yAxis = domI.y + document.documentElement.scrollTop - 100 - 13;
+      this.volumeInfo.xAxis = domI.left + 16/2 - 50/2 - 1;
+      this.volumeInfo.yAxis = domI.top + document.documentElement.scrollTop - 100 - 13;
       this.volumeInfo.volumeVisible = true;
+    },
+    //关闭音量栏
+    closeVolume() {
+      this.volumeInfo.volumeVisible = false;
+    },
+    //slider的值改变
+    changeData() {
+      this.volumeInfo.isMute = false;
+      this.changeVolume();
+    },
+    //静音或取消静音
+    changeMute() {
+      this.volumeInfo.isMute = !this.volumeInfo.isMute;
+      this.changeVolume();
+    },
+    //改变播放器的音量
+    changeVolume() {
+      let player = this.$refs.videoplayer;
+      if(this.volumeInfo.isMute){
+        player.volume = 0;
+      }else{
+        player.volume = this.volumeInfo.volume / 100;
+      }
     }
   },
   computed: {
@@ -154,12 +193,12 @@ export default {
     display: block;
   }
   .controller{
-    padding-top: 7px;
-    padding-bottom: 5px;
-    padding-left: 5px;
-    padding-right: 5px;
-    width: 100%;
-    height: 40px;
+    padding-top: 2%;
+    padding-bottom: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    width: 98%;
+    height: 35px;
     color: white;
     background-color: black;
     .controller-bar{
@@ -171,18 +210,19 @@ export default {
         text-align: right;
         height: 3px;
         background-color: rgb(189, 188, 188);
-        .play-bar{
-          width: 50%;
-          text-align: right;
-          // padding-right: 20px;
-          height: 3px;
-          color: white;
-          background-color: rgb(238, 161, 208);
-          .bar-header{
-            position: relative;
-            top: -8px;
-            right: -8px;
-          }
+      }
+      .play-bar{
+        width: 50%;
+        text-align: right;
+        height: 3px;
+        color: white;
+        position: relative;
+        top: -3px;
+        background-color: rgb(238, 161, 208);
+        .bar-header{
+          position: relative;
+          top: -8px;
+          // right: -8px;
         }
       }
     }
@@ -193,14 +233,16 @@ export default {
         width: 50px;
         height: 100px;
         position: absolute;
-        background-color: black;
-        opacity: 0.5;
+        // opacity会被子元素继承，改用rgba
+        // rgba不兼容IE7,IE8
+        // background-color: black;
+        // opacity: 0.5;
+        background-color: rgba(0, 0, 0, 0.5);
         .box-arrow{
           width: 0;
           height: 0;
           border: 10px solid transparent;
-          opacity: 0.5;
-          border-top-color: black;
+          border-top-color: rgba(0, 0, 0, 0.5);
           position: relative;
           top: 100%;
           left: 15px;
@@ -210,14 +252,28 @@ export default {
           height: 0;
           border: 10px solid transparent;
           background-color: transparent;
-          border-top-color: black;
+          border-top-color: rgba(0, 0, 0, 0.5);
           position: relative;
           top: 79%;
           left: 15px;
         }
+        .box-slider{
+          opacity: 2;
+          position: relative;
+          top: -35px;
+          left: 5px;
+          .volume-data{
+            text-align: center;
+            width: 76%;
+            margin-bottom: 10px;
+          }
+        }
       }
       .volume-btn{
-        color: white;
+        cursor: pointer;
+      }
+      .full-screen-btn{
+        cursor: pointer; 
       }
     }
   }
