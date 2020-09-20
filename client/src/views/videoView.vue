@@ -33,8 +33,10 @@
               <router-link :to="'/video/'+item.VDID" @click.native="flushCom">
                 <span class="title">{{ item.video_title }}</span><br />
               </router-link>
-              <span class="owner">{{ item.user_name }}</span><br />
-              <span class="num">{{ item.video_num }}次播放</span>
+              <div>
+                <span class="owner">{{ item.user_name }}</span><br />
+                <span class="num">{{ item.video_num }}次播放</span>
+              </div>
             </div>
           </div>
         </div>
@@ -151,18 +153,15 @@ export default {
       height: 100px;
       display: flex;
       display: -webkit-flex; /* Safari */
-
       .profile{
         width: 40px;
       }
-
       .user{
         margin-left: 7px;
         width: 250px;
         .user-name{
           font-size: 16px;
         }
-
         .user-descripe{
           font-size: 8px;
           color: dimgray;
@@ -183,6 +182,9 @@ export default {
         }
         .info{
           margin-left: 7px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
           .title{
             font-size: 18px;
           }

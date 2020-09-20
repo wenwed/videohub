@@ -183,12 +183,14 @@ export default {
 
 <style lang="scss">
 .video-player{
+  width: 627px;
   .player-top{
     width: 100%;
-    height: 20px;
+    height: 35px;
     background-color: black;
   }
   .player{
+    cursor: pointer;
     width: 100%;
     display: block;
   }
@@ -197,11 +199,12 @@ export default {
     padding-bottom: 1%;
     padding-left: 1%;
     padding-right: 1%;
-    width: 98%;
+    width: 614px;
     height: 35px;
     color: white;
     background-color: black;
     .controller-bar{
+      cursor: pointer;
       height: 3px;
       width: 100%;
       background-color: rgb(236, 233, 233);
@@ -222,7 +225,6 @@ export default {
         .bar-header{
           position: relative;
           top: -8px;
-          // right: -8px;
         }
       }
     }
@@ -273,7 +275,7 @@ export default {
         cursor: pointer;
       }
       .full-screen-btn{
-        cursor: pointer; 
+        cursor: pointer;
       }
     }
   }
