@@ -1,5 +1,9 @@
 <template>
-  <div class="video-player">
+  <!-- 进度条鼠标抬起和拖动事件，在播放器中抬起就有效 -->
+  <div
+   @mouseup="mouseUp"
+   @mousemove="moveBarIcon"
+   class="video-player">
     <div class="player-top"></div>
     <video
       class="player"
@@ -10,11 +14,16 @@
     </video>
     <!-- 进度条 -->
     <div class="controller">
-      <div class="controller-bar">
+      <div ref="processBar" 
+       @mousedown="mouseDown"
+       class="controller-bar">
         <div class="load-bar" :style="{ width: loadPerecent + '%' }"></div>
         <div class="play-bar" :style="{ width: playPerecent + '%' }">
-          <i class="el-icon-apple bar-header"></i>
         </div>
+        <i draggable="true"
+         @click="test1"
+         :style="{ transform: 'translateX(' + barHeadX +'px)' }"
+         class="el-icon-apple bar-header"></i>
       </div>
       <div class="controller-footer">
         <i v-if="videoIsPlay" class="el-icon-video-pause" @click="changePlay"></i>
@@ -27,7 +36,8 @@
            :style="{ left: volumeInfo.xAxis + 'px', top: volumeInfo.yAxis + 'px' }"
            class="volume-box"
            v-show="volumeInfo.volumeVisible"
-           @mouseleave="closeVolume">
+           @mouseover="overVolumeBox"
+           @mouseleave="leaveVolumeBox">
             <div class="box-arrow"></div>
             <div class="box-shadow"></div>
             <div class="box-slider">
@@ -37,20 +47,22 @@
                 v-model="volumeInfo.volume"
                 vertical
                 :show-tooltip="false"
-                input-size="mini"
                 tooltip-class="tooltip-class"
                 height="50px">
               </el-slider>
             </div>
           </div>
+          <!-- 音量icon -->
           <i v-show="!volumeInfo.isMute"
            class="el-icon-microphone volume-btn"
-           @mouseover="showVolume"
+           @mouseover="overVolumeIcon"
+           @mouseleave="leaveVolumeIcon"
            @click="changeMute">
           </i>
           <i v-show="volumeInfo.isMute"
            class="el-icon-turn-off-microphone volume-btn"
-           @mouseover="showVolume"
+           @mouseover="overVolumeIcon"
+           @mouseleave="leaveVolumeIcon"
            @click="changeMute">
           </i>
         </span>
@@ -68,11 +80,13 @@ export default {
       curtime: "00:00",
       durationtime: "00:00",
       loadPerecent: 0,
-      playPerecent: 0,
+      playPerecent: 1.5,
+      isDown: false,  //鼠标是否按下
       videoIsPlay: false,
       timer: null,
       volumeInfo: {
-        isMute: false,
+        mouseIn: false, //鼠标是否进入音量栏
+        isMute: false,  //是否静音
         volume: 100,
         volumeVisible: false,
         xAxis: 0,
@@ -109,6 +123,27 @@ export default {
       clearInterval(this.timer);
       this.timer = null;
     },
+    //鼠标按下移动播放icon
+    mouseDown() {
+      this.isDown = true;
+    },
+    //鼠标移动移动播放icon
+    moveBarIcon() {
+      // console.log(e);
+      // if(!this.isDown){
+      //   return;
+      // }
+      // let domI = event.toElement.getBoundingClientRect();
+      // console.log(domI);
+    },
+    test1() {
+      let bar = this.$refs.processBar;
+      console.log(bar.toElement.getBoundingClientRect);
+    },
+    //鼠标抬起移动播放icon
+    mouseUp() {
+      this.isDown = false;
+    },
     //格式化时长
     formatTime(time) {
       let res ="";
@@ -133,20 +168,34 @@ export default {
       }
       return res;
     },
+    //全屏
     fullScreen() {
       let player = this.$refs.videoplayer;
       player.webkitRequestFullScreen();
     },
     //显示音量栏
-    showVolume() {
+    overVolumeIcon() {
       let domI =  event.toElement.getBoundingClientRect();
       this.volumeInfo.xAxis = domI.left + 16/2 - 50/2 - 1;
       this.volumeInfo.yAxis = domI.top + document.documentElement.scrollTop - 100 - 13;
       this.volumeInfo.volumeVisible = true;
     },
+    //判断鼠标是否移动到音量栏上
+    leaveVolumeIcon() {
+      setTimeout(() => {
+        if(!this.volumeInfo.mouseIn){
+          this.volumeInfo.volumeVisible = false;
+        }
+      },500);
+    },
     //关闭音量栏
-    closeVolume() {
+    leaveVolumeBox() {
       this.volumeInfo.volumeVisible = false;
+      this.volumeInfo.mouseIn = false;
+    },
+    //鼠标进入音量栏
+    overVolumeBox() {
+      this.volumeInfo.mouseIn = true;
     },
     //slider的值改变
     changeData() {
@@ -177,6 +226,9 @@ export default {
       let tem = this.videoInfo != null?this.videoInfo.video_poster : "default.jpg";
       return "http://127.0.0.1:8633/api/video/getposter?poster=" + tem;
     },
+    barHeadX() {
+      return this.playPerecent / 100 * 614;
+    }
   }
 }
 </script>
@@ -222,10 +274,10 @@ export default {
         position: relative;
         top: -3px;
         background-color: rgb(238, 161, 208);
-        .bar-header{
-          position: relative;
-          top: -8px;
-        }
+      }
+      .bar-header{
+        position: relative;
+        top: -14px;
       }
     }
     .controller-footer{
