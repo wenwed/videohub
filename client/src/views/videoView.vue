@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <div @mouseup="mouseUp"
+    @mousemove="mouseMove"
+    @mouseleave="mouseLeave">
     <top-header></top-header>
     <div class="main-container">
       <div class="video">
@@ -9,7 +11,7 @@
           <span class="video-date">{{ videodate | Dayjs }}</span><br />
           <span class="video-num">{{ videonum }}次播放</span>
         </div>
-        <video-player :videoInfo="videoInfo"></video-player>
+        <video-player :videoInfo="videoInfo" ref="Player"></video-player>
       </div>
       <div class="about">
         <div class="user-info">
@@ -70,6 +72,15 @@ export default {
   methods: {
     flushCom() {
       this.$router.go(0);
+    },
+    mouseUp() {
+      this.$refs.Player.mouseUp();
+    },
+    mouseMove() {
+      this.$refs.Player.moveBarIcon();
+    },
+    mouseLeave() {
+      this.$refs.Player.mouseLeave();
     }
   },
   computed: {
@@ -147,6 +158,10 @@ export default {
   }
 
   .about{
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
     flex: 2;
     margin-left: 20px;
     .user-info{
