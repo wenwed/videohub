@@ -2,9 +2,21 @@
   <div class="headerContainer">
     <div class="header">
       <div class="header-left">
-        <div class="content">logo</div>
-        <div class="content">首页</div>
-        <div class="content">排行</div>
+        <div class="content">
+          <router-link to="/home">
+            logo
+          </router-link>
+        </div>
+        <div class="content">
+          <router-link to="/home">
+            首页
+          </router-link>
+        </div>
+        <div class="content">
+          <!-- <router-link to=""> -->
+            排行
+          <!-- </router-link> -->
+        </div>
         <el-input
         class="search-input"
         type="text"

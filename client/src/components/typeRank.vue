@@ -1,5 +1,6 @@
 <template>
   <div class="rank-container">
+    <el-divider></el-divider>
     <div class="rank-head">
       {{ typeInfo[0].type_tag }}
     </div>

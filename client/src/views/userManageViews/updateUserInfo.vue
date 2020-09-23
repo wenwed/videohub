@@ -1,6 +1,15 @@
 <template>
   <el-container>
     <el-main>
+      <el-upload
+        class="avatar-uploader"
+        action="https://jsonplaceholder.typicode.com/posts/"
+        :show-file-list="false"
+        :on-success="handleAvatarSuccess"
+        :before-upload="beforeAvatarUpload">
+        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+      </el-upload>
       <el-avatar :size="50" :src="'http://127.0.0.1:8633/api/user/getposter?poster='+form.user_poster"></el-avatar>
       <div class="user-name">
         <el-input v-model="form.user_name"></el-input>

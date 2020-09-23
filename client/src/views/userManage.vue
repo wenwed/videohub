@@ -1,8 +1,9 @@
 <template>
   <div>
+    <top-header></top-header>
     <el-container style="border: 1px solid #eee">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-menu :default-openeds="['1', '1']">
+        <el-menu>
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-message"></i>我的投稿</template>
             <el-menu-item-group>
@@ -31,10 +32,16 @@
     </el-container>
   </div>
 </template>
+
 <script>
+import topHeader from '../components/manageTopHeader.vue'
 export default {
+  components: {
+    topHeader
+  }
 }
 </script>
+
 <style lang="scss" scoped>
 a, a:link, a:visited, a:hover, a:active {
     text-decoration: none;

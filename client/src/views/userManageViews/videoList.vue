@@ -2,18 +2,24 @@
   <el-container>
     <el-main>
       <div class="video-box" v-for="item in videoList" :key="item.VDID">
-        <div class="img-container">
-          <img class="video-poster"
-           :src="'http://127.0.0.1:8633/api/video/getposter?poster=' + item.video_poster">
+        <div class="box-left">
+            <div class="img-container">
+            <img class="video-poster"
+            :src="'http://127.0.0.1:8633/api/video/getposter?poster=' + item.video_poster">
+          </div>
+          <div class="video-info">
+            <div class="viodeo-title">{{ item.video_title }}</div>
+            <div class="viodeo-descripe">{{ item.video_descripe }}</div>
+            <div class="viodeo-descripe">{{ item.video_num }}次播放</div>
+            <div class="viodeo-descripe">{{ item.video_date }}</div>
+          </div>
         </div>
-        <div class="video-info">
-          <div class="viodeo-title">{{ item.video_title }}</div>
-          <div class="viodeo-descripe">{{ item.video_descripe }}</div>
-        </div>
-        <div class="video-operation">
-          <router-link to="'updatevideo/:'+item.VDID">
-            <el-button type="primary">编辑</el-button>
-          </router-link>
+        <div class="box-right">
+          <div class="video-operation">
+            <router-link to="'updatevideo/:'+item.VDID">
+              <el-button type="primary">编辑</el-button>
+            </router-link>
+          </div>
         </div>
       </div>
     </el-main>
@@ -58,17 +64,25 @@ export default {
 <style lang="scss" scoped>
 .video-box {
   width: 100%;
-  height: 250px;
+  height: 180px;
   display: flex;
-  .img-container {
-    width: 240px;
-    .video-poster{
-      width: 100%;
+  justify-content: space-between;
+  .box-left{
+    display: flex;
+    .img-container {
+      width: 240px;
+      .video-poster{
+        width: 100%;
+      }
+    }
+    .video-info {
+      margin-left: 20px;
+      display: flex;
+      flex-direction: column;
     }
   }
-  .video-info {
-    display: flex;
-    flex-direction: column;
+  .box-right{
+    margin-right: 70px;
   }
 }
 </style>
