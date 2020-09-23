@@ -1,9 +1,11 @@
 <template>
-  <el-carousel trigger="click" height="288px">
-    <el-carousel-item v-for="item in videolist" :key="item.VDID">
+  <el-carousel trigger="click">
+    <el-carousel-item v-for="item in videolist" :key="item.VDID" height="200px">
       <router-link :to="'/video/'+item.VDID">
-        <img class="img"
-          :src="'http://127.0.0.1:8633/api/video/getposter?poster='+item.video_poster">
+        <el-tooltip :content="item.video_descripe" placement="top">
+          <img class="img"
+            :src="'http://127.0.0.1:8633/api/video/getposter?poster='+item.video_poster">
+        </el-tooltip>
       </router-link>
     </el-carousel-item>
   </el-carousel>
@@ -20,6 +22,9 @@ export default {
   width: 100%;
 }
 .el-carousel__indicators{
-  top: 200px;
+  top: 150px;
+}
+.el-carousel__container{
+  height: 100%!important;
 }
 </style>

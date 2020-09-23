@@ -70,20 +70,25 @@ export default {
     }
   },
   methods: {
+    //刷新界面，视频间跳转页面不会刷新
     flushCom() {
       this.$router.go(0);
     },
+    //调用子组件的进度条的鼠标抬起事件
     mouseUp() {
       this.$refs.Player.mouseUp();
     },
+    //调用子组件的鼠标移动事件
     mouseMove() {
       this.$refs.Player.moveBarIcon();
     },
+    //调用子组件的鼠标离开事件
     mouseLeave() {
       this.$refs.Player.mouseLeave();
     }
   },
   computed: {
+    //默认值
     profilesrc() {
       let tem = this.userInfo != null?this.userInfo.user_poster : "default.jpg";
       return "http://127.0.0.1:8633/api/user/getposter?poster=" + tem;
@@ -151,7 +156,7 @@ export default {
       .video-type, .video-date, .video-num{
         margin-top: 20px;
         margin-bottom: 20px;
-        font-size: 8px;
+        font-size: 12px;
         color: darkgrey;
       }
     }
@@ -178,7 +183,7 @@ export default {
           font-size: 16px;
         }
         .user-descripe{
-          font-size: 8px;
+          font-size: 12px;
           color: dimgray;
         }
       }
@@ -205,7 +210,7 @@ export default {
           }
           .owner,.num{
             color: darkgrey;
-            font-size: 8px;
+            font-size: 12px;
           }
         }
       }

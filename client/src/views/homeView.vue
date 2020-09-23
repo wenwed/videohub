@@ -73,10 +73,13 @@ export default {
     .body-top{
       padding-top: 15px;
       display: flex;
+      justify-content: space-between;
       flex-wrap: nowrap;
       .carousel-class{
-        width: 600px;
-        height: 288px;
+        width: 448px;
+        height: 215px;
+        // width: 600px;
+        // height: 288px;
         margin-left: 39px;
       }
       .carouse-card{
@@ -84,8 +87,8 @@ export default {
         flex-wrap: wrap;
         align-content: flex-start;
         .carouse-box{
-          padding-left: 10px;
-          padding-bottom: 10px;
+          padding-left: 20px;
+          padding-bottom: 18px;
           width: 144px;
           height: 81px;
           .box-img{

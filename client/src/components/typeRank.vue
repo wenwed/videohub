@@ -100,11 +100,11 @@ export default {
         width: 100%;
       }
       .video-title{
-        font-size: 18px;
+        font-size: 16px;
       }
       .video-info{
         color: rgb(121, 124, 126);
-        font-size: 15px;
+        font-size: 14px;
         .video-owner{
           color: rgb(121, 124, 126);
         }
