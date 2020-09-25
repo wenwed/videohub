@@ -31,7 +31,6 @@ module.exports = (req, res) => {
                 break;
         }
         if(extName.length == 0) {
-            fs.unlink(file.path);
             return res.status(412).json({'status': 412, result: '只支持mp4格式视频'});
         }
         /* 拼接新的文件名 */
@@ -43,6 +42,7 @@ module.exports = (req, res) => {
         /* 更改名字和路径 */
         fs.rename(file.path, newPath, (err) => {
             if(err) {
+                console.log(err);
                 return res.status(500).json({'status': 500, result: '视频上传失败'});
             } else {
                 return res.send({'status': 200, 'msg': '视频上传成功', video: videoName });

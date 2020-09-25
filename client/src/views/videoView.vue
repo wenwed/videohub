@@ -98,7 +98,7 @@ export default {
       return this.userInfo != null?this.userInfo.user_name : "作者";
     },
     userid() {
-      return this.userInfo != null?this.userInfo.user_USID : 0;
+      return this.userInfo != null?this.userInfo.USID : 0;
     },
     userdescripe() {
       return this.userInfo != null?this.userInfo.user_descripe : "签名";

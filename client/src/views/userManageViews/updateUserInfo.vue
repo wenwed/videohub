@@ -3,7 +3,7 @@
     <el-main class="main-body">
       <el-upload
         class="avatar-uploader"
-        action="'baseUrl' + /user/poster"
+        :action="baseUrl + '/user/poster'"
         :show-file-list="false"
         :on-success="handleAvatarSuccess">
         <img :src="baseUrl + '/user/getposter?poster='+form.user_poster" class="avatar">
@@ -33,12 +33,13 @@ export default {
   },
   methods: {
     handleAvatarSuccess(res) {
-      this.form.user_poster = res.data.user_poster;
+      this.form.user_poster = res.user_poster;
     },
     confirmForm() {
       this.$axios.post('/user/updateinfo', this.form)
         .then(res => {
           if(res.data.flag === true){
+            console.log(res.data.userinfo[0]);
             localStorage.setItem("user_name", res.data.userinfo[0].user_name);
             localStorage.setItem("user_poster", res.data.userinfo[0].user_poster);
             localStorage.setItem("user_descripe", res.data.userinfo[0].user_descripe);

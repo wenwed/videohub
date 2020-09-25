@@ -57,7 +57,7 @@ module.exports = (req, res) => {
           .resize(1280, 720)     //设置图片大小
           .quality(60)          //设置为jepg
           .write(newPath);      //保存
-      return res.status(200).json({ status: 200, msg: "图片上传成功", poster: imgName });
+      return res.status(200).json({ status: 200, msg: "图片上传成功", video_poster: imgName });
     });
   })
 }

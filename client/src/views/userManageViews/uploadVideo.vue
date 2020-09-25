@@ -1,63 +1,69 @@
 <template>
   <el-container>
     <el-main>
-      <div class="video-post">
-        上传视频
-        <el-upload
-          drag
-          :action="headurl+'/video/vdfile'"
-          :on-success="handleVideoSuccess"
-          multiple>
-          <p v-if="form.video_url">{{ videofilename }}</p>
-          <div v-else>
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+      <div class="video-container">
+        <div class="video-post">
+          上传视频
+          <el-upload
+            drag
+            :action="baseUrl+'/video/vdfile'"
+            :on-success="handleVideoSuccess"
+            multiple>
+            <div>
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+            </div>
+          </el-upload>
+        </div>
+        <div>
+          上传封面
+          <el-upload
+            class="poster-uploader"
+            :action="baseUrl+'/video/poster'"
+            :show-file-list="false"
+            :on-success="handlePosterSuccess">
+            <img v-if="form.video_poster"
+              :src="baseUrl+'/video/getposter?poster='+form.video_poster"
+              class="video_poster">
+            <i v-else class="el-icon-plus uploader-icon"></i>
+          </el-upload>
+        </div>
+        <div class="video-info">
+          <p>标题：</p>
+          <div class="video-title">
+            <el-input
+              v-model="form.video_title"
+              placeholder="请输入内容">
+            </el-input>
           </div>
-        </el-upload>
-      </div>
-      <div class="poster-post">
-        <el-upload
-          :action="headurl+'/video/poster'"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess">
-          <img v-if="form.video_poster" :src="baseUrl+'/video/getposter?poster='+form.video_poster" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-      </div>
-      <div class="video-info">
-        <p>标题：</p>
-        <div class="video-title">
-          <el-input
-            v-model="form.video_title"
-            placeholder="请输入内容">
-          </el-input>
-        </div>
-        <p>选择分区：</p>
-        <div class="video-type">
-          <el-select v-model="form.video_type" placeholder="请选择分区">
-            <el-option
-              v-for="item in tagList"
-              :key="item.VTID"
-              :label="item.type_tag"
-              :value="item.VTID">
-            </el-option>
-          </el-select>
-        </div>
-        <p>视频简介：</p>
-        <div class="video-descripe">
-          <el-input
-            type="textarea"
-            :rows="2"
-            v-model="form.video_descripe">
-          </el-input>
-        </div>
-        <div class="video-operation">
-          <el-button type="primary" @click="confirmForm">确定</el-button>
+          <p>选择分区：</p>
+          <div class="video-type">
+            <el-select v-model="form.video_type" placeholder="请选择分区">
+              <el-option
+                v-for="item in tagList"
+                :key="item.VTID"
+                :label="item.type_tag"
+                :value="item.VTID">
+              </el-option>
+            </el-select>
+          </div>
+          <p>视频简介：</p>
+          <div class="video-descripe">
+            <el-input
+              type="textarea"
+              :rows="2"
+              v-model="form.video_descripe">
+            </el-input>
+          </div>
+          <div class="video-operation">
+            <el-button type="primary" @click="confirmForm">确定</el-button>
+          </div>
         </div>
       </div>
     </el-main>
   </el-container>
 </template>
+
 <script>
 export default {
   data() {
@@ -83,8 +89,8 @@ export default {
     handleVideoSuccess(res) {
       this.form.video_url = res.video;
     },
-    handleAvatarSuccess(res) {
-      this.form.video_poster = res.poster;
+    handlePosterSuccess(res) {
+      this.form.video_poster = res.video_poster;
     },
     confirmForm() {
       this.$axios.post('/video/add', this.form)
@@ -105,5 +111,31 @@ export default {
   }
 }
 </script>
+
 <style lang="scss" scoped>
+.video-container{
+  width: 500px;
+  .poster-uploader{
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    width: 360px;
+    .video_poster{
+      width: 100%;
+    }
+    .uploader-icon{
+      font-size: 28px;
+      color: #8c939d;
+      width: 360px;
+      height: 178px;
+      line-height: 178px;
+      text-align: center;
+    }
+  }
+  .poster-uploader:hover {
+    border-color: #409EFF;
+  }
+}
 </style>

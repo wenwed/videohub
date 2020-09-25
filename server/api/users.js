@@ -120,10 +120,10 @@ router.post('/updatepass', async (req, res) => {
     if(err){  //非法token
       return res.status(401).json({ code: 401, msg: "请登录" });
     }
-    let values = [ req.body.old_password, decoded.id ];
+    let values = [ decoded.id ];
     await mysql.getUserPassword(values)
     .then(result => {
-      let passFlag = bcrypt.compareSync(req.body.user_password, result[0].user_password);
+      let passFlag = bcrypt.compareSync(req.body.old_password, result[0].user_password);
       if(passFlag){
         let values = [ req.body.new_password, req.body.USID ];
         return mysql.updateUserPassword(values)

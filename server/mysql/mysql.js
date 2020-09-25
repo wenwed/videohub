@@ -117,13 +117,13 @@ exports.getUserInfo = ( values ) => {
 
 //查询用户密码
 exports.getUserPassword = ( values ) => {
-  let _sql = "select * from users where user_name=?;";
+  let _sql = "select user_password from users where USID=?;";
   return query( _sql, values );
 }
 
 //修改用户密码
 exports.updateUserPassword = ( values ) => {
-  let _sql = "update users set user_password=? where user_name=?;";
+  let _sql = "update users set user_password=? where USID=?;";
   return query( _sql, values );
 }
 
