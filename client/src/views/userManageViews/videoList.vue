@@ -5,13 +5,13 @@
         <div class="box-left">
             <div class="img-container">
             <img class="video-poster"
-            :src="'http://127.0.0.1:8633/api/video/getposter?poster=' + item.video_poster">
+            :src="baseUrl + '/video/getposter?poster=' + item.video_poster">
           </div>
           <div class="video-info">
-            <div class="viodeo-title">{{ item.video_title }}</div>
-            <div class="viodeo-descripe">{{ item.video_descripe }}</div>
-            <div class="viodeo-descripe">{{ item.video_num }}次播放</div>
-            <div class="viodeo-descripe">{{ item.video_date }}</div>
+            <div class="video-title">{{ item.video_title }}</div>
+            <div class="video-descripe">{{ item.video_descripe }}</div>
+            <div class="video-num">{{ item.video_num }}次播放</div>
+            <div class="video-date">{{ item.video_date | Dayjs("YYYY-MM-DD") }}</div>
           </div>
         </div>
         <div class="box-right">
@@ -30,6 +30,7 @@
 export default {
   data() {
     return {
+      baseUrl: "http://127.0.0.1:8633/api",
       videoList: [
         {
           VDID: 1,
@@ -79,6 +80,8 @@ export default {
       margin-left: 20px;
       display: flex;
       flex-direction: column;
+      .video-title{
+      }
     }
   }
   .box-right{

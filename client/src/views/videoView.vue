@@ -29,7 +29,7 @@
           <span class="correlate-title">相关推荐</span>
           <div class="list" v-for="(item, i) in videolist" :key="i">
             <router-link :to="'/video/'+item.VDID" @click.native="flushCom">
-              <img class="poster" :src="'http://127.0.0.1:8633/api/video/getposter?poster='+item.video_poster">
+              <img class="poster" :src="baseUrl + '/video/getposter?poster=' + item.video_poster">
             </router-link>
             <div class="info">
               <router-link :to="'/video/'+item.VDID" @click.native="flushCom">
@@ -57,6 +57,7 @@ export default {
   },
   data(){
     return {
+      baseUrl: "http://127.0.0.1:8633/api",
       videoInfo: null,
       userInfo: null,
       videolist: [

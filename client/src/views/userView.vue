@@ -6,7 +6,7 @@
         <div class="box" v-for="item in videoList" :key="item.VDID">
           <router-link :to="'/video/'+item.VDID">
             <img class="video-poster"
-             :src="'http://127.0.0.1:8633/api/video/getposter?poster=' + item.video_poster">
+             :src="baseUrl + '/video/getposter?poster=' + item.video_poster">
           </router-link>
           <router-link :to="'/video/'+item.VDID">
             <div class="video-title">{{ item.video_title }}</div>
@@ -45,6 +45,7 @@ export default {
   },
   data() {
     return {
+      baseUrl: "http://127.0.0.1:8633/api",
       isMyself: false,
       userInfo: [
         {

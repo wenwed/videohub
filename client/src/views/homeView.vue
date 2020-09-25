@@ -7,7 +7,7 @@
         <div class="carouse-card">
           <div class="carouse-box" v-for="item in lastAllRank" :key="item.VDID">
             <router-link :to="'/video/'+item.VDID">
-              <img class="box-img" :src="'http://127.0.0.1:8633/api/video/getposter?poster=' + item.video_poster">
+              <img class="box-img" :src="baseUrl + '/video/getposter?poster=' + item.video_poster">
             </router-link>
           </div>
         </div>
@@ -31,6 +31,7 @@ export default {
   },
   data() {
     return {
+      baseUrl: "http://127.0.0.1:8633/api",
       allRank: [],
       allTypes: []
     }

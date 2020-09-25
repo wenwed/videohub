@@ -1,16 +1,13 @@
 <template>
   <el-container>
-    <el-main>
+    <el-main class="main-body">
       <el-upload
         class="avatar-uploader"
-        action="https://jsonplaceholder.typicode.com/posts/"
+        action="'baseUrl' + /user/poster"
         :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload">
-        <img v-if="imageUrl" :src="imageUrl" class="avatar">
-        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        :on-success="handleAvatarSuccess">
+        <img :src="baseUrl + '/user/getposter?poster='+form.user_poster" class="avatar">
       </el-upload>
-      <el-avatar :size="50" :src="'http://127.0.0.1:8633/api/user/getposter?poster='+form.user_poster"></el-avatar>
       <div class="user-name">
         <el-input v-model="form.user_name"></el-input>
       </div>
@@ -21,10 +18,12 @@
     </el-main>
   </el-container>
 </template>
+
 <script>
 export default {
   data() {
     return {
+      baseUrl: "http://127.0.0.1:8633/api",
       form: {
         user_name: this.$store.state.name,
         user_poster: this.$store.state.poster,
@@ -33,6 +32,9 @@ export default {
     }
   },
   methods: {
+    handleAvatarSuccess(res) {
+      this.form.user_poster = res.data.user_poster;
+    },
     confirmForm() {
       this.$axios.post('/user/updateinfo', this.form)
         .then(res => {
@@ -53,5 +55,12 @@ export default {
   }
 }
 </script>
+
 <style lang="scss" scoped>
+.main-body{
+  width: 70%;
+  .avatar-uploader{}
+  .user-name{}
+  .user-descripe{}
+}
 </style>

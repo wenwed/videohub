@@ -20,7 +20,7 @@
           :action="headurl+'/video/poster'"
           :show-file-list="false"
           :on-success="handleAvatarSuccess">
-          <img v-if="form.video_poster" :src="headurl+'/video/getposter?poster='+form.video_poster" class="avatar">
+          <img v-if="form.video_poster" :src="baseUrl+'/video/getposter?poster='+form.video_poster" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </div>
@@ -62,7 +62,7 @@
 export default {
   data() {
     return {
-      headurl: "http://127.0.0.1:8633/api",
+      baseUrl: "http://127.0.0.1:8633/api",
       form: {
         video_poster: "",
         video_url: "",
