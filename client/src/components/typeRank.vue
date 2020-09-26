@@ -99,6 +99,7 @@ export default {
       justify-content: space-between;
       .video-poster{
         width: 100%;
+        border-radius: 5px;
       }
       .video-title{
         font-size: 16px;

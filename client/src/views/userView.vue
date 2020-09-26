@@ -3,14 +3,16 @@
     <top-header></top-header>
     <div class="main-container">
       <div class="user-work">
-        <div class="box" v-for="item in videoList" :key="item.VDID">
-          <router-link :to="'/video/'+item.VDID">
-            <img class="video-poster"
-             :src="baseUrl + '/video/getposter?poster=' + item.video_poster">
-          </router-link>
-          <router-link :to="'/video/'+item.VDID">
-            <div class="video-title">{{ item.video_title }}</div>
-          </router-link>
+        <div class="video-box" v-for="item in videoList" :key="item.VDID">
+          <div>
+            <router-link :to="'/video/'+item.VDID">
+              <img class="video-poster"
+              :src="baseUrl + '/video/getposter?poster=' + item.video_poster">
+            </router-link>
+            <router-link :to="'/video/'+item.VDID">
+              <div class="video-title">{{ item.video_title }}</div>
+            </router-link>
+          </div>
           <div class="video-info">
             <span>{{ item.video_num | ViewCounts }}</span>
             <span>{{ item.video_date | Dayjs("YYYY-MM-DD") }}</span>
@@ -105,31 +107,53 @@ export default {
 <style lang="scss" scoped>
 .container {
   background-color: rgb(240, 240, 240);
+  height: 560px;
   .main-container {
     width: 70%;
+    height: 100%;
     display: flex;
-    margin:10px 15% 15px 15%;
+    margin:0 15% 15px 15%;
     .user-work {
+      border-radius: 10px;
+      padding-top: 10px;
+      margin-top: 10px;
       width: 700px;
+      height: 100%;
       background-color: white;
       display: flex;
       flex-wrap: wrap;
       align-content: flex-start;
-      .box {
+      .video-box {
+        margin-left: 8px;
+        margin-right: 6px;
+        margin-bottom: 17px;
         width: 160px;
-        height: 165px;
+        height: 155px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
         .video-poster {
+          border-radius: 5px;
           width: 100%;
+        }
+        .video-title:hover {}
+        .video-info{
+          font-size: 14px;
+          display: flex;
+          justify-content: space-between;
         }
       }
     }
     .user-info {
+      border-radius: 10px;
+      margin-top: 10px;
+      padding-top: 10px;
+      margin-left: 10px;
       background-color: white;
-      width: 150px;
+      width: 180px;
       height: 300px;
       display: flex;
       flex-direction: column;
-      align-content: space-around;
       .user-profile {}
       .user-name {}
       .user-descripe {}
