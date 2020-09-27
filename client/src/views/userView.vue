@@ -19,20 +19,24 @@
           </div>
         </div>
       </div>
-      <div class="user-info">
-        <div class="user-profile">
-          <el-avatar :src="profile" :size="40"></el-avatar>
-        </div>
-        <div class="user-name">
-          {{ username }}
-        </div>
-        <div class="user-descripe">
-          {{ userdescripe }}
-        </div>
-        <div>
-          <router-link to="/account">
-            <p>个人中心</p>
-          </router-link>
+      <div class="info-container">
+        <div class="user-info">
+          <div class="top-info">
+            <div class="user-profile">
+              <el-avatar :src="profile" :size="40"></el-avatar>
+            </div>
+            <div class="user-name">
+              {{ username }}
+            </div>
+          </div>
+          <div class="user-descripe">
+            {{ userdescripe }}
+          </div>
+          <div class="person-center">
+            <router-link to="/account">
+              <p class="center-text">个人中心</p>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -136,27 +140,54 @@ export default {
           border-radius: 5px;
           width: 100%;
         }
-        .video-title:hover {}
-        .video-info{
+        .video-title:hover {
+          color: #409EFF;
+        }
+        .video-info {
           font-size: 14px;
           display: flex;
           justify-content: space-between;
         }
       }
     }
-    .user-info {
-      border-radius: 10px;
+    .info-container {
+      width: 220px;
       margin-top: 10px;
-      padding-top: 10px;
       margin-left: 10px;
-      background-color: white;
-      width: 180px;
-      height: 300px;
-      display: flex;
-      flex-direction: column;
-      .user-profile {}
-      .user-name {}
-      .user-descripe {}
+      .user-info{
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        width: 90%;
+        background-color: white;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        .top-info {
+          display: flex;
+          .user-profile {}
+          .user-name {
+            margin-left: 8px;
+          }
+        }
+        .user-descripe {
+          margin-top: 5px;
+          margin-bottom: 5px;
+        }
+        .person-center {
+          display: block;
+          margin-top: 20px;
+          margin-bottom: 20px;
+          .center-text {
+            color: rgb(11, 147, 201);
+            margin: 0px auto;
+            width: 70px;
+          }
+          .center-text:hover {
+            color: rgb(6, 179, 248);
+          }
+        }
+      }
     }
   }
 }

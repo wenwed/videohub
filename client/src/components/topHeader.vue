@@ -4,7 +4,7 @@
       <div class="header-left">
         <div class="content">
           <router-link to="/home">
-            logo
+            <img src="../../public/logo.png" class="logo-img" alt="logo">
           </router-link>
         </div>
         <div class="content">
@@ -104,6 +104,9 @@ export default {
         padding: 0 5px 0 5px;
         width: 70px;
         line-height: 36px;
+        .logo-img{
+          width: 100%;
+        }
       }
       .el-input__inner{
         height: 35px;

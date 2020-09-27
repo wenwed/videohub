@@ -262,7 +262,7 @@
 | 请求参数 |  |
 | 返回示例 | `{"code":200,"msg":"查询成功","videoinfo":[{"VDID":1,"video_poster":"1145141.jpg","video_url":"1919810.mp4","video_num":0,"video_title":"视频","video_descripe":"第一个视频","video_type":1,"video_status":1,"video_owner":1,"video_date":"2020-08-19T04:24:02.000Z","type_tag":"生活区","user_name":"wenwd"}]}` |
 
-| 用户修改视频 |  |
+| 用户修改视频信息 |  |
 | -------- | -------- |
 | 请求URL  | http://127.0.0.1:8633/api/video/update |
 | 简要描述 | 将用户修改的视频信息上传到服务器 |

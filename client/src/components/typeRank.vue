@@ -104,6 +104,9 @@ export default {
       .video-title{
         font-size: 16px;
       }
+      .video-title:hover {
+        color: #409EFF;
+      }
       .video-info{
         color: rgb(121, 124, 126);
         font-size: 14px;
