@@ -267,8 +267,8 @@
 | 请求URL  | http://127.0.0.1:8633/api/video/update |
 | 简要描述 | 将用户修改的视频信息上传到服务器 |
 | 请求方式 | post |
-| 请求参数 | `{ video_poster: "114514.jpg", video_url: "1919810.mp4", video_type: 1, video_title: "视频", video_descripe: "第一个视频", video_owner: 1 }` |
-| 返回示例 | `{ code: 200, msg: "添加成功" }` |
+| 请求参数 | `{ video_poster: "114514.jpg", video_url: "1919810.mp4", video_type: 1, video_title: "视频", video_descripe: "第一个视频", VDID: 1 }` |
+| 返回示例 | `{ code: 200, msg: "修改成功" }` |
 
 | 用户删除视频 |  |
 | -------- | -------- |

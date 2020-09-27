@@ -71,6 +71,7 @@ export default {
       baseUrl: "http://127.0.0.1:8633/api",
       id: this.$route.params.id,
       form: {
+        VDID: this.$route.params.id,
         video_poster: "",
         video_url: "",
         video_type: "",
@@ -104,15 +105,10 @@ export default {
       this.form.video_poster = res.video_poster;
     },
     confirmForm() {
-      this.$axios.post('/video/add', this.form)
+      this.$axios.post('/video/update', this.form)
         .then(res => {
           if(res.data.code === 200){
-            this.video_poster = "";
-            this.video_url = "";
-            this.video_type = "";
-            this.video_title = "";
-            this.video_descripe = "";
-            alert("上传成功");
+            alert("修改成功");
           }
         })
     }

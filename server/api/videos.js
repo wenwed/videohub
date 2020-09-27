@@ -90,7 +90,7 @@ router.get('/videoinfo', async (req, res) => {
 })
 
 //用户修改视频信息
-router.post('/add', async (req, res) => {
+router.post('/update', async (req, res) => {
   if(!req.headers.usertoken){    //验证是否带有token
     return res.status(401).json({ code: 401, msg: "请登录" });
   }
@@ -101,17 +101,18 @@ router.post('/add', async (req, res) => {
       return res.status(401).json({ code: 401, msg: "请登录" });
     }
     
+    console.log(req.body);
     let values = [ 
-      res.body.video_poster, 
-      res.body.video_url, 
-      res.body.video_title, 
-      res.body.video_descripe, 
-      res.body.video_type, 
-      res.body.VDID
+      req.body.video_poster, 
+      req.body.video_url, 
+      req.body.video_title, 
+      req.body.video_descripe, 
+      req.body.video_type, 
+      req.body.VDID
     ];
     await mysql.updateVideo(values)
       .then(result => {
-        res.status(200).json({ code: 200, msg: "添加成功" });
+        res.status(200).json({ code: 200, msg: "修改成功" });
       }).catch(err => {
         console.log(err);
         res.status(500).json({ code: 500, msg: "未知错误" });

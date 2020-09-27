@@ -16,7 +16,7 @@
         </div>
         <div class="box-right">
           <div class="video-operation">
-            <router-link to="'updatevideo/:'+item.VDID">
+            <router-link :to="'updatevideo/'+item.VDID">
               <el-button type="primary">编辑</el-button>
             </router-link>
           </div>
