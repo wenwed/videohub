@@ -33,7 +33,7 @@
             </router-link>
             <div class="info">
               <router-link :to="'/video/'+item.VDID" @click.native="flushCom">
-                <span class="title">{{ item.video_title }}</span><br />
+                <span class="title">{{ item.video_title }}</span>
               </router-link>
               <div>
                 <span class="owner">{{ item.user_name }}</span><br />
@@ -198,8 +198,9 @@ export default {
         margin-top: 10px;
         margin-bottom: 10px;
         display: flex;
+        height: 75px;
         .poster{
-          width: 120px;
+          width: 125px;
         }
         .info{
           margin-left: 7px;
@@ -207,7 +208,13 @@ export default {
           flex-direction: column;
           justify-content: space-between;
           .title{
-            font-size: 18px;
+            font-size: 16px;
+            line-height: 20px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
           }
           .owner,.num{
             color: darkgrey;

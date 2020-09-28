@@ -3,15 +3,33 @@
     <el-main>
       <div class="video-box" v-for="item in videoList" :key="item.VDID">
         <div class="box-left">
-            <div class="img-container">
+          <div class="img-container">
             <img class="video-poster"
             :src="baseUrl + '/video/getposter?poster=' + item.video_poster">
           </div>
           <div class="video-info">
-            <div class="video-title">{{ item.video_title }}</div>
-            <div class="video-descripe">{{ item.video_descripe }}</div>
-            <div class="video-num">{{ item.video_num }}次播放</div>
-            <div class="video-date">{{ item.video_date | Dayjs("YYYY-MM-DD") }}</div>
+            <div>
+              <div class="video-title">{{ item.video_title }}</div>
+              <div class="video-descripe">{{ item.video_descripe }}</div>
+            </div>
+            <div>
+              <div v-if="item.video_status===1" class="video-status">
+                <i class="el-icon-view"></i>
+                <div style="margin-left: 5px; line-height: 12px;">视频审核中</div>
+              </div>
+              <div v-if="item.video_status===2" class="video-status">
+                <i class="el-icon-circle-check"></i>
+                <div style="margin-left: 5px; line-height: 12px;">视频审核通过</div>
+              </div>
+              <div v-if="item.video_status===3" class="video-status">
+                <i class="el-icon-circle-close"></i>
+                <div style="margin-left: 5px; line-height: 12px;">视频审核未通过</div>
+              </div>
+              <div style="display: flex; margin-top: 6px; width: 230px; justify-content: space-between;">
+                <div class="video-num">{{ item.video_num }}次播放</div>
+                <div class="video-date">{{ item.video_date | Dayjs("YYYY-MM-DD") }}</div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="box-right">
@@ -34,7 +52,7 @@ export default {
       videoList: [
         {
           VDID: 1,
-          video_poster: '114514.jpg',
+          video_poster: '1145141.jpg',
           video_url: '1919810.mp4',
           video_num: 1919810,
           video_title: '视频',
@@ -64,23 +82,61 @@ export default {
 
 <style lang="scss" scoped>
 .video-box {
+  margin-bottom: 20px;
   width: 100%;
-  height: 180px;
+  height: 135px;
   display: flex;
   justify-content: space-between;
   .box-left{
     display: flex;
     .img-container {
-      width: 240px;
+      height: 135px;
       .video-poster{
-        width: 100%;
+        height: 100%;
       }
     }
     .video-info {
       margin-left: 20px;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
+      .video-status{
+        font-size: 12px;
+        height: 12px;
+        color: dimgrey;
+        display: flex;
+      }
       .video-title{
+        margin-bottom: 6px;
+        height: 32px;
+        line-height: 16px;
+        font-size: 16px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+      .video-descripe{
+        margin-bottom: 6px;
+        height: 56px;
+        line-height: 14px;
+        font-size: 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+      }
+      .video-num{
+        font-size: 14px;
+        vertical-align:middle;
+        line-height: 21px;
+      }
+      .video-date{
+        font-size: 14px;
+        vertical-align:middle;
+        line-height: 21px;
       }
     }
   }

@@ -121,6 +121,9 @@ export default {
           this.loadPerecent = ( player.buffered.end(0) / player.duration ) * 100;
           this.playPerecent = ( player.currentTime / player.duration ) * 100;
         }
+        if(player.currentTime === player.duration){
+          this.stopMonitor();
+        }
       },500)
     },
     //停止监听播放进度

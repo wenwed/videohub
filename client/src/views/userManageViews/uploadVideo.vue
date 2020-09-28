@@ -134,6 +134,11 @@ export default {
       text-align: center;
     }
   }
+  .video-info{
+    .video-operation{
+      margin-top: 15px;
+    }
+  }
   .poster-uploader:hover {
     border-color: #409EFF;
   }

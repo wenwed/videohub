@@ -140,6 +140,15 @@ export default {
           border-radius: 5px;
           width: 100%;
         }
+        .video-title {
+          font-size: 15px;
+          line-height: 20px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
         .video-title:hover {
           color: #409EFF;
         }
