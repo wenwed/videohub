@@ -101,7 +101,6 @@ router.post('/update', async (req, res) => {
       return res.status(401).json({ code: 401, msg: "请登录" });
     }
     
-    console.log(req.body);
     let values = [ 
       req.body.video_poster, 
       req.body.video_url, 
