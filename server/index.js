@@ -16,10 +16,12 @@ const admin = require('./api/admins.js');
 const user = require('./api/users.js');
 const videotype = require('./api/videotypes');
 const video = require('./api/videos');
+const safecode = require('./api/safecode.js');
 app.use('/api/admin', admin);
 app.use('/api/user', user);
 app.use('/api/tyvideo', videotype);
 app.use('/api/video', video);
+app.use('/api', safecode);
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './static/view/404.html'));
