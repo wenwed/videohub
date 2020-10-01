@@ -36,6 +36,7 @@
           <el-avatar :src="profile" :size="36"></el-avatar>
           <div class="user-name">{{ username }}</div>
         </router-link>
+        <div class="user-name" @click="exitLogin">注销</div>
       </div>
     </div>
 
@@ -64,7 +65,8 @@ export default {
     },
     changeRegister() {
       this.registerVisible = ! this.registerVisible;
-    }
+    },
+    exitLogin() {}
   },
   computed: {
     profile(){
@@ -116,7 +118,7 @@ export default {
       }
     }
     .header-right{
-      width: 250px;
+      width: 300px;
       display: -webkit-flex; /* Safari */
       .notLogin{
         display: flex;
@@ -146,12 +148,12 @@ export default {
         .el-avatar{
           margin-right: 8px;
         }
-        .user-name{
-          color: rgb(97, 89, 89);
-          padding: 0 5px 0 5px;
-          width: 70px;
-          line-height: 36px;
-        }
+      }
+      .user-name{
+        color: rgb(97, 89, 89);
+        padding: 0 5px 0 5px;
+        width: 90px;
+        line-height: 36px;
       }
     }
   }

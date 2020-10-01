@@ -8,6 +8,10 @@
         <el-form-item label="密码" class="form-item">
           <el-input v-model="form.user_password" autocomplete="off" class="form-input" show-password></el-input>
         </el-form-item>
+        <el-form-item label="验证码" class="form-item">
+          <el-input v-model="form.captcha" autocomplete="off" class="form-input" show-password></el-input>
+          <img :src="baseUrl+'/getsafecode'">
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="loginvisible = false">取 消</el-button>
@@ -22,6 +26,7 @@ export default {
   props: [ "loginvisible", "changeVisible" ],
   data() {
     return {
+      baseUrl: "http://127.0.0.1:8633/api",
       formLabelWidth: "400px",
       form: {
         user_name: "",
