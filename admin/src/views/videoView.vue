@@ -62,22 +62,26 @@ export default {
     }
   },
   methods: {
-    async getUnreviewVideo() {
-      await this.$axios.get('/admin/revideolist')
+    //获取所有未审核的视频
+    getUnreviewVideo() {
+      this.$axios.get('/admin/revideolist')
         .then(res => {
           this.videoList = res.data.videolist
         })
     },
+    //某个视频审核通过
     reviewPass( row ) {
       this.reviewForm.VDID = row.VDID
       this.reviewForm.video_status = 2
       this.confirmReview()
     },
+    //某个视频审核未通过
     reviewNotPass( row ) {
       this.reviewForm.VDID = row.VDID
       this.reviewForm.video_status = 3
       this.confirmReview()
     },
+    //确认更改界面
     confirmReview() {
       this.$confirm(`确认该视频审核${this.reviewForm.video_status===2?"":"不"}通过？`, '确认信息', {
         distinguishCancelAndClose: false,
@@ -92,10 +96,10 @@ export default {
           this.reviewForm.video_status = null
         });
     },
-    async postReview() {
-      await this.$axios.post('/admin/revideo', this.reviewForm)
+    //更改视频后获取视频列表
+    postReview() {
+      this.$axios.post('/admin/revideo', this.reviewForm)
         .then(res => {
-          console.log(res)
           this.getUnreviewVideo()
         })
     },

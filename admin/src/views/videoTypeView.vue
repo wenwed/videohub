@@ -67,6 +67,7 @@ export default {
     }
   },
   methods: {
+    //获取所有的视频分区
     getVideoTypes() {
       this.$axios.get("/tyvideo/all")
       .then(res => {

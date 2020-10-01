@@ -31,8 +31,9 @@ export default {
     }
   },
   methods: {
-    async addVT() {
-      await this.$axios.post('/tyvideo/add', this.addForm)
+    //添加视频分区
+    addVT() {
+      this.$axios.post('/tyvideo/add', this.addForm)
         .then(res => {
           console.log(res)
           this.$emit('getVideoTypes')

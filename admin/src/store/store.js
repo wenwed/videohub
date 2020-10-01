@@ -12,9 +12,13 @@ const vuexLocal = new VuexPersistence({
 
 const store = new Vuex.Store({
   state:  Vue.observable({
+    //管理员toekn
     adminToken: "",
+    //管理员id
     ADID: null,
+    //管理员姓名
     name: "",
+    //登录标志
     isLogin: false
   }),
   mutations: {

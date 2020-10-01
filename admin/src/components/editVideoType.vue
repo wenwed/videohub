@@ -33,14 +33,16 @@ export default {
     }
   },
   methods: {
-    async getOneType() {
+    //获取某个分区
+    getOneType() {
       await this.$axios.get(`/tyvideo/one?id=${this.ID}`)
         .then(res => {
           this.editForm.type_tag = res.data.videotype[0].type_tag
           this.editForm.type_descripe = res.data.videotype[0].type_descripe
         })
     },
-    async editVT() {
+    //编辑某个分区
+    editVT() {
       await this.$axios.post('/tyvideo/update', this.editForm)
         .then(res => {
           console.log(res)

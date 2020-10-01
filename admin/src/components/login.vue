@@ -32,8 +32,9 @@ export default {
     }
   },
   methods: {
-    async loginBtn(){
-      await this.$axios.post('/admin/login', this.addform)
+    //管理员登陆
+    loginBtn(){
+      this.$axios.post('/admin/login', this.addform)
         .then(res => {
           if(res.data.flag){
             localStorage.setItem("adminToken", res.data.token)

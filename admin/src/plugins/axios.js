@@ -3,6 +3,7 @@ import axios from "axios"
 
 
 let config = {
+  //api的基础地址，后台更换ip时修改
   baseURL: "http://127.0.0.1:8633/api",
   timeout: 60 * 100,
   headers: { "content-Type": "application/json" }
