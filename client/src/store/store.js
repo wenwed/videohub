@@ -12,7 +12,7 @@ const vuexLocal = new VuexPersistence({
     user_poster: state.poster,
     register_date: state.date,
     user_descripe: state.descripe,
-    login: state.isLogin
+    isLogin: state.isLogin
   })
 })
 

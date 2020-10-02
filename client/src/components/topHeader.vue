@@ -36,7 +36,7 @@
           <el-avatar :src="profile" :size="36"></el-avatar>
           <div class="user-name">{{ username }}</div>
         </router-link>
-        <div class="user-name" @click="exitLogin">注销</div>
+        <div v-if="isLogin" class="user-name" @click="exitLogin">注销</div>
       </div>
     </div>
 
@@ -66,7 +66,22 @@ export default {
     changeRegister() {
       this.registerVisible = ! this.registerVisible;
     },
-    exitLogin() {}
+    exitLogin() {
+      localStorage.removeItem("userToken");
+      localStorage.removeItem("USID");
+      localStorage.removeItem("user_name");
+      localStorage.removeItem("user_poster");
+      localStorage.removeItem("register_date");
+      localStorage.removeItem("user_descripe");
+      localStorage.removeItem("isLogin");
+      this.$store.commit("setToken", null);
+      this.$store.commit("setUSID", null);
+      this.$store.commit("setName", "");
+      this.$store.commit("setPoster", "");
+      this.$store.commit("setDate", "");
+      this.$store.commit("setDescripe", "");
+      this.$store.commit("setLogin", false);
+    }
   },
   computed: {
     profile(){

@@ -3,14 +3,16 @@
     <el-dialog title="登录" :visible.sync="loginvisible">
       <el-form :model="form" class="form">
         <el-form-item label="名称" class="form-item">
-          <el-input v-model="form.user_name" autocomplete="off" class="form-input"></el-input>
+          <el-input v-model="form.user_name" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="密码" class="form-item">
-          <el-input v-model="form.user_password" autocomplete="off" class="form-input" show-password></el-input>
+          <el-input v-model="form.user_password" autocomplete="off" show-password></el-input>
         </el-form-item>
         <el-form-item label="验证码" class="form-item">
-          <el-input v-model="form.captcha" autocomplete="off" class="form-input" show-password></el-input>
-          <img :src="baseUrl+'/getsafecode'">
+          <div>
+            <el-input v-model="form.captcha" autocomplete="off" class="form-input"></el-input>
+            <img :src="baseUrl+'/getsafecode'" style="vertical-align: middle;">
+          </div>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -46,7 +48,7 @@ export default {
             localStorage.setItem("user_poster", res.data.user.user_poster);
             localStorage.setItem("register_date", res.data.user.register_date);
             localStorage.setItem("user_descripe", res.data.user.user_descripe);
-            localStorage.setItem("login", res.data.flag);
+            localStorage.setItem("isLogin", res.data.flag);
             this.$store.commit("setToken", res.data.token);
             this.$store.commit("setUSID", res.data.user.USID);
             this.$store.commit("setName", res.data.user.user_name);
@@ -79,6 +81,11 @@ export default {
         }
         .el-input {
           width: 300px;
+        }
+        .form-input{
+          margin-right: 10px;
+          width: 210px;
+          vertical-align: middle;
         }
       }
       .dialog-footer {

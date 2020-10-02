@@ -3,7 +3,13 @@
     <el-dialog title="注册" :visible.sync="registervisible">
       <el-form :model="form" class="form">
         <el-form-item label="名称" class="form-item">
-          <el-input v-model="form.user_name" autocomplete="off" class="form-input"></el-input>
+          <el-input
+            v-model="form.user_name"
+            autocomplete="off"
+            maxlength="30"
+            show-word-limit
+            class="form-input">
+          </el-input>
         </el-form-item>
         <el-form-item label="密码" class="form-item">
           <el-input v-model="form.user_password" autocomplete="off" class="form-input"></el-input>

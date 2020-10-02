@@ -72,14 +72,14 @@ const vueRouter = new Router({
 });
 
 // 页面刷新时，重新赋值有没登录
-if (window.localStorage.getItem('login')) {
+if (window.localStorage.getItem('isLogin')) {
   store.commit("setToken", window.localStorage.getItem('userToken'));
   store.commit("setUSID", window.localStorage.getItem('USID'));
   store.commit("setName", window.localStorage.getItem('user_name'));
   store.commit("setPoster", window.localStorage.getItem('user_poster'));
   store.commit("setDate", window.localStorage.getItem('register_date'));
   store.commit("setDescripe", window.localStorage.getItem('user_descripe'));
-  store.commit("setLogin", window.localStorage.getItem('login'));
+  store.commit("setLogin", window.localStorage.getItem('isLogin'));
 }
 
 vueRouter.beforeEach((to, from, next) => {

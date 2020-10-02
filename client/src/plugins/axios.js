@@ -36,7 +36,7 @@ _axios.interceptors.response.use(
       localStorage.removeItem("user_poster");
       localStorage.removeItem("register_date");
       localStorage.removeItem("user_descripe");
-      localStorage.removeItem("login");
+      localStorage.removeItem("isLogin");
       this.$store.commit("setToken", null);
       this.$store.commit("setUSID", null);
       this.$store.commit("setName", "");
