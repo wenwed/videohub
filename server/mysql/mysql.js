@@ -115,9 +115,9 @@ exports.getUserInfo = ( values ) => {
   return query( _sql, values );
 }
 
-//查询用户密码
+//查询用户密码及相关信息
 exports.getUserPassword = ( values ) => {
-  let _sql = "select user_password from users where USID=?;";
+  let _sql = "select * from users where user_name=?;";
   return query( _sql, values );
 }
 

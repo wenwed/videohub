@@ -1,24 +1,27 @@
 <template>
   <div class="login-container">
     <el-dialog title="登录" :visible.sync="loginvisible">
-      <el-form :model="form" class="form">
+      <el-form :model="form" class="form" prop="userName">
         <el-form-item label="名称" class="form-item">
           <el-input v-model="form.user_name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码" class="form-item">
+        <el-form-item label="密码" class="form-item" prop="userName">
           <el-input v-model="form.user_password" autocomplete="off" show-password></el-input>
         </el-form-item>
         <el-form-item label="验证码" class="form-item">
           <div>
             <el-input v-model="form.captcha" autocomplete="off" class="form-input"></el-input>
-            <img :src="baseUrl+'/getsafecode'" style="vertical-align: middle;">
+            <img 
+              :src="baseUrl+'/getsafecode'+captchaSrc" 
+              style="vertical-align: middle; cursor: pointer;" 
+              @click="changeCaptcha">
           </div>
         </el-form-item>
+        <el-form-item>
+          <el-button @click="loginvisible = false">取 消</el-button>
+          <el-button type="primary" @click="sendLoginForm">登 录</el-button>
+        </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="loginvisible = false">取 消</el-button>
-        <el-button type="primary" @click="sendLoginForm">登 录</el-button>
-      </div>
     </el-dialog>
   </div>
 </template>
@@ -30,6 +33,7 @@ export default {
     return {
       baseUrl: "http://127.0.0.1:8633/api",
       formLabelWidth: "400px",
+      captchaSrc: "?query=0",
       form: {
         user_name: "",
         user_password: ""
@@ -40,7 +44,6 @@ export default {
     sendLoginForm() {
       this.$axios.post('/user/login', this.form)
         .then(res => {
-          console.log(res.data);
           if(res.data.flag){
             localStorage.setItem("userToken", res.data.token);
             localStorage.setItem("USID", res.data.user.USID);
@@ -60,6 +63,10 @@ export default {
             this.changeVisible();
           }
         })
+    },
+    //更新验证码图片
+    changeCaptcha() {
+      this.captchaSrc = "?query=" + Math.random();
     }
   }
 }
