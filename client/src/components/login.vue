@@ -1,14 +1,14 @@
 <template>
   <div class="login-container">
     <el-dialog title="登录" :visible.sync="loginvisible">
-      <el-form :model="form" class="form" prop="userName">
-        <el-form-item label="名称" class="form-item">
+      <el-form :model="form" class="form" :rules="formRules">
+        <el-form-item label="名称" class="form-item" prop="userName">
           <el-input v-model="form.user_name" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="密码" class="form-item" prop="userName">
+        <el-form-item label="密码" class="form-item" prop="userPassword">
           <el-input v-model="form.user_password" autocomplete="off" show-password></el-input>
         </el-form-item>
-        <el-form-item label="验证码" class="form-item">
+        <el-form-item label="验证码" class="form-item" prop="userCaptcha">
           <div>
             <el-input v-model="form.captcha" autocomplete="off" class="form-input"></el-input>
             <img 
@@ -30,13 +30,51 @@
 export default {
   props: [ "loginvisible", "changeVisible" ],
   data() {
+    let checkName = (rule, value, callback) => {
+      console.log(value);
+      if(!value) {
+        return callback(new Error('姓名不能为空'));
+      }else{
+        callback();
+      }
+    };
+    let checkPass = (rule, value, callback) => {
+      if(!value) {
+        return callback(new Error('密码不能为空'));
+      }else{
+        callback();
+      }
+    };
+    let checkCaptcha = (rule, value, callback) => {
+      if(!value) {
+        return callback(new Error('请输入验证码'));
+      }
+      let cookieCaptcha = this.getCookie("captcha");
+      if(value === cookieCaptcha) {
+        this.changeCaptcha();
+        return callback(new Error('验证码输入错误'));
+      }
+      callback();
+    };
     return {
       baseUrl: "http://127.0.0.1:8633/api",
       formLabelWidth: "400px",
       captchaSrc: "?query=0",
       form: {
         user_name: "",
-        user_password: ""
+        user_password: "",
+        captcha: ""
+      },
+      formRules: {
+        userName: [
+          { validator: checkName, trigger: 'blur' }
+        ],
+        userPassword: [
+          { validator: checkPass, trigger: 'blur' }
+        ],
+        userCaptcha: [
+          { validator: checkCaptcha, trigger: 'blur' }
+        ]
       }
     }
   },

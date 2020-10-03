@@ -16,7 +16,6 @@ router.get("/getsafecode", (req, res) => {
     height: 32
   })
   req.session = captcha.text.toLowerCase();
-  console.log(req.session);
   res.cookie('captcha', req.session);
   res.setHeader("Content-Type", "image/svg+xml");
   res.send(String(captcha.data));
