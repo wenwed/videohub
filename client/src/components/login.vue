@@ -31,26 +31,26 @@ export default {
   props: [ "loginvisible", "changeVisible" ],
   data() {
     let checkName = (rule, value, callback) => {
-      console.log(value);
-      if(!value) {
+      if(!this.form.user_name) {
         return callback(new Error('姓名不能为空'));
       }else{
         callback();
       }
     };
     let checkPass = (rule, value, callback) => {
-      if(!value) {
+      if(!this.form.user_password) {
         return callback(new Error('密码不能为空'));
       }else{
         callback();
       }
     };
     let checkCaptcha = (rule, value, callback) => {
-      if(!value) {
+      if(!this.form.captcha) {
         return callback(new Error('请输入验证码'));
       }
       let cookieCaptcha = this.getCookie("captcha");
-      if(value === cookieCaptcha) {
+      console.log(cookieCaptcha);
+      if(this.form.captcha === cookieCaptcha) {
         this.changeCaptcha();
         return callback(new Error('验证码输入错误'));
       }
@@ -105,6 +105,17 @@ export default {
     //更新验证码图片
     changeCaptcha() {
       this.captchaSrc = "?query=" + Math.random();
+    },
+    //获取cookie中的某个值
+    getCookie(cookieName) {
+      let cName = cookieName + "=";
+      console.log(document.cookie);
+      let cookies = document.cookie.split(';');
+      console.log(cookies);
+      for(let cookie in cookies) {
+        if(cookie.trim().indexOf() === 0)
+          return cookie.substring(cName.length, cookie.trim().length);
+      }
     }
   }
 }

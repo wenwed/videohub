@@ -152,10 +152,10 @@
 
 | 用户重复姓名查询 |  |
 | -------- | -------- |
-| 请求URL  | http://127.0.0.1:8633/api/user/nameuse |
+| 请求URL  | http://127.0.0.1:8633/api/user/nameuse?name=wenwending |
 | 简要描述 | 查询用户姓名是否被使用 |
-| 请求方式 | post |
-| 请求参数 | `{ user_name: "wenwd"}` |
+| 请求方式 | get |
+| 请求参数 |  |
 | 返回示例 | `{ code: 200, msg: "姓名未被使用", flag: true }` |
 
 | 用户注册 |  |

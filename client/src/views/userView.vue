@@ -111,7 +111,7 @@ export default {
 <style lang="scss" scoped>
 .container {
   background-color: rgb(240, 240, 240);
-  height: 560px;
+  height: 100%;
   .main-container {
     width: 70%;
     height: 100%;

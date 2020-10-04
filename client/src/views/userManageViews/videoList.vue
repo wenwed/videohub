@@ -14,15 +14,15 @@
             </div>
             <div>
               <div v-if="item.video_status===1" class="video-status">
-                <i class="el-icon-view"></i>
+                <i class="el-icon-view" style="color: rgb(57, 9, 170);"></i>
                 <div style="margin-left: 5px; line-height: 12px;">视频审核中</div>
               </div>
               <div v-if="item.video_status===2" class="video-status">
-                <i class="el-icon-circle-check"></i>
+                <i class="el-icon-circle-check" style="color: rgb(4, 184, 79);"></i>
                 <div style="margin-left: 5px; line-height: 12px;">视频审核通过</div>
               </div>
               <div v-if="item.video_status===3" class="video-status">
-                <i class="el-icon-circle-close"></i>
+                <i class="el-icon-circle-close" style="color: rgb(221, 6, 6);"></i>
                 <div style="margin-left: 5px; line-height: 12px;">视频审核未通过</div>
               </div>
               <div style="display: flex; margin-top: 6px; width: 230px; justify-content: space-between;">
