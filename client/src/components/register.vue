@@ -1,7 +1,12 @@
 <template>
   <div class="register-container">
-    <el-dialog title="注册" :visible.sync="registervisible">
-      <el-form :model="form" class="form" :rules="formRule">
+    <el-dialog title="注册" :visible.sync="dialogVisible" :before-close="handleDialogClose">
+      <el-form 
+        :model="form" 
+        close-on-click-modal="false" 
+        class="form" 
+        :rules="formRule" 
+        ref="form" >
         <el-form-item label="名称" class="form-item" prop="userName">
           <el-input
             v-model="form.user_name"
@@ -31,11 +36,7 @@
           <el-button>取 消</el-button>
           <el-button type="primary" @click="sendRegisterForm">确 定</el-button>
         </el-form-item>
-      </el-form>     
-      <!-- <div slot="footer" class="dialog-footer">
-        <el-button>取 消</el-button>
-        <el-button type="primary" @click="sendRegisterForm">确 定</el-button>
-      </div> -->
+      </el-form>
     </el-dialog>
   </div>
 </template>
@@ -48,10 +49,14 @@ export default {
       if(!this.form.user_name) {
         return callback(new Error("请输入名称"));
       }
-      if(!this.isUsedName(this.form.user_name)) {
-        return callback(new Error("该名称已被占用"));
-      }
-      callback();
+      this.$axios.get(`/user/nameuse?name=${this.form.user_name}`)
+        .then(res => {
+          if(res.data.flag) {
+            return callback(new Error("该名称已被占用"));
+          } else {
+            callback();
+          }
+        })
     };
     let checkPass = (rule, value, callback) => {
       if(!this.form.user_password) {
@@ -70,6 +75,8 @@ export default {
     };
     return {
       confirm_password: "",
+      // element的默认关闭事件会改变visible的值，而子组件不能修改props的值，在data中创建一个新值
+      dialogVisible: this.registervisible,
       form: {
         user_name: "",
         user_password: "",
@@ -89,20 +96,24 @@ export default {
   },
   methods: {
     sendRegisterForm() {
-      this.$axios.post('/user/register', this.form)
-        .then(res => {
-          if(res.data.code === 200){
-            console.log(res.data)
-            alert("注册成功");
-            this.changeVisible();
-          }
-        });
+      this.$refs.form.validate((valid) => {
+        if(valid){
+          this.$axios.post('/user/register', this.form)
+          .then(res => {
+            if(res.data.code === 200){
+              console.log(res.data)
+              alert("注册成功");
+              this.changeVisible();
+            } else {
+              return false;
+            }
+          });
+        }
+      })
     },
-    isUsedName(userName) {
-      this.$axios.get(`/user/nameuse?name=${userName}`)
-        .then(res => {
-          return res.data.flag;
-        });
+    handleDialogClose(done) {
+      this.changeVisible();
+      done();
     }
   }
 }
@@ -126,9 +137,6 @@ export default {
           width: 300px;
         }
       }
-      // .dialog-footer {
-      //   text-align: center;
-      // }
     }
   }
 }

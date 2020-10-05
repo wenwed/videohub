@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <el-dialog title="登录" :visible.sync="loginvisible">
+    <el-dialog title="登录" :visible.sync="dialogVisible" :before-close="handleDialogClose">
       <el-form :model="form" class="form" :rules="formRules">
         <el-form-item label="名称" class="form-item" prop="userName">
           <el-input v-model="form.user_name" autocomplete="off"></el-input>
@@ -60,6 +60,7 @@ export default {
       baseUrl: "http://127.0.0.1:8633/api",
       formLabelWidth: "400px",
       captchaSrc: "?query=0",
+      dialogVisible: this.loginvisible,
       form: {
         user_name: "",
         user_password: "",
@@ -116,6 +117,10 @@ export default {
         if(cookie.trim().indexOf() === 0)
           return cookie.substring(cName.length, cookie.trim().length);
       }
+    },
+    handleDialogClose(done) {
+      this.changeVisible();
+      done();
     }
   }
 }

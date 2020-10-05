@@ -71,7 +71,7 @@ const vueRouter = new Router({
   ]
 });
 
-// 页面刷新时，重新赋值有没登录
+// 页面刷新时，重新赋值登录信息
 if (window.localStorage.getItem('isLogin')) {
   store.commit("setToken", window.localStorage.getItem('userToken'));
   store.commit("setUSID", window.localStorage.getItem('USID'));
@@ -84,7 +84,7 @@ if (window.localStorage.getItem('isLogin')) {
 
 vueRouter.beforeEach((to, from, next) => {
   if(to.matched.some(r => r.meta.requiresAuth)){
-    if(window.localStorage.getItem('login') !== "true"){
+    if(window.localStorage.getItem('isLogin') !== "true"){
       next({ name: "404NotFound" });
     }else{
       next();

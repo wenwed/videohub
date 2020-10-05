@@ -32,7 +32,7 @@
           <div class="user-descripe">
             {{ userdescripe }}
           </div>
-          <div class="person-center">
+          <div class="person-center" v-if="isMyself">
             <router-link to="/account">
               <p class="center-text">个人中心</p>
             </router-link>
