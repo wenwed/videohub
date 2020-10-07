@@ -60,8 +60,8 @@ export default {
 <style lang="scss" scoped>
 .main-body{
   width: 70%;
-  .avatar-uploader{}
-  .user-name{}
-  .user-descripe{}
+  // .avatar-uploader{}
+  // .user-name{}
+  // .user-descripe{}
 }
 </style>
