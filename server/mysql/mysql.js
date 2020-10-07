@@ -254,3 +254,21 @@ exports.getVideoStatus = ( values ) => {
   let _sql = "select video_status from videos where VDID=?;";
   return query( _sql, values );
 }
+
+//获取所有有效的视频封面
+exports.getUseOfPoster = ( values ) => {
+  let _sql = "select * from videos where video_poster=?;";
+  return query( _sql, values );
+}
+
+//获取所有有效的视频文件
+exports.getUseOfVideo = ( values ) => {
+  let _sql = "select * from videos where video_url=?;";
+  return query( _sql, values );
+}
+
+//获取所有有效的用户头像
+exports.getUseOfAvatar = ( values ) => {
+  let _sql = "select * from users where user_poster=?;";
+  return query( _sql, values );
+}
