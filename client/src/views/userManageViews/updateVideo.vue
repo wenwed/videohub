@@ -6,12 +6,15 @@
           上传视频
           <el-upload
             drag
-            :action="baseUrl+'/video/vdfile'"
+            :action="baseUrl + '/video/vdfile'"
             :on-success="handleVideoSuccess"
-            multiple>
+            multiple
+          >
             <div>
               <i class="el-icon-upload"></i>
-              <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+              <div class="el-upload__text">
+                将文件拖到此处，或<em>点击上传</em>
+              </div>
             </div>
           </el-upload>
         </div>
@@ -19,21 +22,22 @@
           上传封面
           <el-upload
             class="poster-uploader"
-            :action="baseUrl+'/video/poster'"
+            :action="baseUrl + '/video/poster'"
             :show-file-list="false"
-            :on-success="handlePosterSuccess">
-            <img v-if="form.video_poster"
-              :src="baseUrl+'/video/getposter?poster='+form.video_poster"
-              class="video_poster">
+            :on-success="handlePosterSuccess"
+          >
+            <img
+              v-if="form.video_poster"
+              :src="baseUrl + '/video/getposter?poster=' + form.video_poster"
+              class="video_poster"
+            />
             <i v-else class="el-icon-plus uploader-icon"></i>
           </el-upload>
         </div>
         <div class="video-info">
           <p>标题：</p>
           <div class="video-title">
-            <el-input
-              v-model="form.video_title"
-              placeholder="请输入内容">
+            <el-input v-model="form.video_title" placeholder="请输入内容">
             </el-input>
           </div>
           <p>选择分区：</p>
@@ -43,16 +47,14 @@
                 v-for="item in tagList"
                 :key="item.VTID"
                 :label="item.type_tag"
-                :value="item.VTID">
+                :value="item.VTID"
+              >
               </el-option>
             </el-select>
           </div>
           <p>视频简介：</p>
           <div class="video-descripe">
-            <el-input
-              type="textarea"
-              :rows="2"
-              v-model="form.video_descripe">
+            <el-input type="textarea" :rows="2" v-model="form.video_descripe">
             </el-input>
           </div>
           <div class="video-operation">
@@ -78,25 +80,23 @@ export default {
         video_title: "",
         video_descripe: "",
       },
-      tagList: []
-    }
+      tagList: [],
+    };
   },
   methods: {
     getVideoInfo() {
-      this.$axios.get(`/video/videoinfo?vdid=${this.id}`)
-        .then(res => {
-          this.form.video_poster = res.data.videoinfo[0].video_poster;
-          this.form.video_url = res.data.videoinfo[0].video_url;
-          this.form.video_type = res.data.videoinfo[0].video_type;
-          this.form.video_title = res.data.videoinfo[0].video_title;
-          this.form.video_descripe = res.data.videoinfo[0].video_descripe;
-        })
+      this.$axios.get(`/video/videoinfo?vdid=${this.id}`).then((res) => {
+        this.form.video_poster = res.data.videoinfo[0].video_poster;
+        this.form.video_url = res.data.videoinfo[0].video_url;
+        this.form.video_type = res.data.videoinfo[0].video_type;
+        this.form.video_title = res.data.videoinfo[0].video_title;
+        this.form.video_descripe = res.data.videoinfo[0].video_descripe;
+      });
     },
     getAllTags() {
-      this.$axios.get('/tyvideo/all')
-        .then(res => {
-          this.tagList = res.data.videotypes;
-        })
+      this.$axios.get("/tyvideo/all").then((res) => {
+        this.tagList = res.data.videotypes;
+      });
     },
     handleVideoSuccess(res) {
       this.form.video_url = res.video;
@@ -105,35 +105,34 @@ export default {
       this.form.video_poster = res.video_poster;
     },
     confirmForm() {
-      this.$axios.post('/video/update', this.form)
-        .then(res => {
-          if(res.data.code === 200){
-            alert("修改成功");
-          }
-        })
-    }
+      this.$axios.post("/video/update", this.form).then((res) => {
+        if (res.data.code === 200) {
+          alert("修改成功");
+        }
+      });
+    },
   },
   created() {
     this.getVideoInfo();
     this.getAllTags();
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.video-container{
+.video-container {
   width: 500px;
-  .poster-uploader{
+  .poster-uploader {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
     cursor: pointer;
     position: relative;
     overflow: hidden;
     width: 360px;
-    .video_poster{
+    .video_poster {
       width: 100%;
     }
-    .uploader-icon{
+    .uploader-icon {
       font-size: 28px;
       color: #8c939d;
       width: 360px;
@@ -143,7 +142,7 @@ export default {
     }
   }
   .poster-uploader:hover {
-    border-color: #409EFF;
+    border-color: #409eff;
   }
 }
 </style>

@@ -5,12 +5,12 @@
 </template>
 
 <script>
-import topHeader from '../components/topHeader.vue';
+import topHeader from "../components/topHeader.vue";
 export default {
   components: {
-    topHeader
-  }
-}
+    topHeader,
+  },
+};
 </script>
 
 <style lang="scss" scoped>

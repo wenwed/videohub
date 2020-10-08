@@ -5,7 +5,7 @@ const path = require('path');
 module.exports = {
     delAllUseless: () => {
         let videoFiles = fs.readdirSync(path.resolve(__dirname, "../static/video"));
-        for (let videoFile in videoFiles) {
+        for (let videoFile of videoFiles) {
             let value = [videoFile];
             mysql.getUseOfVideo(value)
                 .then(res => {
@@ -15,19 +15,19 @@ module.exports = {
                     }
                 })
         }
-        let posterFiles = fs.readdirSync(path.resolve(__dirname, "../static/poster"));
-        for (let posterFile in posterFiles) {
+        let posterFiles = fs.readdirSync(path.resolve(__dirname, "../static/videoPoster"));
+        for (let posterFile of posterFiles) {
             let value = [posterFile];
             mysql.getUseOfPoster(value)
                 .then(res => {
                     if (res[0].num === 0) {
-                        fs.unlinkSync(path.resolve(__dirname, "../static/video/" + posterFile));
+                        fs.unlinkSync(path.resolve(__dirname, "../static/videoPoster/" + posterFile));
                         console.log("删除闲置封面资源:" + posterFile);
                     }
                 })
         }
         let avatarFiles = fs.readdirSync(path.resolve(__dirname, "../static/userPoster"));
-        for (let avatarFile in avatarFiles) {
+        for (let avatarFile of avatarFiles) {
             let value = [avatarFile];
             mysql.getUseOfAvatar(value)
                 .then(res => {
