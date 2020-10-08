@@ -100,3 +100,9 @@ const mysql = require('../mysql/mysql.js');
 //   .then(res => {
 //     console.log(res[0].video_status)
 //   })
+
+// let values = [1];
+// mysql.getUseOfPoster(values)
+//   .then(res => {
+//     console.log(res[0].num == 0)
+//   })

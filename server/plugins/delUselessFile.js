@@ -4,7 +4,17 @@ const path = require('path');
 
 modules.exports = {
     delAllUseless: () => {
-        let musicFiles = fs.readdirSync(path.resolve(__dirname, "../static/music"));
+        let videoFiles = fs.readdirSync(path.resolve(__dirname, "../static/video"));
+        for(let videoFile in videoFiles) {
+            let value = [ videoFile ];
+            mysql.getUseOfVideo(value)
+                .then(res => {
+                    if(res[0].num === 0) {
+                        fs.unlinkSync(path.resolve(__dirname, "../static/video/" + videoFile));
+                        console.log("删除闲置图片资源:" + videoFile);
+                    }
+                })
+        }
         let posterFiles = fs.readdirSync(path.resolve(__dirname, "../static/poster"));
     }
 }

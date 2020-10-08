@@ -255,20 +255,20 @@ exports.getVideoStatus = ( values ) => {
   return query( _sql, values );
 }
 
-//获取所有有效的视频封面
+//查询某个视频封面是否被使用
 exports.getUseOfPoster = ( values ) => {
-  let _sql = "select * from videos where video_poster=?;";
+  let _sql = "select count(video_poster) as num from videos where video_poster=?;";
   return query( _sql, values );
 }
 
-//获取所有有效的视频文件
+//查询某个视频文件是否被使用
 exports.getUseOfVideo = ( values ) => {
-  let _sql = "select * from videos where video_url=?;";
+  let _sql = "select count(video_url) as num from videos where video_url=?;";
   return query( _sql, values );
 }
 
-//获取所有有效的用户头像
+//查询某个用户头像是否被使用
 exports.getUseOfAvatar = ( values ) => {
-  let _sql = "select * from users where user_poster=?;";
+  let _sql = "select count(user_poster) as num from users where user_poster=?;";
   return query( _sql, values );
 }
