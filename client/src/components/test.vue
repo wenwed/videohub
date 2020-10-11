@@ -95,6 +95,7 @@ export default {
     display: inline;
 
     .slide-pages li{
+      display: inline-block;
       list-style: none;
 
       width: 7px;

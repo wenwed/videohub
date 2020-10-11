@@ -4,35 +4,49 @@
       <div class="header-left">
         <div class="content">
           <router-link to="/home">
-            <img src="../../public/logo.png" class="logo-img" alt="logo">
+            <div class="logo-img"></div>
+            <!-- <img src="../../public/logo.png" class="logo-img" alt="logo"> -->
           </router-link>
         </div>
         <div class="content">
-          <router-link to="/home">
-            首页
-          </router-link>
+          <router-link to="/home"> 首页 </router-link>
         </div>
         <div class="content">
           <!-- <router-link to=""> -->
-            排行
+          排行
           <!-- </router-link> -->
         </div>
         <el-input
-        class="search-input"
-        type="text"
-        placeholder="关键词"
-        suffix-icon="el-icon-search">
+          class="search-input"
+          type="text"
+          placeholder="关键词"
+          suffix-icon="el-icon-search"
+        >
         </el-input>
       </div>
       <div class="header-right">
         <!-- 未登录显示的内容 -->
         <div v-if="!isLogin" class="notLogin">
-          <el-avatar @click="changeLogin"  :src="profile" :size="36"></el-avatar>
-          <input class="login-btn" type="button" value="登录" @click="changeLogin">
-          <input class="register-btn" type="button" value="注册" @click="changeRegister">
+          <el-avatar @click="changeLogin" :src="profile" :size="36"></el-avatar>
+          <input
+            class="login-btn"
+            type="button"
+            value="登录"
+            @click="changeLogin"
+          />
+          <input
+            class="register-btn"
+            type="button"
+            value="注册"
+            @click="changeRegister"
+          />
         </div>
         <!-- 登陆后显示的内容 -->
-        <router-link v-if="isLogin" class="isLogion" :to="'/user/' + $store.state.USID">
+        <router-link
+          v-if="isLogin"
+          class="isLogion"
+          :to="'/user/' + $store.state.USID"
+        >
           <el-avatar :src="profile" :size="36"></el-avatar>
           <div class="user-name">{{ username }}</div>
         </router-link>
@@ -40,31 +54,39 @@
       </div>
     </div>
 
-    <login :changeVisible="changeLogin" :loginvisible="loginVisible" v-if="loginVisible"></login>
-    <register :changeVisible="changeRegister" :registervisible="registerVisible" v-if="registerVisible"></register>
+    <login
+      :changeVisible="changeLogin"
+      :loginvisible="loginVisible"
+      v-if="loginVisible"
+    ></login>
+    <register
+      :changeVisible="changeRegister"
+      :registervisible="registerVisible"
+      v-if="registerVisible"
+    ></register>
   </div>
 </template>
 
 <script>
-import login from './login.vue'
-import register from './register.vue'
+import login from "./login.vue";
+import register from "./register.vue";
 export default {
   components: {
     login,
-    register
+    register,
   },
   data() {
     return {
       loginVisible: false,
-      registerVisible: false
-    }
+      registerVisible: false,
+    };
   },
   methods: {
     changeLogin() {
       this.loginVisible = !this.loginVisible;
     },
     changeRegister() {
-      this.registerVisible = ! this.registerVisible;
+      this.registerVisible = !this.registerVisible;
     },
     exitLogin() {
       localStorage.removeItem("userToken");
@@ -81,90 +103,97 @@ export default {
       this.$store.commit("setDate", "");
       this.$store.commit("setDescripe", "");
       this.$store.commit("setLogin", false);
-    }
+    },
   },
   computed: {
-    profile(){
-      let tem = this.$store.state.poster?this.$store.state.poster : "default.jpg";
+    profile() {
+      let tem = this.$store.state.poster
+        ? this.$store.state.poster
+        : "default.jpg";
       return "http://127.0.0.1:8633/api/user/getposter?poster=" + tem;
     },
-    username(){
+    username() {
       return this.$store.state.name;
     },
-    isLogin(){
+    isLogin() {
       return this.$store.state.isLogin;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-.headerContainer{
+.headerContainer {
   background-color: white;
   height: 45px;
   width: 100%;
   box-shadow: 0px 2px 1px rgb(221, 218, 218);
   margin-bottom: 2px;
-  .header{
+  .header {
     height: 100%;
     width: 90%;
     display: -webkit-flex; /* Safari */
     display: flex;
     justify-content: space-between;
     margin: 10px 5% 15px 5%;
-    .header-left{
+    .header-left {
       width: 600px;
       display: -webkit-flex; /* Safari */
       display: flex;
       justify-content: space-between;
-      .content{
+      .content {
         padding: 0 5px 0 5px;
         width: 70px;
         line-height: 36px;
-        .logo-img{
-          width: 100%;
+        .logo-img {
+          width: 30px;
+          height: 100%;
+          background-image: url(../../public/logo.png);
+          background-repeat: no-repeat;
+          background-position: center;
         }
       }
-      .el-input__inner{
+      .el-input__inner {
         height: 35px;
       }
-      .el-icon-search{
+      .el-icon-search {
         height: 35px;
       }
     }
-    .header-right{
+    .header-right {
       width: 300px;
       display: -webkit-flex; /* Safari */
-      .notLogin{
+      .notLogin {
         display: flex;
-        .el-avatar{
+        .el-avatar {
           margin-right: 8px;
         }
-        .login-btn{
+        .login-btn {
           width: 45px;
           height: 36px;
           background-color: white;
           border-width: 0;
           outline: none;
         }
-        .register-btn{
+        .register-btn {
           width: 45px;
           height: 36px;
           background-color: white;
           border-width: 0;
           outline: none;
         }
-        .login-btn:hover, .register-btn:hover{
+        .login-btn:hover,
+        .register-btn:hover {
           cursor: pointer;
         }
       }
-      .isLogion{
+      .isLogion {
         display: flex;
-        .el-avatar{
+        .el-avatar {
           margin-right: 8px;
         }
       }
-      .user-name{
+      .user-name {
         color: rgb(97, 89, 89);
         padding: 0 5px 0 5px;
         width: 90px;
@@ -173,8 +202,12 @@ export default {
     }
   }
 }
-a, a:link, a:visited, a:hover, a:active {
-    text-decoration: none;
-    color: black;
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+  text-decoration: none;
+  color: black;
 }
 </style>

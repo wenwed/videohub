@@ -293,6 +293,12 @@ export default {
       return (this.playPerecent / 100) * 614;
     },
   },
+  mounted() {
+    console.log(1);
+    let player = this.$refs.videoplayer;
+    player.play();
+    // player.muted = false;
+  },
 };
 </script>
 
