@@ -43,7 +43,7 @@ router.post('/register', async (req, res) => {
 //管理员登陆
 router.post('/login', async (req, res) => {
   let values = [req.body.ADID];
-  await mysql.getAdminById(values)
+  await mysql.getAdminByName(values)
     .then(result => {
       let passFlag = bcrypt.compareSync(req.body.admin_password, result[0].admin_password);
       if (passFlag) {

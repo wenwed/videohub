@@ -1,9 +1,7 @@
 <template>
   <div class="videoContainer">
     <el-main class="vdMain">
-      <el-table
-        :data="videoList"
-        style="width: 100%">
+      <el-table :data="videoList" style="width: 100%">
         <el-table-column type="expand" class="expandForm">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
@@ -31,14 +29,8 @@
             </el-form>
           </template>
         </el-table-column>
-        <el-table-column
-          label="ID"
-          prop="VDID">
-        </el-table-column>
-        <el-table-column
-          label="标题"
-          prop="video_title">
-        </el-table-column>
+        <el-table-column label="ID" prop="VDID"> </el-table-column>
+        <el-table-column label="标题" prop="video_title"> </el-table-column>
         <el-table-column label="审核">
           <template slot-scope="props">
             <i class="el-icon-success" @click="reviewPass(props.row)"></i>
@@ -56,74 +48,78 @@ export default {
     return {
       reviewForm: {
         VDID: null,
-        video_status: null
+        video_status: null,
       },
-      videoList: []
-    }
+      videoList: [],
+    };
   },
   methods: {
     //获取所有未审核的视频
     getUnreviewVideo() {
-      this.$axios.get('/admin/revideolist')
-        .then(res => {
-          this.videoList = res.data.videolist
-        })
+      this.$axios.get("/admin/revideolist").then((res) => {
+        this.videoList = res.data.videolist;
+      });
     },
     //某个视频审核通过
-    reviewPass( row ) {
-      this.reviewForm.VDID = row.VDID
-      this.reviewForm.video_status = 2
-      this.confirmReview()
+    reviewPass(row) {
+      this.reviewForm.VDID = row.VDID;
+      this.reviewForm.video_status = 2;
+      this.confirmReview();
     },
     //某个视频审核未通过
-    reviewNotPass( row ) {
-      this.reviewForm.VDID = row.VDID
-      this.reviewForm.video_status = 3
-      this.confirmReview()
+    reviewNotPass(row) {
+      this.reviewForm.VDID = row.VDID;
+      this.reviewForm.video_status = 3;
+      this.confirmReview();
     },
     //确认更改界面
     confirmReview() {
-      this.$confirm(`确认该视频审核${this.reviewForm.video_status===2?"":"不"}通过？`, '确认信息', {
-        distinguishCancelAndClose: false,
-        confirmButtonText: '确认',
-        cancelButtonText: '取消'
-      })
+      this.$confirm(
+        `确认该视频审核${this.reviewForm.video_status === 2 ? "" : "不"}通过？`,
+        "确认信息",
+        {
+          distinguishCancelAndClose: false,
+          confirmButtonText: "确认",
+          cancelButtonText: "取消",
+        }
+      )
         .then(() => {
-          this.postReview()
+          this.postReview();
         })
         .catch(() => {
-          this.reviewForm.VDID = null
-          this.reviewForm.video_status = null
+          this.reviewForm.VDID = null;
+          this.reviewForm.video_status = null;
         });
     },
     //更改视频后获取视频列表
     postReview() {
-      this.$axios.post('/admin/revideo', this.reviewForm)
-        .then(res => {
-          this.getUnreviewVideo()
-        })
+      this.$axios.post("/admin/revideo", this.reviewForm).then(() => {
+        this.getUnreviewVideo();
+      });
     },
   },
   created() {
-    this.getUnreviewVideo()
-  }
-}
+    this.getUnreviewVideo();
+  },
+};
 </script>
 
 <style lang="scss" scoped>
-.videoContainer{
+.videoContainer {
   width: 100%;
 
-  .vdMain{
+  .vdMain {
     width: 100%;
 
-    .el-form-item{
+    .el-form-item {
       margin-right: 0;
       margin-bottom: 0;
       width: 50%;
     }
 
-    .formPoster, .formVideo, .formDescripe{
+    .formPoster,
+    .formVideo,
+    .formDescripe {
       width: 100%;
     }
   }
