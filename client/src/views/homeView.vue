@@ -69,41 +69,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home-page {
-  background-color: rgb(231, 243, 243);
-  .home-body {
-    background-color: white;
-    width: 70%;
-    padding: 10px;
-    margin: 0 15% 0 15%;
-
-    .body-top {
-      padding-top: 15px;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: nowrap;
-      .carousel-class {
-        width: 448px;
-        height: 215px;
-        // width: 600px;
-        // height: 288px;
-        margin-left: 39px;
-      }
-      .carouse-card {
-        display: flex;
-        flex-wrap: wrap;
-        align-content: flex-start;
-        .carouse-box {
-          padding-left: 20px;
-          padding-bottom: 18px;
-          width: 144px;
-          height: 81px;
-          .box-img {
-            width: 100%;
-          }
-        }
-      }
-    }
-  }
-}
 </style>

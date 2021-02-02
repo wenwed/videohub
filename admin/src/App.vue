@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-
     <div class="app-header">
       <span class="app-title">后台管理系统</span>
       <div class="header-right">
@@ -13,81 +12,81 @@
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
         <el-menu>
           <el-submenu index="1">
-            <template slot="title"><i class="el-icon-message"></i>视频分区管理</template>
+            <template slot="title"
+              ><i class="el-icon-message"></i>视频分区管理</template
+            >
             <el-menu-item-group>
               <template slot="title">视频分区</template>
               <router-link to="/videotype">
-                <el-menu-item index="1-1">
-                  视频分区
-                </el-menu-item>
+                <el-menu-item index="1-1"> 视频分区 </el-menu-item>
               </router-link>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="2">
-            <template slot="title"><i class="el-icon-menu"></i>视频管理</template>
+            <template slot="title"
+              ><i class="el-icon-menu"></i>视频管理</template
+            >
             <el-menu-item-group>
               <template slot="title">视频</template>
               <router-link to="/video">
-                <el-menu-item index="2-1">
-                  视频审核
-                </el-menu-item>
+                <el-menu-item index="2-1"> 视频审核 </el-menu-item>
               </router-link>
             </el-menu-item-group>
           </el-submenu>
           <el-submenu index="3">
-            <template slot="title"><i class="el-icon-setting"></i>用户管理</template>
+            <template slot="title"
+              ><i class="el-icon-setting"></i>用户管理</template
+            >
             <el-menu-item-group>
               <template slot="title">分组一</template>
               <router-link to="/user">
-                <el-menu-item index="3-1">
-                  用户管理
-                </el-menu-item>
+                <el-menu-item index="3-1"> 用户管理 </el-menu-item>
               </router-link>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
       </el-aside>
 
-    <el-container>
-      <router-view></router-view>
+      <el-container>
+        <router-view></router-view>
+      </el-container>
     </el-container>
-  </el-container>
 
-  <login></login>
+    <login></login>
   </div>
 </template>
 
 <script>
-import login from "./components/login.vue"
+import login from "./components/login.vue";
 export default {
   data() {
     return {
-      nowTime: new Date()
-    }
+      nowTime: new Date(),
+    };
   },
   methods: {
     currentTime() {
       setInterval(() => {
-        this.nowTime = new Date()
-      }, 1000)
-    }
+        this.nowTime = new Date();
+      }, 1000);
+    },
   },
   components: {
-    login
+    login,
   },
   computed: {
     adminid() {
-      return this.$store.state.ADID
+      return this.$store.state.ADID;
     },
     adminname() {
-      return this.$store.state.name
-    }
+      return this.$store.state.name;
+    },
   },
   created() {
-    this.currentTime()
+    this.currentTime();
   },
-  name: 'App'
-}
+  name: "App",
+};
 </script>
 <style lang="scss" scoped>
 #app {
@@ -99,17 +98,17 @@ export default {
   padding-right: 0.5%;
   color: #2c3e50;
 
-  .app-header{
+  .app-header {
     display: flex;
     justify-content: space-between;
     padding-left: 20px;
     padding-right: 20px;
 
-    .app-title{
+    .app-title {
       font-size: 20px;
     }
 
-    .header-right{
+    .header-right {
       width: 230px;
       display: flex;
       justify-content: space-between;
@@ -122,7 +121,7 @@ export default {
       text-decoration: none;
       color: black;
     }
-    
+
     .router-link-active {
       text-decoration: none;
     }
