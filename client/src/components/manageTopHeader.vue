@@ -1,54 +1,59 @@
 <template>
-  <div class="header-container">
-    <div class="header-left">
-      <div class="header-logo">
-        <router-link to="/home">
-          logo
-        </router-link>
-      </div>
+    <div class="header clearfix">
+        <div class="header-left fl">
+            <router-link to="/home">
+                <div class="logo"></div>
+            </router-link>
+        </div>
+        <div class="header-right fr">
+            <div class="welcome">欢迎，{{ personName }}！</div>
+        </div>
     </div>
-    <div class="header-right">
-      <div class="header-name">
-        欢迎，{{ personName }}！
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      personName: this.$store.state.name
-    }
-  }
-}
+    data() {
+        return {
+            personName: this.$store.state.name,
+        };
+    },
+};
 </script>
 
 <style lang="scss" scoped>
+a {
+    color: #666;
+    text-decoration: none;
+}
 
-.header-container{
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
-  width: 100%;
-  height: 35px;
-  display: flex;
-  justify-content: space-between;
-  .header-left{
-    margin-left: 30px;
-    .header-logo{
-      line-height: 35px;
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.header {
+    width: 100%;
+    height: 35px;
+    line-height: 35px;
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+
+    .header-left {
+        padding-left: 35px;
+
+        .logo {
+            width: 100px;
+            height: 35px;
+            background: url(../../public/logo.png) no-repeat center;
+        }
     }
-  }
-  .header-right{
-    margin-right: 30px;
-    display: inline-block;
-    vertical-align: middle;
-    .header-name{
-      line-height: 35px;
+
+    .header-right {
+        padding-right: 40px;
     }
-  }
 }
 </style>

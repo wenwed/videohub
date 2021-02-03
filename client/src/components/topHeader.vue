@@ -1,10 +1,12 @@
 <template>
-    <div class="header clearfix">
+    <div class="header">
         <div class="w">
             <!-- header左边 -->
             <div class="header-left fl">
                 <ul>
-                    <li></li>
+                    <li class="logo">
+                        <router-link to="/home"></router-link>
+                    </li>
                     <li>
                         <router-link to="/home">首页</router-link>
                     </li>
@@ -15,18 +17,56 @@
                 </ul>
             </div>
             <!-- header右边 -->
-            <div class="header-right fr"></div>
+            <div class="header-right fr">
+                <div v-if="!isLogin">
+                    <div class="avatar fl">
+                        <img :src="profile" alt="头像" />
+                    </div>
+                    <!-- 账号操作 -->
+                    <div class="account fl">
+                        <div class="no-login">
+                            <button @click="changeLogin">登录</button>
+                            <button @click="changeRegister">注册</button>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="isLogin">
+                    <router-link :to="'/user/' + $store.state.USID">
+                        <div class="avatar fl">
+                            <img :src="profile" alt="头像" />
+                        </div>
+                    </router-link>
+                    <!-- 账号操作 -->
+                    <div class="account fl">
+                        <div class="logined">
+                            <button @click="exitLogin">注销</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <login
+            :changeVisible="changeLogin"
+            :loginvisible="loginVisible"
+            v-if="loginVisible"
+        ></login>
+
+        <register
+            :changeVisible="changeRegister"
+            :registervisible="registerVisible"
+            v-if="registerVisible"
+        ></register>
     </div>
 </template>
 
 <script>
-// import login from "./login.vue";
-// import register from "./register.vue";
+import login from "./login.vue";
+import register from "./register.vue";
 export default {
     components: {
-        // login,
-        // register,
+        login,
+        register,
     },
     data() {
         return {
@@ -80,19 +120,11 @@ a {
     color: #666;
     text-decoration: none;
 }
+
 ul {
     margin: 0;
     padding: 0;
     list-style: none;
-}
-
-.clearfix::after {
-    content: "";
-    display: block;
-    visibility: hidden;
-    height: 0;
-    line-height: 0;
-    clear: 0;
 }
 
 .w {
@@ -111,7 +143,9 @@ ul {
 .header {
     width: 100%;
     height: 35px;
+    line-height: 35px;
     background-color: #fff;
+    border-bottom: 1px solid #ccc;
 
     // header左边
     .header-left {
@@ -120,18 +154,50 @@ ul {
                 float: left;
                 width: 70px;
                 height: 35px;
-                line-height: 35px;
                 font-size: 16px;
                 text-align: center;
             }
 
-            li:nth-child(1) {
+            .logo {
                 width: 100px;
                 background: url(../../public/logo.png) no-repeat center;
+
+                a {
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                }
             }
         }
     }
 
     // header右边
+    .header-right {
+        .avatar {
+            width: 30px;
+            height: 30px;
+            margin-top: 3px;
+            border-radius: 15px;
+            overflow: hidden;
+            background-color: aqua;
+
+            img {
+                width: 100%;
+            }
+        }
+        .account {
+            width: 80px;
+            font-size: 14px;
+
+            button {
+                width: 40px;
+                height: 35px;
+                border: 0;
+                background-color: #fff;
+                cursor: pointer;
+                outline: 0;
+            }
+        }
+    }
 }
 </style>
