@@ -1,7 +1,10 @@
 <template>
-  <div class="home-page">
+  <div>
+    <!-- 头部 -->
     <top-header></top-header>
-    <div class="home-body">
+    <!-- 主体 -->
+    <div class="home-body w">
+      <!-- 轮播栏 + 推荐 -->
       <div class="body-top">
         <carousel :videolist="allRank" class="carousel-class"></carousel>
         <div class="carouse-card">
@@ -15,6 +18,7 @@
           </div>
         </div>
       </div>
+      <!-- 各区数据 -->
       <div class="type-body">
         <type-rank
           class="type-rank"
@@ -69,4 +73,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+/* 页面宽度 */
+w {
+  width: 1200px;
+  margin: 0 auto;
+}
 </style>
