@@ -6,7 +6,7 @@
             </router-link>
         </div>
         <div class="header-right fr">
-            <div class="welcome">欢迎，{{ personName }}！</div>
+            <span>欢迎，{{ personName }}！</span>
         </div>
     </div>
 </template>

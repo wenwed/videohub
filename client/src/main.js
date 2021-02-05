@@ -8,7 +8,6 @@ import dayjs from 'dayjs'
 Vue.config.productionTip = false
 
 //导入normalize.css进行css初始化
-// import 'normalize.css/narmalize.css'
 import 'normalize.css/normalize.css'
 
 //导入element-ui

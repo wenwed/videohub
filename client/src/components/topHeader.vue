@@ -15,6 +15,10 @@
                         排行
                     </li>
                 </ul>
+                <div class="search">
+                    <input type="text" placeholder="测试" />
+                    <span class="el-icon-search"></span>
+                </div>
             </div>
             <!-- header右边 -->
             <div class="header-right fr">
@@ -35,6 +39,7 @@
                         <div class="avatar fl">
                             <img :src="profile" alt="头像" />
                         </div>
+                        <!-- <h3>{{ username }}</h3> -->
                     </router-link>
                     <!-- 账号操作 -->
                     <div class="account fl">
@@ -150,6 +155,7 @@ ul {
     // header左边
     .header-left {
         ul {
+            float: left;
             li {
                 float: left;
                 width: 70px;
@@ -167,6 +173,31 @@ ul {
                     width: 100%;
                     height: 100%;
                 }
+            }
+        }
+        .search {
+            float: left;
+            width: 200px;
+            height: 30px;
+            margin: 2px 0 0 30px;
+            padding-left: 14px;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            font-size: 12px;
+
+            input {
+                float: left;
+                display: block;
+                width: 173px;
+                height: 30px;
+                padding: 0;
+                border: 0;
+                outline: none;
+            }
+
+            span {
+                font-size: 14px;
+                cursor: pointer;
             }
         }
     }
@@ -195,7 +226,7 @@ ul {
                 border: 0;
                 background-color: #fff;
                 cursor: pointer;
-                outline: 0;
+                outline: none;
             }
         }
     }
