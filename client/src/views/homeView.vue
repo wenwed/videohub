@@ -3,7 +3,7 @@
         <!-- 顶部导航栏 -->
         <top-header></top-header>
         <!-- 导航区域 -->
-        <div class="nav w">
+        <div class="nav clearfix">
             <!-- 轮播栏 -->
             <div class="carousel"></div>
             <!-- 推荐 -->
@@ -23,18 +23,24 @@
                 </li>
             </ul>
         </div>
+        <!-- 分区导航 -->
+        <type-rank
+            v-for="item in allTypes"
+            :typetag="item.VTID"
+            :key="item.VTID"
+        ></type-rank>
     </div>
 </template>
 
 <script>
 import topHeader from "../components/topHeader.vue";
 // import carousel from "../components/carousel.vue";
-// import typeRank from "../components/typeRank.vue";
+import typeRank from "../components/typeRank.vue";
 export default {
     components: {
         // carousel,
         topHeader,
-        // typeRank,
+        typeRank,
     },
     data() {
         return {
@@ -73,6 +79,15 @@ export default {
 a {
     color: #666;
     text-decoration: none;
+}
+
+.clearfix::after {
+    content: "";
+    display: block;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+    clear: both;
 }
 
 .nav {
