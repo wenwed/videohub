@@ -20,7 +20,7 @@ module.exports = {
             let value = [posterFile];
             mysql.getUseOfPoster(value)
                 .then(res => {
-                    if (res[0].num === 0) {
+                    if (res[0].num === 0 && posterFile != "default.jpg") {
                         fs.unlinkSync(path.resolve(__dirname, "../static/videoPoster/" + posterFile));
                         console.log("删除闲置封面资源:" + posterFile);
                     }

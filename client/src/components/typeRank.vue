@@ -8,19 +8,24 @@
         <!-- 分区视频 -->
         <ul class="rank-bd">
             <li v-for="item in videoRank" :key="item.VDID">
-                <img
-                    :src="
-                        'http://127.0.0.1:8633/api/video/getposter?poster=' +
-                        item.video_poster
-                    "
-                    alt="封面"
-                />
-                <!-- 作者 -->
-                <div>
-                    <span class="el-icon-user"></span>
+                <router-link :to="'/video/' + item.VDID">
+                    <!-- 视频封面 -->
+                    <img
+                        :src="
+                            'http://127.0.0.1:8633/api/video/getposter?poster=' +
+                            item.video_poster
+                        "
+                        alt="封面"
+                    />
+                    <!-- 视频标题 -->
+                    <span class="title">{{ item.video_title }}</span>
+                </router-link>
+                <!-- 视频作者 -->
+                <router-link :to="'/user/' + item.video_owner" class="author">
+                    <i class="el-icon-user"></i>
                     {{ item.user_name }}
-                </div>
-                <!-- 其他信息 -->
+                </router-link>
+                <!-- 视频其他信息 -->
                 <div>
                     <span class="fl">
                         <i class="el-icon-video-play"></i>
@@ -80,6 +85,11 @@ export default {
 
 
 <style lang="scss" scoped>
+a {
+    color: #666;
+    text-decoration: none;
+}
+
 .fl {
     float: left;
 }
@@ -146,6 +156,7 @@ export default {
 
         li {
             float: left;
+            position: relative;
             width: 228px;
             height: 190px;
             margin-right: 15px;
@@ -156,6 +167,24 @@ export default {
                 width: 100%;
                 height: 128px;
             }
+
+            .title {
+                position: absolute;
+                left: 7px;
+                bottom: 65px;
+                width: 216px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .author:hover {
+                color: rgb(16, 161, 161);
+            }
+        }
+
+        li:nth-child(-n + 5) {
+            margin-bottom: 5px;
         }
 
         li:nth-child(5n) {
