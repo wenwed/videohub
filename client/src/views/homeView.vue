@@ -5,7 +5,8 @@
         <!-- 导航区域 -->
         <div class="nav clearfix">
             <!-- 轮播栏 -->
-            <div class="carousel"></div>
+            <!-- <div class="carousel"></div> -->
+            <carousel :videolist="allRank" class="carousel"></carousel>
             <!-- 推荐 -->
             <ul class="recommend">
                 <li v-for="item in lastAllRank" :key="item.VDID">
@@ -28,19 +29,24 @@
             v-for="item in allTypes"
             :typetag="item.VTID"
             :key="item.VTID"
+            class="clearfix"
         ></type-rank>
+        <!-- 底部版权 -->
+        <copy-right></copy-right>
     </div>
 </template>
 
 <script>
 import topHeader from "../components/topHeader.vue";
-// import carousel from "../components/carousel.vue";
+import carousel from "../components/carousel.vue";
 import typeRank from "../components/typeRank.vue";
+import copyRight from "../components/copyRight.vue";
 export default {
     components: {
-        // carousel,
+        carousel,
         topHeader,
         typeRank,
+        copyRight,
     },
     data() {
         return {
@@ -100,7 +106,6 @@ a {
         width: 480px;
         height: 270px;
         margin-right: 10px;
-        background-color: aqua;
     }
 
     //推荐信息
