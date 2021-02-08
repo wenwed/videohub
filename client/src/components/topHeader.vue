@@ -11,8 +11,7 @@
                         <router-link to="/home">首页</router-link>
                     </li>
                     <li>
-                        <!-- <router-link to="/home">排行</router-link> -->
-                        排行
+                        <router-link to="/rank">排行</router-link>
                     </li>
                 </ul>
                 <div class="search">
@@ -150,7 +149,7 @@ ul {
     height: 35px;
     line-height: 35px;
     background-color: #fff;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid rgb(227, 229, 230);
 
     // header左边
     .header-left {
@@ -210,7 +209,6 @@ ul {
             margin-top: 3px;
             border-radius: 15px;
             overflow: hidden;
-            background-color: aqua;
 
             img {
                 width: 100%;

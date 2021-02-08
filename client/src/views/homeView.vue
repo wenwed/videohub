@@ -31,7 +31,7 @@
             :key="item.VTID"
             class="clearfix"
         ></type-rank>
-        <!-- 底部版权 -->
+        <!-- 底部版权信息 -->
         <copy-right></copy-right>
     </div>
 </template>

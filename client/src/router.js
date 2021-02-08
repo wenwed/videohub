@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import store from './store/store'
 
 import homeView from '@/views/homeView.vue';
+import rankView from '@/views/rankView.vue';
 import videoView from '@/views/videoView.vue';
 import userView from '@/views/userView.vue';
 import userManage from '@/views/userManage.vue';
@@ -18,6 +19,7 @@ const vueRouter = new Router({
   routes: [
     { path: '/', redirect: '/home' },
     { path: '/home', name: "home", component: homeView, meta: { requiresAuth: false } },
+    { path: '/rank', name: "rank", component: rankView, meta: { requiresAuth: false } },
     { path: '/video/:vdid', name: "video", component: videoView, meta: { requiresAuth: false } },
     { path: '/user/:usid', name: "user", component: userView, meta: { requiresAuth: false } },
     {

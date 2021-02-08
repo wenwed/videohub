@@ -106,7 +106,7 @@ a {
     .rank-hd {
         width: 100%;
         height: 50px;
-        border-bottom: 1px solid #ccc;
+        border-bottom: 1px solid rgb(227, 229, 230);
 
         h3 {
             float: left;

@@ -1,6 +1,8 @@
 <template>
     <div class="footer">
-        <p>Copyright © 2021</p>
+        <div class="w">
+            <p>© 2021 wenwd所有</p>
+        </div>
     </div>
 </template>
 
@@ -9,16 +11,18 @@ export default {};
 </script>
 
 <style lang="scss" scoped>
-.w {
-    width: 1200px;
-    margin: 0 auto;
-}
-
 .footer {
-    height: 50px;
+    height: 80px;
     padding-top: 20px;
-    background-color: rgb(229, 234, 235);
     font-size: 12px;
-    text-align: center;
+
+    .w {
+        width: 1200px;
+        margin: 0 auto;
+        padding-top: 20px;
+        color: rgb(55, 55, 55);
+        font-size: 14px;
+        border-top: 1px solid rgb(227, 229, 230);
+    }
 }
 </style>
