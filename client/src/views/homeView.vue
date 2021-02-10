@@ -63,7 +63,7 @@ export default {
                     this.allRank = res.data.videolist;
                 });
         },
-        getVideoTypeRank() {
+        getVideoType() {
             this.$axios.get("/tyvideo/all").then((res) => {
                 this.allTypes = res.data.videotypes;
             });
@@ -71,7 +71,7 @@ export default {
     },
     created() {
         this.getAllRank();
-        this.getVideoTypeRank();
+        this.getVideoType();
     },
     computed: {
         lastAllRank() {
