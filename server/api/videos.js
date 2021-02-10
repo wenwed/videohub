@@ -13,7 +13,7 @@ const jwt_key = require("../config/jwtkey.js").KEYORSECRET;
 
 //上传封面文件
 router.post('/poster', async (req, res) => {
-  console.log("用户上传头像中");
+  console.log("用户上传图片中");
   await uploadVideoImg(req, res);
 })
 
@@ -154,7 +154,6 @@ router.get('/person/all', async (req, res) => {
   }
   let token = req.headers.usertoken;
   jwt.verify(token, jwt_key, async (err, decoded) => {
-    console.log(err);
     if (err) {  //非法token
       return res.status(401).json({ code: 401, msg: "请登录2" });
     }

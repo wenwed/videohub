@@ -119,13 +119,12 @@ a {
         span {
             float: right;
             position: relative;
-            width: 35px;
+            width: 36px;
             height: 23px;
             font-size: 12px;
-            line-height: 23px;
-            margin-top: 15px;
-            margin-right: 20px;
-            padding-left: 3px;
+            line-height: 25px;
+            margin: 15px 20px 0 0;
+            padding-left: 7px;
             border: 1px solid #666;
             border-radius: 5px;
             cursor: pointer;
@@ -134,8 +133,8 @@ a {
             &::after {
                 content: "";
                 position: absolute;
-                top: 7px;
-                right: 4px;
+                top: 8px;
+                right: 5px;
                 width: 6px;
                 height: 6px;
                 border-top: 1px solid #666;

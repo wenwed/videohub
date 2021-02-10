@@ -9,7 +9,7 @@ module.exports = {
             let value = [videoFile];
             mysql.getUseOfVideo(value)
                 .then(res => {
-                    if (res[0].num === 0) {
+                    if (res[0].num === 0 && avatarFile != "default.mp4") {
                         fs.unlinkSync(path.resolve(__dirname, "../static/video/" + videoFile));
                         console.log("删除闲置video资源:" + videoFile);
                     }
@@ -31,7 +31,7 @@ module.exports = {
             let value = [avatarFile];
             mysql.getUseOfAvatar(value)
                 .then(res => {
-                    if (res[0].num === 0) {
+                    if (res[0].num === 0 && avatarFile != "default.jpg") {
                         fs.unlinkSync(path.resolve(__dirname, "../static/userPoster/" + avatarFile));
                         console.log("删除闲置头像资源:" + avatarFile);
                     }
