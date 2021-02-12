@@ -1,4 +1,4 @@
-const mysql = require('../mysql/mysql.js');
+const mysql = require('./mysql/mysql.js');
 const fs = require('fs');
 const path = require('path');
 

@@ -20,7 +20,7 @@
                 <!-- 排行列表 -->
                 <li v-for="(item, i) in rankList" :key="item.VTID">
                     <!-- 排名 -->
-                    <span class="num">
+                    <span class="rank-num">
                         {{ i + 1 }}
                     </span>
 
@@ -193,7 +193,7 @@ a:hover {
             border-top: 1px solid rgb(227, 229, 230);
 
             //排名
-            .num {
+            .rank-num {
                 float: left;
                 width: 70px;
                 height: 70px;
