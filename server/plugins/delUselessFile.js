@@ -1,4 +1,4 @@
-const mysql = require('./mysql/mysql.js');
+const mysql = require('../mysql/mysql.js');
 const fs = require('fs');
 const path = require('path');
 
@@ -20,7 +20,7 @@ module.exports = {
             let value = [posterFile];
             mysql.getUseOfPoster(value)
                 .then(res => {
-                    if (res[0].num === 0 && posterFile != "default.jpg") {
+                    if (res[0].num === 0 && posterFile !== "default.jpg") {
                         fs.unlinkSync(path.resolve(__dirname, "../static/videoPoster/" + posterFile));
                         console.log("删除闲置封面资源:" + posterFile);
                     }
@@ -31,7 +31,7 @@ module.exports = {
             let value = [avatarFile];
             mysql.getUseOfAvatar(value)
                 .then(res => {
-                    if (res[0].num === 0 && avatarFile != "default.jpg") {
+                    if (res[0].num === 0 && avatarFile !== "default.jpg") {
                         fs.unlinkSync(path.resolve(__dirname, "../static/userPoster/" + avatarFile));
                         console.log("删除闲置头像资源:" + avatarFile);
                     }

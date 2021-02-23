@@ -19,9 +19,11 @@
         <ul class="dot">
             <li v-for="item in videolist" :key="item.VDID"></li>
         </ul>
+        <!-- 上一张按钮 -->
         <div class="before">
             <span></span>
         </div>
+        <!-- 下一张按钮 -->
         <div class="after">
             <span></span>
         </div>
@@ -31,6 +33,14 @@
 <script>
 export default {
     props: ["videolist"],
+    data() {
+        return {
+            // animate: (obj, ) => {
+            //     return new Promise((resolve, reject) => {});
+            // },
+        };
+    },
+    methods() {},
 };
 </script>
 
@@ -47,7 +57,14 @@ ul {
 
     // 轮播图片
     ul {
+        width: 2880px;
+        height: 100%;
+
         .pic {
+            float: left;
+            width: 480px;
+            height: 100%;
+
             img {
                 width: 100%;
                 height: 100%;
@@ -58,8 +75,9 @@ ul {
     // 下方小点
     .dot {
         position: absolute;
-        left: 50%;
+        left: 240px;
         top: 247px;
+        width: 96px;
         transform: translateX(-50%);
 
         li {
