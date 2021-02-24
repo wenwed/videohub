@@ -1,8 +1,8 @@
 <template>
     <div class="content">
         <!-- 图片 -->
-        <ul>
-            <li v-for="item in videolist" :key="item.VDID" class="pic">
+        <ul ref="pics">
+            <li v-for="(item, index) of lists" :key="index" class="pic">
                 <router-link :to="'/video/' + item.VDID">
                     <!-- item.video_descripe -->
                     <img
@@ -35,16 +35,77 @@ export default {
     props: ["videolist"],
     data() {
         return {
-            // animate: (obj, ) => {
-            //     return new Promise((resolve, reject) => {});
-            // },
+            carousel: {
+                // 当前播放的图片
+                index: 0,
+                // 一张图片的宽度
+                picWidth: 480,
+                // 动画内部使用定时器
+                animateTimer: null,
+            },
+            // 轮播栏自动播放定时器
+            timer: null,
+            // 有修改视频列表的需求，prop修改不了
+            lists: null,
         };
     },
-    methods() {},
+    methods: {
+        // 动画函数
+        animate(obj, target) {
+            return new Promise((resolve) => {
+                clearInterval(this.carousel.animateTimer);
+                let used = obj.offsetLeft;
+                if (target > 0) {
+                    this.carousel.animateTimer = setInterval(() => {
+                        if (obj.offsetLeft <= used - this.carousel.picWidth) {
+                            clearInterval(this.carousel.animateTimer);
+                        } else {
+                            obj.style.left = obj.offsetLeft - 5 + "px";
+                        }
+                    }, 1);
+                } else {
+                    this.animateTimer = setInterval(() => {
+                        if (obj.offsetLeft >= used + this.carousel.picWidth)
+                            clearInterval(this.carousel.animateTimer);
+                        else obj.style.left = obj.offsetLeft + 5 + "px";
+                    }, 1);
+                }
+                resolve();
+            });
+        },
+        // 自动滚动函数
+        autoRoll() {
+            if (this.carousel.index !== this.lists.length - 1) {
+                this.carousel.index++;
+                this.animate(this.$refs.pics, 1);
+            } else {
+                this.carousel.index = 0;
+                this.lists.push(this.lists[0]);
+                console.log(this.lists[0]);
+                console.log(this.lists[6]);
+                this.animate(this.$refs.pics, 1).then(() => {
+                    this.lists.pop();
+                    this.$refs.pics.style.left = 0;
+                });
+            }
+        },
+    },
+    created() {},
+    mounted() {
+        this.timer = setInterval(this.autoRoll, 1000);
+    },
+    watch: {
+        videolist(newVal) {
+            this.lists = newVal;
+        },
+    },
 };
 </script>
 
 <style lang="scss" scoped>
+// 一张图片的宽度
+$picWidth: 480px;
+
 ul {
     margin: 0;
     padding: 0;
@@ -57,12 +118,14 @@ ul {
 
     // 轮播图片
     ul {
-        width: 2880px;
+        position: relative;
+        left: 0;
+        width: $picWidth * 7;
         height: 100%;
 
         .pic {
             float: left;
-            width: 480px;
+            width: $picWidth;
             height: 100%;
 
             img {
