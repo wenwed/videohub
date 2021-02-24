@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div class="content" @mouseenter="stopTimer()" @mouseleave="startTimer()">
         <!-- 图片 -->
         <ul ref="pics">
             <li v-for="(item, index) of lists" :key="index" class="pic">
@@ -17,14 +17,19 @@
         </ul>
         <!-- 下方点 -->
         <ul class="dot">
-            <li v-for="item in videolist" :key="item.VDID"></li>
+            <li
+                v-for="(item, index) in videolist"
+                :key="index"
+                :class="{ current: index === carousel.index }"
+                @click="switchPic(index)"
+            ></li>
         </ul>
         <!-- 上一张按钮 -->
-        <div class="before">
+        <div class="before" @click="last()">
             <span></span>
         </div>
         <!-- 下一张按钮 -->
-        <div class="after">
+        <div class="after" @click="next()">
             <span></span>
         </div>
     </div>
@@ -50,53 +55,113 @@ export default {
         };
     },
     methods: {
+        // 开始运行轮播栏定时器
+        startTimer() {
+            this.timer = setInterval(this.next, 5000);
+        },
+        // 停止运行轮播栏定时器
+        stopTimer() {
+            clearInterval(this.timer);
+            this.timer = null;
+        },
         // 动画函数
         animate(obj, target) {
             return new Promise((resolve) => {
                 clearInterval(this.carousel.animateTimer);
                 let used = obj.offsetLeft;
+                // 大于0向左移动
                 if (target > 0) {
                     this.carousel.animateTimer = setInterval(() => {
                         if (obj.offsetLeft <= used - this.carousel.picWidth) {
                             clearInterval(this.carousel.animateTimer);
+                            resolve();
                         } else {
                             obj.style.left = obj.offsetLeft - 5 + "px";
                         }
                     }, 1);
-                } else {
-                    this.animateTimer = setInterval(() => {
-                        if (obj.offsetLeft >= used + this.carousel.picWidth)
+                    // 小于0向右移动
+                } else if (target < 0) {
+                    this.carousel.animateTimer = setInterval(() => {
+                        if (obj.offsetLeft >= used + this.carousel.picWidth) {
                             clearInterval(this.carousel.animateTimer);
-                        else obj.style.left = obj.offsetLeft + 5 + "px";
+                            resolve();
+                        } else {
+                            obj.style.left = obj.offsetLeft + 5 + "px";
+                        }
                     }, 1);
                 }
-                resolve();
             });
         },
-        // 自动滚动函数
-        autoRoll() {
-            if (this.carousel.index !== this.lists.length - 1) {
+        // 上一张图片
+        last() {
+            if (this.carousel.index !== 0) {
+                this.carousel.index--;
+                this.animate(this.$refs.pics, -1);
+            } else {
+                this.$refs.pics.style.left =
+                    -(this.lists.length - 1) * this.carousel.picWidth + "px";
+                this.carousel.index = this.lists.length - 2;
+                this.animate(this.$refs.pics, -1);
+            }
+        },
+        // 下一张图片
+        next() {
+            // 最后一张图分开判断
+            if (this.carousel.index !== this.lists.length - 2) {
                 this.carousel.index++;
                 this.animate(this.$refs.pics, 1);
-            } else {
+                // 最后一张图片移动后将从重复的那张移动到第一张
+            } else if (this.carousel.index === this.lists.length - 2) {
                 this.carousel.index = 0;
-                this.lists.push(this.lists[0]);
-                console.log(this.lists[0]);
-                console.log(this.lists[6]);
                 this.animate(this.$refs.pics, 1).then(() => {
-                    this.lists.pop();
                     this.$refs.pics.style.left = 0;
+                    this.carousel.index = 0;
+                });
+            }
+        },
+        // 下面小点点击事件
+        switchPic(i) {
+            if (i === this.carousel.index) return;
+            let tem = null;
+            // 点击的点在当前位置的左边
+            if (i < this.carousel.index) {
+                // 将当前位置的图片暂时移动到将要切换的图片的旁边
+                // 在切换位置后将其转换回来即可
+                tem = this.lists[i + 1];
+                this.lists[i + 1] = this.lists[this.carousel.index];
+                this.$refs.pics.style.left =
+                    -(i + 1) * this.carousel.picWidth + "px";
+                this.carousel.index = i;
+                this.animate(this.$refs.pics, -1).then(() => {
+                    this.lists[i + 1] = tem;
+                });
+            } else {
+                // 点击的点在当前位置的右边
+                tem = this.lists[i - 1];
+                this.lists[i - 1] = this.lists[this.carousel.index];
+                this.$refs.pics.style.left =
+                    -(i - 1) * this.carousel.picWidth + "px";
+                this.carousel.index = i;
+                this.animate(this.$refs.pics, 1).then(() => {
+                    this.lists[i - 1] = tem;
                 });
             }
         },
     },
-    created() {},
     mounted() {
-        this.timer = setInterval(this.autoRoll, 1000);
+        // 需要深拷贝
+        this.lists = JSON.parse(JSON.stringify(this.videolist));
+        this.lists.push(this.lists[0]);
+        this.startTimer();
+    },
+    destroyed() {
+        this.stopTimer();
     },
     watch: {
         videolist(newVal) {
-            this.lists = newVal;
+            // 需要深拷贝
+            this.lists = JSON.parse(JSON.stringify(newVal));
+            this.lists.push(this.lists[0]);
         },
     },
 };
@@ -105,6 +170,7 @@ export default {
 <style lang="scss" scoped>
 // 一张图片的宽度
 $picWidth: 480px;
+$picNum: 6;
 
 ul {
     margin: 0;
@@ -120,7 +186,7 @@ ul {
     ul {
         position: relative;
         left: 0;
-        width: $picWidth * 7;
+        width: $picWidth * ($picNum + 1);
         height: 100%;
 
         .pic {
@@ -140,17 +206,24 @@ ul {
         position: absolute;
         left: 240px;
         top: 247px;
-        width: 96px;
+        width: $picNum * 16px;
+        height: 16px;
+        border-radius: 8px;
+        background-color: rgba(255, 255, 255, 0.4);
         transform: translateX(-50%);
 
         li {
             float: left;
             width: 10px;
             height: 10px;
-            margin: 0 3px;
+            margin: 3px 3px 0;
             border-radius: 5px;
-            background-color: rgba(0, 0, 0, 0.4);
+            background-color: rgba(0, 0, 0, 0.6);
             cursor: pointer;
+        }
+
+        .current {
+            background-color: rgb(9, 198, 245);
         }
     }
 
