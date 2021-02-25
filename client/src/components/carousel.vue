@@ -1,4 +1,4 @@
-<template>
+<template >
     <div class="content" @mouseenter="stopTimer()" @mouseleave="startTimer()">
         <!-- 图片 -->
         <ul ref="pics">
@@ -150,8 +150,10 @@ export default {
     },
     mounted() {
         // 需要深拷贝
-        this.lists = JSON.parse(JSON.stringify(this.videolist));
-        this.lists.push(this.lists[0]);
+        if (this.videolist.length !== 0) {
+            this.lists = JSON.parse(JSON.stringify(this.videolist));
+            this.lists.push(this.lists[0]);
+        }
         this.startTimer();
     },
     destroyed() {
