@@ -25,11 +25,19 @@
             ></li>
         </ul>
         <!-- 上一张按钮 -->
-        <div class="before" @click="last()">
+        <div
+            class="before"
+            :class="{ mouseHover: !mouseHoverFlag }"
+            @click="last()"
+        >
             <span></span>
         </div>
         <!-- 下一张按钮 -->
-        <div class="after" @click="next()">
+        <div
+            class="after"
+            :class="{ mouseHover: !mouseHoverFlag }"
+            @click="next()"
+        >
             <span></span>
         </div>
     </div>
@@ -45,9 +53,10 @@ export default {
                 index: 0,
                 // 一张图片的宽度
                 picWidth: 480,
-                // 动画内部使用定时器
-                animateTimer: null,
+                // 是否播放
+                animateTimerFlag: true,
             },
+            mouseHoverFlag: false,
             // 轮播栏自动播放定时器
             timer: null,
             // 有修改视频列表的需求，prop修改不了
@@ -58,22 +67,25 @@ export default {
         // 开始运行轮播栏定时器
         startTimer() {
             this.timer = setInterval(this.next, 5000);
+            this.mouseHoverFlag = true;
         },
         // 停止运行轮播栏定时器
         stopTimer() {
             clearInterval(this.timer);
             this.timer = null;
+            this.mouseHoverFlag = false;
         },
         // 动画函数
         animate(obj, target) {
             return new Promise((resolve) => {
-                clearInterval(this.carousel.animateTimer);
                 let used = obj.offsetLeft;
+                let animateTimer = null;
                 // 大于0向左移动
                 if (target > 0) {
-                    this.carousel.animateTimer = setInterval(() => {
+                    animateTimer = setInterval(() => {
                         if (obj.offsetLeft <= used - this.carousel.picWidth) {
-                            clearInterval(this.carousel.animateTimer);
+                            clearInterval(animateTimer);
+                            this.carousel.animateTimerFlag = true;
                             resolve();
                         } else {
                             obj.style.left = obj.offsetLeft - 5 + "px";
@@ -81,9 +93,10 @@ export default {
                     }, 1);
                     // 小于0向右移动
                 } else if (target < 0) {
-                    this.carousel.animateTimer = setInterval(() => {
+                    animateTimer = setInterval(() => {
                         if (obj.offsetLeft >= used + this.carousel.picWidth) {
-                            clearInterval(this.carousel.animateTimer);
+                            clearInterval(animateTimer);
+                            this.carousel.animateTimerFlag = true;
                             resolve();
                         } else {
                             obj.style.left = obj.offsetLeft + 5 + "px";
@@ -94,6 +107,10 @@ export default {
         },
         // 上一张图片
         last() {
+            // 是否有正在运行的动画函数
+            if (!this.carousel.animateTimerFlag) return;
+            this.carousel.animateTimerFlag = false;
+
             if (this.carousel.index !== 0) {
                 this.carousel.index--;
                 this.animate(this.$refs.pics, -1);
@@ -106,6 +123,10 @@ export default {
         },
         // 下一张图片
         next() {
+            // 是否有正在运行的动画函数
+            if (!this.carousel.animateTimerFlag) return;
+            this.carousel.animateTimerFlag = false;
+
             // 最后一张图分开判断
             if (this.carousel.index !== this.lists.length - 2) {
                 this.carousel.index++;
@@ -121,6 +142,10 @@ export default {
         },
         // 下面小点点击事件
         switchPic(i) {
+            // 是否有正在运行的动画函数
+            if (!this.carousel.animateTimerFlag) return;
+            this.carousel.animateTimerFlag = false;
+
             if (i === this.carousel.index) return;
             let tem = null;
             // 点击的点在当前位置的左边
@@ -234,6 +259,7 @@ ul {
         position: absolute;
         top: 140px;
         width: 25px;
+        display: none;
         height: 30px;
         background: rgba(0, 0, 0, 0.4);
         overflow: hidden;
@@ -268,6 +294,10 @@ ul {
             right: 11px;
             transform: rotateZ(45deg);
         }
+    }
+
+    .mouseHover {
+        display: block;
     }
 }
 </style>
